@@ -1,2 +1,1 @@
-# parallax-protocol-foundry
-A Foundry VTT system implementation for Parallax Protocol
+Utilities, simulators, and generators for the Parallax Protocol tabletop roleplaying game.
