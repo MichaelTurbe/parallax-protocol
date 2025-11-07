@@ -1,0 +1,23 @@
+{
+  // Let Prettier format on save
+  "editor.formatOnSave": true,
+
+  // Ensure Prettier is the default for TS/JS
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+  // Run ESLint auto-fixes on save, too
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  // Avoid formatter conflicts (ESLint is not the formatter)
+  "eslint.format.enable": false,
+
+  // Optional: show ESLint status
+  "eslint.alwaysShowStatus": true,
+
+  // Consistent tabs/spaces in editor view
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true
+}
