@@ -1,21 +1,20 @@
 import type ActorSkill from './actor-skill.ts';
 import DamageReduction from './damage-reduction.ts';
+import type DiceFormula from './dice-formula.ts';
 import type StatBonus from './stat-bonus.ts';
 
 export default class Actor {
     #name: string;
-    #hitDie?: number;
-    #hitDieBonus?: number;
+    #hitDie: DiceFormula;
     #level: number;
     #kineticDamageReduction?: DamageReduction;
     #energyDamageReduction?: DamageReduction;
     #skills?: Array<ActorSkill>;
     #stats?: Array<StatBonus>;
 
-    constructor(name: string, hitDie: number, hitDieBonus: number, level: number) {
+    constructor(name: string, hitDie: DiceFormula, level: number) {
         this.#name = name;
         this.#hitDie = hitDie;
-        this.#hitDieBonus = hitDieBonus;
         this.#level = level;
     }
 
@@ -59,20 +58,12 @@ export default class Actor {
         this.name = value;
     }
 
-    get hitDie(): number {
-        return this.#hitDie || 0;
+    get hitDie(): DiceFormula {
+        return this.#hitDie;
     }
 
     set hitDie(value: number) {
         this.hitDie = value;
-    }
-
-    get hitDieBonus(): number {
-        return this.#hitDieBonus || 0;
-    }
-
-    set hitDieBonus(value: number) {
-        this.hitDieBonus = value;
     }
 
     get level(): number {
