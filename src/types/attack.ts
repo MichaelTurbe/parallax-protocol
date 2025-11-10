@@ -1,14 +1,22 @@
+import type ActorSkill from './actor-skill.ts';
 import type Weapon from './weapon.ts';
 
 export default class Attack {
     #weapon: Weapon;
     #attackBonus: number;
     #attackTarget: number;
+    #associatedSkill: ActorSkill;
 
-    constructor(weapon: Weapon, attackBonus: number, attackTarget: number) {
+    constructor(
+        weapon: Weapon,
+        associatedSkill: ActorSkill,
+        attackBonus: number,
+        attackTarget: number
+    ) {
         this.#weapon = weapon;
         this.#attackBonus = attackBonus;
         this.#attackTarget = attackTarget;
+        this.#associatedSkill = associatedSkill;
     }
 
     // --- Getters ---
@@ -22,6 +30,10 @@ export default class Attack {
 
     get attackTarget(): number {
         return this.#attackTarget;
+    }
+
+    get associatedSkill(): ActorSkill {
+        return this.#associatedSkill;
     }
 
     // --- Setters ---

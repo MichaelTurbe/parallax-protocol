@@ -1,7 +1,9 @@
 import type ActorSkill from './actor-skill.ts';
+import type Attack from './attack.ts';
 import DamageReduction from './damage-reduction.ts';
 import type DiceFormula from './dice-formula.ts';
 import type StatBonus from './stat-bonus.ts';
+import pc from 'picocolors';
 
 export default class Actor {
     #name: string;
@@ -11,6 +13,7 @@ export default class Actor {
     #energyDamageReduction?: DamageReduction;
     #skills?: Array<ActorSkill>;
     #stats?: Array<StatBonus>;
+    #attacks?: Array<Attack>;
 
     constructor(name: string, hitDie: DiceFormula, level: number) {
         this.#name = name;
@@ -26,7 +29,7 @@ export default class Actor {
         this.#kineticDamageReduction = damageReduction;
     }
 
-    get energyDamageRedution(): DamageReduction {
+    get energyDamageReduction(): DamageReduction {
         return this.#energyDamageReduction || new DamageReduction(0, 0, 0, 0);
     }
 
@@ -39,7 +42,7 @@ export default class Actor {
     }
 
     set skills(skills: Array<ActorSkill>) {
-        this.skills = skills;
+        this.#skills = skills;
     }
 
     get stats(): Array<StatBonus> {
@@ -72,5 +75,22 @@ export default class Actor {
 
     set level(value: number) {
         this.level = value;
+    }
+
+    // --- Getter ---
+    get attacks(): Array<Attack> | undefined {
+        return this.#attacks;
+    }
+
+    // --- Setter ---
+    set attacks(value: Array<Attack> | undefined) {
+        this.#attacks = value;
+    }
+
+    toJSON() {
+        return {
+            name: pc.green(this.name),
+            damage: pc.red(this.level),
+        };
     }
 }

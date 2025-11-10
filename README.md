@@ -6,7 +6,7 @@ Install it:
 npm install --save-dev tsx
 
 Run your project:
-npx tsx src/main.ts
+npx tsx src/index.ts
 
 For watch mode (auto-reload):
 npx tsx watch src/main.ts

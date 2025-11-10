@@ -10,7 +10,7 @@ export default class Weapon extends Item {
     #hasSecondaryDamageType: boolean;
     #secondarySubDamageType: KineticDamageType | EnergyDamageType | null;
     #secondaryDamageType: DamageType | null;
-    #damage: DiceFofrmula;
+    #damage: DiceFormula;
     constructor(
         name: string,
         primaryDamageType: DamageType,
