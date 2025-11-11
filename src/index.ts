@@ -15,5 +15,27 @@ const robotBuildParameters = new RobotBuildParameters(
     ['none']
 );
 
-const robot = robotBuilderService.buildRobot(robotBuildParameters);
-robot.output();
+const robot1 = robotBuilderService.buildRobot(robotBuildParameters);
+robot1.output();
+
+const robotBuildParameters2 = new RobotBuildParameters(
+    'Slicer',
+    RobotRoles.Infiltration,
+    3,
+    DiceTypes.d8,
+    ['none']
+);
+
+const robot2 = robotBuilderService.buildRobot(robotBuildParameters2);
+robot2.output();
+
+const robotBuildParameters3 = new RobotBuildParameters(
+    'Boomer',
+    RobotRoles.Armored,
+    7,
+    DiceTypes.d12,
+    ['none']
+);
+
+const robot3 = robotBuilderService.buildRobot(robotBuildParameters3);
+robot3.output();

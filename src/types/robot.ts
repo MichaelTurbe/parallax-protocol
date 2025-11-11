@@ -1,5 +1,6 @@
 import Actor from './actor.ts';
 import pc from 'picocolors';
+import { SkillCategories } from './skill-category.ts';
 
 export default class Robot extends Actor {
     toJSON() {
@@ -14,10 +15,13 @@ export default class Robot extends Actor {
         console.log(pc.red(String('level:' + this.level)));
         console.log(pc.red('SKILLS'));
         this.skills.forEach((actorSkill) => {
-            console.log(
-                pc.yellow(String(actorSkill.skill.name)),
-                pc.blue(String(`+` + actorSkill.totalSkillBonus))
-            );
+            if (actorSkill.skill.category !== SkillCategories.Martial) {
+                console.log(
+                    pc.yellow(String(actorSkill.skill.name)),
+                    pc.blue(String(`+` + actorSkill.totalSkillBonus))
+                );
+            }
         });
+        console.log(pc.red(String('damage reduction:' + this.energyDamageReduction.total)));
     }
 }

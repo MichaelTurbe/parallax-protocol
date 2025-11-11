@@ -5,7 +5,7 @@ import type { KineticDamageType } from './kinetic-damage-types.ts';
 import Weapon from './weapon.ts';
 
 export default class RangedWeapon extends Weapon {
-    #automaticDamage: DiceFormula;
+    #automaticDamage: DiceFormula | null;
     #shortRange: number;
     #longRange: number;
     #maxRange: number;
@@ -16,7 +16,7 @@ export default class RangedWeapon extends Weapon {
         damage: DiceFormula,
         bulk: number = 0,
         price: number = 0,
-        automaticDamage: DiceFormula,
+        automaticDamage: DiceFormula | null,
         shortRange: number,
         longRange: number,
         maxRange: number
@@ -29,8 +29,8 @@ export default class RangedWeapon extends Weapon {
     }
 
     // --- Getters ---
-    get automaticDamage(): DiceFormula {
-        return this.#automaticDamage;
+    get automaticDamage(): DiceFormula | null {
+        return this.#automaticDamage ?? null;
     }
 
     get shortRange(): number {
