@@ -1,3 +1,4 @@
+import Attack from '../types/attack.ts';
 import DamageReduction from '../types/damage-reduction.ts';
 import DiceFormula from '../types/dice-formula.ts';
 import type { DieType } from '../types/die-type.ts';
@@ -20,16 +21,44 @@ export default class RobotBuilderService {
         robot.kineticDamageReduction = overallDR;
         robot.energyDamageReduction = overallDR;
         robot.skills = this.SkillService.getSkillsForRobotRole(params.robotRole, params.level);
+        robot.attacks = this.buildAttacks(params, robot);
         return robot;
     }
 
-    // private buildAttacks(params: RobotBuildParameters): Array<Attack> {
-    //     const attacks = new Array<Attack>();
-    //     params.weapons.forEach(weaponName => {
-    //         const weapon = this.WeaponsService.getWeaponByName('Gauss Rifle');
-    //         const attack = new Attack()
-    //     })
-    // }
+    private buildAttacks(params: RobotBuildParameters, robot: Robot): Array<Attack> {
+        const attacks = new Array<Attack>();
+        console.log(params.weapons);
+        params.weapons.forEach((weaponName) => {
+            const weapon = this.WeaponsService.getWeaponByName(weaponName);
+            if (weapon) {
+                console.log(weapon);
+                const associatedSkill = weapon.associatedSkill;
+                if (associatedSkill) {
+                    const actorSkill = robot.skills.find(
+                        (item) => item.skill.name === associatedSkill.name
+                    );
+                    if (actorSkill) {
+                        const attack = new Attack(
+                            weapon,
+                            actorSkill,
+                            actorSkill?.totalSkillBonus,
+                            actorSkill?.skillTarget
+                        );
+                        attacks.push(attack);
+                    } else {
+                        console.log(
+                            'the actor did not have a skill that matched the desired weapon skill'
+                        );
+                    }
+                } else {
+                    console.log('could not find the skill for this weapon');
+                }
+            } else {
+                console.log('could not locate weapon called ', weaponName);
+            }
+        });
+        return attacks;
+    }
 
     private getHitDie(params: RobotBuildParameters): DiceFormula {
         let dieType: DieType;

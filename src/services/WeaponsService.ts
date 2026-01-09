@@ -3,25 +3,407 @@ import DiceFormula from '../types/dice-formula.ts';
 import { DiceTypes } from '../types/die-type.ts';
 import { EnergyDamageTypes } from '../types/energy-damage-type.ts';
 import { KineticDamageTypes } from '../types/kinetic-damage-types.ts';
+import MeleeWeapon from '../types/melee-weapon.ts';
 // import type MeleeWeapon from '../types/melee-weapon.ts';
 import RangedWeapon from '../types/ranged-weapon.ts';
+import { SkillNames } from '../types/skill-name.ts';
 import type Weapon from '../types/weapon.ts';
+import type SkillService from './SkillService.ts';
 
 export default class WeaponsService {
+    #skillService: SkillService;
     #smallArms: Array<RangedWeapon>;
     #longArms: Array<RangedWeapon>;
     #heavyArms: Array<RangedWeapon>;
-    //  #meleeWeapons: Array<MeleeWeapon>;
+    #meleeWeapons: Array<MeleeWeapon>;
+    #naturalWeapons: Array<MeleeWeapon>;
     #nameDictionary: Map<string, Weapon> = new Map<string, Weapon>();
 
-    constructor() {
+    constructor(skillService: SkillService) {
+        this.#skillService = skillService;
         this.#longArms = this.#populateLongArms();
         this.#smallArms = this.#populateSmallArms();
         this.#heavyArms = this.#populateHeavyArms();
+        this.#meleeWeapons = this.#populateMeleeWeapons();
+        this.#naturalWeapons = this.#populateNaturalWeapons();
+        this.populateWeaponMap();
+    }
+    #populateMeleeWeapons() {
+        const meleeWeapons = new Array<MeleeWeapon>();
+        const meleeWeaponsSkill = this.#skillService.getSkillBySkillName(SkillNames.MeleeWeapons);
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Piezo Dagger',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Dagger',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Sword',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                1,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Piezo Sword',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d10, 1, 0),
+                1,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Titanium Cudgel',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                1,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Titanium Staff',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                2,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Stun Baton',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                1,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Stun Staff',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                2,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Plasma Fibril Sword',
+                DamageTypes.Energy,
+                EnergyDamageTypes.Fire,
+                new DiceFormula(DiceTypes.d6, 2, 0),
+                1,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        const shockHammer = new MeleeWeapon(
+            'Shock Hammer',
+            DamageTypes.Kinetic,
+            KineticDamageTypes.Bludgeoning,
+            new DiceFormula(DiceTypes.d6, 2, 0),
+            3,
+            0,
+            meleeWeaponsSkill
+        );
+        shockHammer.secondaryDamageType = DamageTypes.Energy;
+        shockHammer.secondarySubDamageType = EnergyDamageTypes.Electrical;
+        shockHammer.secondaryDamage = new DiceFormula(DiceTypes.d8, 1, 0);
+        meleeWeapons.push(shockHammer);
+
+        return meleeWeapons;
+    }
+
+    #populateNaturalWeapons() {
+        const meleeWeapons = new Array<MeleeWeapon>();
+        const meleeWeaponsSkill = this.#skillService.getSkillBySkillName(SkillNames.MeleeWeapons);
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Claws - Small',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Claws - Medium',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Claws - Large',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Claws - Huge',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d10, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Claws - Enormous',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Slashing,
+                new DiceFormula(DiceTypes.d12, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Jaws - Small',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Jaws - Medium',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Jaws - Large',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Jaws - Huge',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d10, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Jaws - Enormous',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d12, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Paws - Small',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Paws - Medium',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Paws - Large',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Paws - Huge',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d10, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Paws - Enormous',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Bludgeoning,
+                new DiceFormula(DiceTypes.d12, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Horns - Small',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d4, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Horns - Medium',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d6, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Horns - Large',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d8, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Horns - Huge',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d10, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+
+        meleeWeapons.push(
+            new MeleeWeapon(
+                'Horns - Enormous',
+                DamageTypes.Kinetic,
+                KineticDamageTypes.Piercing,
+                new DiceFormula(DiceTypes.d12, 1, 0),
+                0,
+                0,
+                meleeWeaponsSkill
+            )
+        );
+        return meleeWeapons;
     }
 
     #populateLongArms() {
         const longArms = new Array<RangedWeapon>();
+        const longArmsSkill = this.#skillService.getSkillBySkillName(SkillNames.FirearmsLong);
         longArms.push(
             new RangedWeapon(
                 'Gauss Rifle',
@@ -33,7 +415,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d12, 1, 0),
                 30,
                 100,
-                200
+                200,
+                longArmsSkill
             )
         );
         longArms.push(
@@ -47,7 +430,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d12, 1, 0),
                 30,
                 100,
-                200
+                200,
+                longArmsSkill
             )
         );
         longArms.push(
@@ -61,7 +445,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d12, 1, 0),
                 10,
                 30,
-                60
+                60,
+                longArmsSkill
             )
         );
 
@@ -76,7 +461,8 @@ export default class WeaponsService {
                 null,
                 20,
                 40,
-                80
+                80,
+                longArmsSkill
             )
         );
 
@@ -91,7 +477,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d12, 1, 0),
                 30,
                 100,
-                200
+                200,
+                longArmsSkill
             )
         );
 
@@ -106,7 +493,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d8, 1, 0),
                 30,
                 50,
-                90
+                90,
+                longArmsSkill
             )
         );
 
@@ -121,7 +509,8 @@ export default class WeaponsService {
                 null,
                 200,
                 400,
-                600
+                600,
+                longArmsSkill
             )
         );
 
@@ -136,7 +525,8 @@ export default class WeaponsService {
                 null,
                 200,
                 400,
-                600
+                600,
+                longArmsSkill
             )
         );
 
@@ -145,6 +535,8 @@ export default class WeaponsService {
 
     #populateSmallArms() {
         const weapons = new Array<RangedWeapon>();
+        const smallArmsSkill = this.#skillService.getSkillBySkillName(SkillNames.FirearmsSmall);
+
         weapons.push(
             new RangedWeapon(
                 'Gauss Pistol',
@@ -156,7 +548,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d10, 1, 0),
                 30,
                 100,
-                200
+                200,
+                smallArmsSkill
             )
         );
         weapons.push(
@@ -170,7 +563,8 @@ export default class WeaponsService {
                 null,
                 30,
                 100,
-                200
+                200,
+                smallArmsSkill
             )
         );
         weapons.push(
@@ -184,7 +578,8 @@ export default class WeaponsService {
                 null,
                 10,
                 30,
-                60
+                60,
+                smallArmsSkill
             )
         );
 
@@ -199,7 +594,8 @@ export default class WeaponsService {
                 null,
                 20,
                 40,
-                80
+                80,
+                smallArmsSkill
             )
         );
 
@@ -214,7 +610,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d8, 1, 0),
                 30,
                 100,
-                200
+                200,
+                smallArmsSkill
             )
         );
 
@@ -229,7 +626,8 @@ export default class WeaponsService {
                 null,
                 20,
                 40,
-                80
+                80,
+                smallArmsSkill
             )
         );
 
@@ -238,6 +636,8 @@ export default class WeaponsService {
 
     #populateHeavyArms() {
         const weapons = new Array<RangedWeapon>();
+        const heavyArmsSkill = this.#skillService.getSkillBySkillName(SkillNames.FirearmsHeavy);
+
         weapons.push(
             new RangedWeapon(
                 'Gauss Canon',
@@ -249,7 +649,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d6, 3, 0),
                 30,
                 100,
-                200
+                200,
+                heavyArmsSkill
             )
         );
         weapons.push(
@@ -263,7 +664,8 @@ export default class WeaponsService {
                 null,
                 30,
                 100,
-                200
+                200,
+                heavyArmsSkill
             )
         );
         weapons.push(
@@ -277,7 +679,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d10, 1, 0),
                 10,
                 30,
-                60
+                60,
+                heavyArmsSkill
             )
         );
 
@@ -292,7 +695,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d6, 2, 0),
                 20,
                 40,
-                80
+                80,
+                heavyArmsSkill
             )
         );
 
@@ -307,7 +711,8 @@ export default class WeaponsService {
                 new DiceFormula(DiceTypes.d8, 3, 0),
                 30,
                 100,
-                200
+                200,
+                heavyArmsSkill
             )
         );
 
@@ -322,7 +727,8 @@ export default class WeaponsService {
                 null,
                 200,
                 400,
-                600
+                600,
+                heavyArmsSkill
             )
         );
 
@@ -337,13 +743,18 @@ export default class WeaponsService {
             ...this.#longArms,
             ...this.#smallArms,
             ...this.#heavyArms,
-            // ...this.#subtleSkills,
+            ...this.#meleeWeapons,
+            ...this.#naturalWeapons,
         ];
     }
 
+    get allNaturalWeapons(): Array<Weapon> {
+        return this.#naturalWeapons;
+    }
+
     private populateWeaponMap() {
-        this.allWeapons.forEach((skill) => {
-            this.#nameDictionary.set(skill.name.toLowerCase(), skill);
+        this.allWeapons.forEach((weapon) => {
+            this.#nameDictionary.set(weapon.name.toLowerCase(), weapon);
         });
     }
 

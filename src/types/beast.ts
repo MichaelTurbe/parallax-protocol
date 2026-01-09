@@ -2,7 +2,17 @@ import Actor from './actor.ts';
 import pc from 'picocolors';
 import { SkillCategories } from './skill-category.ts';
 
-export default class Robot extends Actor {
+export default class Beast extends Actor {
+    #singleSavingThrowTarget: number = 0;
+
+    get singleSavingThrowTarget(): number {
+        return this.#singleSavingThrowTarget;
+    }
+
+    set singleSavingThrowTarget(value: number) {
+        this.#singleSavingThrowTarget = value;
+    }
+
     toJSON() {
         return {
             name: pc.green(this.name),
@@ -37,18 +47,12 @@ export default class Robot extends Actor {
                         attack.attackBonus +
                         '/' +
                         attack.attackTarget
-                ),
-                pc.red(
-                    attack.weapon.damage.diceNumber +
-                        attack.weapon.damage.dieType +
-                        ' ' +
-                        attack.weapon.primaryDamageType +
-                        '(' +
-                        attack.weapon.primarySubDamageType +
-                        ')'
                 )
             );
         });
         console.log(pc.red(String('damage reduction:' + this.energyDamageReduction.total)));
+        console.log(
+            pc.yellowBright(String(`single saving throw target: ${this.singleSavingThrowTarget} `))
+        );
     }
 }

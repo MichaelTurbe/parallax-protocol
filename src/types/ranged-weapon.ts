@@ -2,6 +2,7 @@ import type { DamageType } from './damage-type.ts';
 import type DiceFormula from './dice-formula.ts';
 import type { EnergyDamageType } from './energy-damage-type.ts';
 import type { KineticDamageType } from './kinetic-damage-types.ts';
+import type Skill from './skill.ts';
 import Weapon from './weapon.ts';
 
 export default class RangedWeapon extends Weapon {
@@ -19,9 +20,10 @@ export default class RangedWeapon extends Weapon {
         automaticDamage: DiceFormula | null,
         shortRange: number,
         longRange: number,
-        maxRange: number
+        maxRange: number,
+        associatedSkill: Skill | null
     ) {
-        super(name, primaryDamageType, primarySubDamageType, damage, bulk, price);
+        super(name, primaryDamageType, primarySubDamageType, damage, bulk, price, associatedSkill);
         this.#automaticDamage = automaticDamage;
         this.#shortRange = shortRange;
         this.#longRange = longRange;

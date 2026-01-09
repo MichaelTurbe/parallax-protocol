@@ -1,3 +1,4 @@
+import type { ActorSize } from './actor-size.ts';
 import type ActorSkill from './actor-skill.ts';
 import type Attack from './attack.ts';
 import DamageReduction from './damage-reduction.ts';
@@ -14,6 +15,7 @@ export default class Actor {
     #skills?: Array<ActorSkill>;
     #stats?: Array<StatBonus>;
     #attacks?: Array<Attack>;
+    #size?: ActorSize;
 
     constructor(name: string, hitDie: DiceFormula, level: number) {
         this.#name = name;
@@ -92,5 +94,13 @@ export default class Actor {
             name: pc.green(this.name),
             damage: pc.red(this.level),
         };
+    }
+
+    get size(): ActorSize | undefined {
+        return this.#size;
+    }
+
+    set size(value: ActorSize) {
+        this.#size = value;
     }
 }

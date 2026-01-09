@@ -1,0 +1,428 @@
+{
+    "name": "Strigast",
+    "type": "character",
+    "folder": null,
+    "img": "https://foundry-2024.s3.us-east-1.amazonaws.com/Parallax%20Protocol/Maps/STRIGAST%20082824%204.png",
+    "system": {
+        "biography": "",
+        "health": {
+            "value": 4,
+            "min": 0,
+            "max": 5
+        },
+        "power": {
+            "value": 30,
+            "min": 0,
+            "max": 30
+        },
+        "attributes": {
+            "StatBonuses": {
+                "STR": {
+                    "value": 1,
+                    "label": "Strength",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                },
+                "DEX": {
+                    "value": 1,
+                    "label": "Dexterity",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                },
+                "CON": {
+                    "value": 1,
+                    "label": "Constitution",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                },
+                "INT": {
+                    "value": 0,
+                    "label": "Intelligence",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                },
+                "WIS": {
+                    "value": 0,
+                    "label": "Wisdom",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                },
+                "CHA": {
+                    "value": 0,
+                    "label": "Wisdom",
+                    "dtype": "Number",
+                    "group": "StatBonuses"
+                }
+            },
+            "Skills": {
+                "LongArms": {
+                    "value": 1,
+                    "label": "Long Arms",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "MeleeWeapons": {
+                    "value": 5,
+                    "label": "Melee Weapons",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "SmallArms": {
+                    "value": 5,
+                    "label": "Small Arms",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Grenades": {
+                    "value": 7,
+                    "label": "Grenades",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Gunnery": {
+                    "value": 5,
+                    "label": "Gunnery",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "HeavyWeapons": {
+                    "value": 1,
+                    "label": "Heavy Weapons",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Chemistry": {
+                    "value": 0,
+                    "label": "Chemistry",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Computers": {
+                    "value": 0,
+                    "label": "Computers",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Cultures": {
+                    "value": 0,
+                    "label": "Cultures",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Engineering": {
+                    "value": 0,
+                    "label": "Engineering",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Medicine": {
+                    "value": 0,
+                    "label": "Medicine",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Acrobatics": {
+                    "value": 0,
+                    "label": "Acrobatics",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Athletics": {
+                    "value": 6,
+                    "label": "Athletics",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "GroundVehicles": {
+                    "value": 4,
+                    "label": "Ground Vehicles",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Survival": {
+                    "value": 1,
+                    "label": "Survival",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Bureaucracy": {
+                    "value": 0,
+                    "label": "Bureaucracy",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Interrogation": {
+                    "value": 2,
+                    "label": "Interrogation",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Stealth": {
+                    "value": 3,
+                    "label": "Stealth",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Trading": {
+                    "value": 2,
+                    "label": "Trading",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Deflection": {
+                    "value": 3,
+                    "label": "Deflection",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "Evasion": {
+                    "value": 4,
+                    "label": "Evasion",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "StreetSmarts": {
+                    "value": 2,
+                    "label": "Street Smarts",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "StarshipPiloting": {
+                    "value": 2,
+                    "label": "Starship Piloting",
+                    "dtype": "Number",
+                    "group": "Skills"
+                },
+                "AircraftPiloting": {
+                    "value": 1,
+                    "label": "Aircraft Piloting",
+                    "dtype": "Number",
+                    "group": "Skills"
+                }
+            },
+            "Combat": {
+                "KDR": {
+                    "value": 1,
+                    "label": "Kinetic Damage Resistance",
+                    "dtype": "Number",
+                    "group": "Combat"
+                },
+                "EDR": {
+                    "value": 1,
+                    "label": "Energy Damage Resistance",
+                    "dtype": "Number",
+                    "group": "Combat"
+                }
+            },
+            "SavingThrows": {
+                "Allergy": {
+                    "value": 1,
+                    "label": "Allergy",
+                    "dtype": "Number",
+                    "group": "SavingThrows"
+                },
+                "Gas": {
+                    "value": 1,
+                    "label": "Gas",
+                    "dtype": "Number",
+                    "group": "SavingThrows"
+                },
+                "Poison": {
+                    "value": 1,
+                    "label": "Poison",
+                    "dtype": "Number",
+                    "group": "SavingThrows"
+                },
+                "Stun": {
+                    "value": 1,
+                    "label": "Stun",
+                    "dtype": "Number",
+                    "group": "SavingThrows"
+                },
+                "Radiation": {
+                    "value": 1,
+                    "label": "Radiation",
+                    "dtype": "Number",
+                    "group": "SavingThrows"
+                }
+            }
+        },
+        "groups": {
+            "StatBonuses": {
+                "key": "StatBonuses",
+                "label": "Stat Bonuses",
+                "dtype": "Number"
+            },
+            "Skills": {
+                "key": "Skills",
+                "label": "Total Skill Bonuses",
+                "dtype": "Number"
+            },
+            "Combat": {
+                "key": "Combat",
+                "label": "",
+                "dtype": "String"
+            },
+            "SavingThrows": {
+                "key": "SavingThrows",
+                "label": "Saving Throws",
+                "dtype": "Number"
+            }
+        }
+    },
+    "prototypeToken": {
+        "name": "Sedjeck TornNew Actor",
+        "displayName": 0,
+        "actorLink": true,
+        "width": 1,
+        "height": 1,
+        "texture": {
+            "src": "https://foundry-2024.s3.us-east-1.amazonaws.com/Parallax%20Protocol/Maps/strigast-token.png",
+            "anchorX": 0.5,
+            "anchorY": 0.5,
+            "offsetX": 0,
+            "offsetY": 0,
+            "fit": "contain",
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 0,
+            "tint": "#ffffff",
+            "alphaThreshold": 0.75
+        },
+        "lockRotation": true,
+        "rotation": 0,
+        "alpha": 1,
+        "disposition": -1,
+        "displayBars": 30,
+        "bar1": {
+            "attribute": "health"
+        },
+        "bar2": {
+            "attribute": "power"
+        },
+        "light": {
+            "negative": false,
+            "priority": 0,
+            "alpha": 0.5,
+            "angle": 360,
+            "bright": 0,
+            "color": null,
+            "coloration": 1,
+            "dim": 0,
+            "attenuation": 0.5,
+            "luminosity": 0.5,
+            "saturation": 0,
+            "contrast": 0,
+            "shadows": 0,
+            "animation": {
+                "type": null,
+                "speed": 5,
+                "intensity": 5,
+                "reverse": false
+            },
+            "darkness": {
+                "min": 0,
+                "max": 1
+            }
+        },
+        "sight": {
+            "enabled": true,
+            "range": 0,
+            "angle": 360,
+            "visionMode": "basic",
+            "color": null,
+            "attenuation": 0.1,
+            "brightness": 0,
+            "saturation": 0,
+            "contrast": 0
+        },
+        "detectionModes": [],
+        "occludable": {
+            "radius": 0
+        },
+        "ring": {
+            "enabled": false,
+            "colors": {
+                "ring": null,
+                "background": null
+            },
+            "effects": 0,
+            "subject": {
+                "scale": 1,
+                "texture": null
+            }
+        },
+        "turnMarker": {
+            "mode": 1,
+            "animation": null,
+            "src": null,
+            "disposition": false
+        },
+        "movementAction": null,
+        "flags": {},
+        "randomImg": false,
+        "appendNumber": false,
+        "prependAdjective": false
+    },
+    "items": [
+        {
+            "name": "Medium Claws",
+            "type": "item",
+            "_id": "8GlF4KTMFDuYYAwL",
+            "img": "icons/creatures/claws/claw-curved-jagged-gray.webp",
+            "system": {
+                "description": "",
+                "quantity": 1,
+                "weight": 0,
+                "attributes": {
+                    "ApplicableSkill": {
+                        "value": "MeleeWeapons",
+                        "label": "Applicable Skill",
+                        "dtype": "String",
+                        "group": ""
+                    },
+                    "DamageRoll": {
+                        "value": "1d4 + @StatBonuses.STR",
+                        "label": "Damage Roll",
+                        "dtype": "Formula",
+                        "group": ""
+                    },
+                    "DamageType": {
+                        "value": "Kinetic (Slashing)",
+                        "label": "Damage Type",
+                        "dtype": "String",
+                        "group": ""
+                    }
+                },
+                "groups": {}
+            },
+            "effects": [],
+            "folder": null,
+            "sort": 0,
+            "flags": {},
+            "_stats": {
+                "coreVersion": "13.347",
+                "systemId": "worldbuilding",
+                "systemVersion": "0.8.2",
+                "lastModifiedBy": null
+            }
+        }
+    ],
+    "effects": [],
+    "flags": {},
+    "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "worldbuilding",
+        "systemVersion": "0.8.2",
+        "createdTime": 1758588861236,
+        "modifiedTime": 1761087144910,
+        "lastModifiedBy": "43ZsAUIqWWCyHqBS",
+        "exportSource": {
+            "worldId": "parallax-protocol",
+            "uuid": "Actor.ifoo73yesGJtiocL",
+            "coreVersion": "13.347",
+            "systemId": "worldbuilding",
+            "systemVersion": "0.8.2"
+        }
+    }
+}

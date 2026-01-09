@@ -3,6 +3,7 @@ import type DiceFormula from './dice-formula.ts';
 import type { EnergyDamageType } from './energy-damage-type.ts';
 import Item from './item.ts';
 import type { KineticDamageType } from './kinetic-damage-types.ts';
+import type Skill from './skill.ts';
 
 export default class Weapon extends Item {
     #primaryDamageType: DamageType;
@@ -11,13 +12,16 @@ export default class Weapon extends Item {
     #secondarySubDamageType: KineticDamageType | EnergyDamageType | null;
     #secondaryDamageType: DamageType | null;
     #damage: DiceFormula;
+    #secondaryDamage: DiceFormula | null;
+    #associatedSkill: Skill | null;
     constructor(
         name: string,
         primaryDamageType: DamageType,
         primarySubDamageType: KineticDamageType | EnergyDamageType,
         damage: DiceFormula,
         bulk: number = 0,
-        price: number = 0
+        price: number = 0,
+        associatedSkill: Skill | null
     ) {
         super(name, bulk, price);
         this.#primaryDamageType = primaryDamageType;
@@ -26,6 +30,8 @@ export default class Weapon extends Item {
         this.#secondaryDamageType = null;
         this.#secondarySubDamageType = null;
         this.#damage = damage;
+        this.#secondaryDamageType = null;
+        this.#associatedSkill = associatedSkill;
     }
 
     get primaryDamageType(): DamageType {
@@ -67,5 +73,17 @@ export default class Weapon extends Item {
 
     get damage(): DiceFormula {
         return this.#damage;
+    }
+
+    get secondaryDamage(): DiceFormula | null {
+        return this.#secondaryDamage;
+    }
+
+    set secondaryDamage(value: DiceFormula | null) {
+        this.#secondaryDamage = value;
+    }
+
+    get associatedSkill(): Skill | null {
+        return this.#associatedSkill;
     }
 }

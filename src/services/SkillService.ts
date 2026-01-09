@@ -1,3 +1,4 @@
+import type { SkillCategory } from '../types/skill-category.ts';
 import { SkillCategories } from '../types/skill-category.ts';
 import type { SkillName } from '../types/skill-name.ts';
 import { SkillNames } from '../types/skill-name.ts';
@@ -113,6 +114,7 @@ export default class SkillService {
         // using the nullish coalescing operator
         // return whatever’s in the map — unless it’s undefined,
         // then return null.
+        console.log(`find skill by skill name: ${skillName}`);
         return this.#nameDictionary.get(skillName.toLowerCase()) ?? null;
     }
 
@@ -126,6 +128,40 @@ export default class SkillService {
     getSkillsForRobotRole(role: RobotRole, level: number): Array<ActorSkill> {
         const actorSkills = new Array<ActorSkill>();
         const skillPackage: Map<string, number> = this.getSkillPackageForRobotRole(role);
+        for (const [key, value] of skillPackage) {
+            if (key === this.#RANGED_WEAPON_SKILLS_PLACEHOLDER) {
+                const rangedWeaponSkills = this.allRangedWeaponSkills;
+                rangedWeaponSkills.forEach((skill) => {
+                    const totalSkillBonus = level + value;
+                    const actorSkill = new ActorSkill(
+                        skill,
+                        0,
+                        20 - totalSkillBonus,
+                        totalSkillBonus
+                    );
+                    actorSkills.push(actorSkill);
+                });
+            } else {
+                const skill = this.getSkillByName(key);
+                if (skill) {
+                    const totalSkillBonus = level + value;
+                    const actorSkill = new ActorSkill(
+                        skill,
+                        0,
+                        20 - totalSkillBonus,
+                        totalSkillBonus
+                    );
+                    actorSkills.push(actorSkill);
+                }
+            }
+        }
+        return actorSkills;
+    }
+
+    getSkillsForBeastCategory(category: SkillCategory, level: number) {
+        const actorSkills = new Array<ActorSkill>();
+        const skillPackage: Map<string, number> =
+            this.getSkillPackageForBeastBySkillCategory(category);
         for (const [key, value] of skillPackage) {
             if (key === this.#RANGED_WEAPON_SKILLS_PLACEHOLDER) {
                 const rangedWeaponSkills = this.allRangedWeaponSkills;
@@ -214,6 +250,7 @@ export default class SkillService {
             case RobotRoles.Governance:
                 skillPackage = new Map<string, number>([
                     ['melee weapons', 0],
+                    [this.#RANGED_WEAPON_SKILLS_PLACEHOLDER, 1],
                     ['evasion', 4],
                     ['deflection', 1],
                     ['acrobatics', 1],
@@ -240,6 +277,57 @@ export default class SkillService {
                 ]);
                 break;
             default:
+                break;
+        }
+        return skillPackage;
+    }
+
+    private getSkillPackageForBeastBySkillCategory(role: SkillCategory): Map<string, number> {
+        let skillPackage: Map<string, number> = new Map<string, number>();
+        switch (role) {
+            case SkillCategories.Intellectual:
+                skillPackage = new Map<string, number>([
+                    ['melee weapons', 2],
+                    ['evasion', 3],
+                    ['deflection', 2],
+                    ['acrobatics', 2],
+                    ['athletics', 2],
+                    ['awareness', 3],
+                    ['stealth', 3],
+                ]);
+                break;
+            case SkillCategories.Martial:
+                skillPackage = new Map<string, number>([
+                    ['melee weapons', 6],
+                    ['evasion', 2],
+                    ['deflection', 3],
+                    ['acrobatics', 2],
+                    ['athletics', 6],
+                    ['awareness', 2],
+                    ['stealth', 2],
+                ]);
+                break;
+            case SkillCategories.Subtle:
+                skillPackage = new Map<string, number>([
+                    ['melee weapons', 3],
+                    ['evasion', 4],
+                    ['deflection', 2],
+                    ['acrobatics', 4],
+                    ['athletics', 2],
+                    ['awareness', 4],
+                    ['stealth', 4],
+                ]);
+                break;
+            case SkillCategories.Physical:
+                skillPackage = new Map<string, number>([
+                    ['melee weapons', 4],
+                    ['evasion', 2],
+                    ['deflection', 3],
+                    ['acrobatics', 2],
+                    ['athletics', 3],
+                    ['awareness', 2],
+                    ['stealth', 2],
+                ]);
                 break;
         }
         return skillPackage;
