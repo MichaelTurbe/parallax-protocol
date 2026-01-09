@@ -44,6 +44,7 @@
         "typescript-eslint": "^8.46.3"
     },
     "dependencies": {
+        "@angular/cli": "^21.0.5",
         "@clack/prompts": "^0.11.0",
         "commander": "^14.0.2",
         "picocolors": "^1.1.1",
