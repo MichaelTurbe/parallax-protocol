@@ -27,6 +27,7 @@ export default class Weapon extends Item {
         this.#primaryDamageType = primaryDamageType;
         this.#primarySubDamageType = primarySubDamageType;
         this.#hasSecondaryDamageType = false;
+        this.#secondaryDamage = null;
         this.#secondaryDamageType = null;
         this.#secondarySubDamageType = null;
         this.#damage = damage;

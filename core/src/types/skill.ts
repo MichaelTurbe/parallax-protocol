@@ -1,4 +1,4 @@
-import type { SkillCategory } from '../types/skill-category.js'; // type
+import type { SkillCategory } from './skill-category.js'; // type
 import type { SkillName } from './skill-name.ts';
 import type { Stat } from './stat.ts';
 
