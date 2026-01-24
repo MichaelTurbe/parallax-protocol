@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-epithet',
@@ -7,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './epithet.component.scss'
 })
 export class EpithetComponent {
+  nameControl = new FormControl('');
+  // nameSignal: Signal<any>;
 
 }
