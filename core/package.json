@@ -1,12 +1,21 @@
 {
-    "name": "parallax-protocol",
+    "name": "@parallax-protocol/core",
     "version": "1.0.0",
-    "description": "Utilities, simulators, and generators for the Parallax Protocol tabletop roleplaying game.",
-    "main": "index.js",
+    "private": true,
     "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "description": "Utilities, simulators, and generators for the Parallax Protocol tabletop roleplaying game.",
     "scripts": {
         "start": "ts-node src/index.ts",
-        "build": "tsc",
+        "build": "tsc -p tsconfig.build.json",
         "run": "node dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "lint": "eslint src --ext .ts",
