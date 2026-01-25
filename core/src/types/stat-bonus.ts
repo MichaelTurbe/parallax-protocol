@@ -1,4 +1,4 @@
-import type { Stat } from './stat.ts';
+import type { Stat } from './stat.js';
 
 export default class StatBonus {
   stat: Stat;

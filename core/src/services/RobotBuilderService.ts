@@ -1,13 +1,13 @@
-import Attack from '../types/attack.ts';
-import DamageReduction from '../types/damage-reduction.ts';
-import DiceFormula from '../types/dice-formula.ts';
-import type { DieType } from '../types/die-type.ts';
-import { DiceTypes } from '../types/die-type.ts';
-import { RobotRoles } from '../types/robot-role.ts';
-import Robot from '../types/robot.ts';
-import type RobotBuildParameters from '../types/robotBuildParameters.ts';
-import type SkillService from './SkillService.ts';
-import type WeaponsService from './WeaponsService.ts';
+import Attack from '../types/attack.js';
+import DamageReduction from '../types/damage-reduction.js';
+import DiceFormula from '../types/dice-formula.js';
+import type { DieType } from '../types/die-type.js';
+import { DiceTypes } from '../types/die-type.js';
+import { RobotRoles } from '../types/robot-role.js';
+import Robot from '../types/robot.js';
+import type RobotBuildParameters from '../types/robotBuildParameters.js';
+import type SkillService from './SkillService.js';
+import type WeaponsService from './WeaponsService.js';
 
 export default class RobotBuilderService {
     constructor(

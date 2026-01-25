@@ -1,5 +1,5 @@
-import type ActorSkill from './actor-skill.ts';
-import type Weapon from './weapon.ts';
+import type ActorSkill from './actor-skill.js';
+import type Weapon from './weapon.js';
 
 export default class Attack {
   weapon: Weapon;

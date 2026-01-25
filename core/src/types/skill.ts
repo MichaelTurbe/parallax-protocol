@@ -1,6 +1,6 @@
 import type { SkillCategory } from './skill-category.js';
-import type { SkillName } from './skill-name.ts';
-import type { Stat } from './stat.ts';
+import type { SkillName } from './skill-name.js';
+import type { Stat } from './stat.js';
 
 export default class Skill {
   name: SkillName;

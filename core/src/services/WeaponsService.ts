@@ -1,14 +1,14 @@
-import { DamageTypes } from '../types/damage-type.ts';
-import DiceFormula from '../types/dice-formula.ts';
-import { DiceTypes } from '../types/die-type.ts';
-import { EnergyDamageTypes } from '../types/energy-damage-type.ts';
-import { KineticDamageTypes } from '../types/kinetic-damage-types.ts';
-import MeleeWeapon from '../types/melee-weapon.ts';
-// import type MeleeWeapon from '../types/melee-weapon.ts';
-import RangedWeapon from '../types/ranged-weapon.ts';
-import { SkillNames } from '../types/skill-name.ts';
-import type Weapon from '../types/weapon.ts';
-import type SkillService from './SkillService.ts';
+import { DamageTypes } from '../types/damage-type.js';
+import DiceFormula from '../types/dice-formula.js';
+import { DiceTypes } from '../types/die-type.js';
+import { EnergyDamageTypes } from '../types/energy-damage-type.js';
+import { KineticDamageTypes } from '../types/kinetic-damage-types.js';
+import MeleeWeapon from '../types/melee-weapon.js';
+// import type MeleeWeapon from '../types/melee-weapon.js';
+import RangedWeapon from '../types/ranged-weapon.js';
+import { SkillNames } from '../types/skill-name.js';
+import type Weapon from '../types/weapon.js';
+import type SkillService from './SkillService.js';
 
 export default class WeaponsService {
     #skillService: SkillService;

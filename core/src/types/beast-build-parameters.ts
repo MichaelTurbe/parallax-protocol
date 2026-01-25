@@ -1,7 +1,7 @@
-import type { ActorSize } from './actor-size.ts';
-import type { DieType } from './die-type.ts';
-// import type { DieType } from './die-type.ts';
-import type { SkillCategory } from './skill-category.ts';
+import type { ActorSize } from './actor-size.js';
+import type { DieType } from './die-type.js';
+// import type { DieType } from './die-type.js';
+import type { SkillCategory } from './skill-category.js';
 
 export default class {
     constructor(

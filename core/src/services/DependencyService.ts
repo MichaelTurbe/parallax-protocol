@@ -1,7 +1,7 @@
-import BeastBuilderService from './BeastBuilderService.ts';
-import RobotBuilderService from './RobotBuilderService.ts';
-import SkillService from './SkillService.ts';
-import WeaponsService from './WeaponsService.ts';
+import BeastBuilderService from './BeastBuilderService.js';
+import RobotBuilderService from './RobotBuilderService.js';
+import SkillService from './SkillService.js';
+import WeaponsService from './WeaponsService.js';
 
 export default class DependencyService {
     #skillService: SkillService;

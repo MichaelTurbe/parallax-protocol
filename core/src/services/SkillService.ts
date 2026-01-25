@@ -1,12 +1,12 @@
-import type { SkillCategory } from '../types/skill-category.ts';
-import { SkillCategories } from '../types/skill-category.ts';
-import type { SkillName } from '../types/skill-name.ts';
-import { SkillNames } from '../types/skill-name.ts';
-import { Stats } from '../types/stat.ts';
-import Skill from '../types/skill.ts';
-import type { RobotRole } from '../types/robot-role.ts';
-import { RobotRoles } from '../types/robot-role.ts';
-import ActorSkill from '../types/actor-skill.ts';
+import type { SkillCategory } from '../types/skill-category.js';
+import { SkillCategories } from '../types/skill-category.js';
+import type { SkillName } from '../types/skill-name.js';
+import { SkillNames } from '../types/skill-name.js';
+import { Stats } from '../types/stat.js';
+import Skill from '../types/skill.js';
+import type { RobotRole } from '../types/robot-role.js';
+import { RobotRoles } from '../types/robot-role.js';
+import ActorSkill from '../types/actor-skill.js';
 
 export default class SkillService {
     #martialSkills: Array<Skill>;

@@ -1,5 +1,5 @@
-import type { DieType } from './die-type.ts';
-import type { RobotRole } from './robot-role.ts';
+import type { DieType } from './die-type.js';
+import type { RobotRole } from './robot-role.js';
 
 export default class RobotBuildParameters {
     constructor(

@@ -1,4 +1,4 @@
-import type { DieType } from './die-type.ts';
+import type { DieType } from './die-type.js';
 
 export default class DiceFormula {
   dieType: DieType;

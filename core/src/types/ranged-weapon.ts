@@ -1,9 +1,9 @@
-import type { DamageType } from './damage-type.ts';
-import type DiceFormula from './dice-formula.ts';
-import type { EnergyDamageType } from './energy-damage-type.ts';
-import type { KineticDamageType } from './kinetic-damage-types.ts';
-import type Skill from './skill.ts';
-import Weapon from './weapon.ts';
+import type { DamageType } from './damage-type.js';
+import type DiceFormula from './dice-formula.js';
+import type { EnergyDamageType } from './energy-damage-type.js';
+import type { KineticDamageType } from './kinetic-damage-types.js';
+import type Skill from './skill.js';
+import Weapon from './weapon.js';
 
 export default class RangedWeapon extends Weapon {
   automaticDamage: DiceFormula | null;

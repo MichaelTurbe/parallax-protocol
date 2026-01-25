@@ -1,4 +1,4 @@
-import type Skill from './skill.ts';
+import type Skill from './skill.js';
 
 export default class ActorSkill {
   skill: Skill;

@@ -1,2 +1,2 @@
-export * from './types/index.ts';
-export * from './services/index.ts';
+export * from './types/index.js';
+export * from './services/index.js';

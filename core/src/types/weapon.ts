@@ -1,9 +1,9 @@
-import type { DamageType } from './damage-type.ts';
-import type DiceFormula from './dice-formula.ts';
-import type { EnergyDamageType } from './energy-damage-type.ts';
-import Item from './item.ts';
-import type { KineticDamageType } from './kinetic-damage-types.ts';
-import type Skill from './skill.ts';
+import type { DamageType } from './damage-type.js';
+import type DiceFormula from './dice-formula.js';
+import type { EnergyDamageType } from './energy-damage-type.js';
+import Item from './item.js';
+import type { KineticDamageType } from './kinetic-damage-types.js';
+import type Skill from './skill.js';
 
 export default class Weapon extends Item {
   primaryDamageType: DamageType;

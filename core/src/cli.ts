@@ -12,26 +12,26 @@ import {
     cancel,
     confirm,
 } from '@clack/prompts';
-import DependencyService from './services/DependencyService.ts';
-import BeastBuilderService from './services/BeastBuilderService.ts';
-import BeastBuildParameters from './types/beast-build-parameters.ts';
-import { BuilderTypes, type BuilderType } from './types/builder-type.ts';
-import type { SkillCategory } from './types/skill-category.ts';
-import { SkillCategories } from './types/skill-category.ts';
-import { DiceTypes, type DieType } from './types/die-type.ts';
-import type DiceFormula from './types/dice-formula.ts';
-import type { ActorSize } from './types/actor-size.ts';
-import { ActorSizes } from './types/actor-size.ts';
-import Attack from './types/attack.ts';
-import type { WeaponType } from './types/weapon-type.ts';
-import { WeaponTypes } from './types/weapon-type.ts';
-import WeaponsService from './services/WeaponsService.ts';
-import type Weapon from './types/weapon.ts';
-import type { RobotRole } from './types/robot-role.ts';
-import { RobotRoles } from './types/robot-role.ts';
-import RobotBuilderService from './services/RobotBuilderService.ts';
-import RobotBuildParameters from './types/robotBuildParameters.ts';
-import FoundryActorService from './services/FoundryActorService.ts';
+import DependencyService from './services/DependencyService.js';
+import BeastBuilderService from './services/BeastBuilderService.js';
+import BeastBuildParameters from './types/beast-build-parameters.js';
+import { BuilderTypes, type BuilderType } from './types/builder-type.js';
+import type { SkillCategory } from './types/skill-category.js';
+import { SkillCategories } from './types/skill-category.js';
+import { DiceTypes, type DieType } from './types/die-type.js';
+import type DiceFormula from './types/dice-formula.js';
+import type { ActorSize } from './types/actor-size.js';
+import { ActorSizes } from './types/actor-size.js';
+import Attack from './types/attack.js';
+import type { WeaponType } from './types/weapon-type.js';
+import { WeaponTypes } from './types/weapon-type.js';
+import WeaponsService from './services/WeaponsService.js';
+import type Weapon from './types/weapon.js';
+import type { RobotRole } from './types/robot-role.js';
+import { RobotRoles } from './types/robot-role.js';
+import RobotBuilderService from './services/RobotBuilderService.js';
+import RobotBuildParameters from './types/robotBuildParameters.js';
+import FoundryActorService from './services/FoundryActorService.js';
 const dependencyService: DependencyService = new DependencyService();
 const beastBuilderService: BeastBuilderService = new BeastBuilderService(
     dependencyService.skillService,

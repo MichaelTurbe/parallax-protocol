@@ -1,5 +1,5 @@
-import type { DieType } from '../types/die-type.ts';
-import { DiceTypes } from '../types/die-type.ts';
+import type { DieType } from '../types/die-type.js';
+import { DiceTypes } from '../types/die-type.js';
 
 export default class DiceFormulaService {
     convertNumberToDiceType(value: number): DieType {

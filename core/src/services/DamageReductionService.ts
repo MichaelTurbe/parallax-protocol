@@ -1,4 +1,4 @@
-import DamageReduction from '../types/damage-reduction.ts';
+import DamageReduction from '../types/damage-reduction.js';
 
 export default class DamageReductionService {
     getBlankDamageReductionInstance() {

@@ -1,9 +1,9 @@
-import type { ActorSize } from './actor-size.ts';
-import type ActorSkill from './actor-skill.ts';
-import type Attack from './attack.ts';
-import DamageReduction from './damage-reduction.ts';
-import type DiceFormula from './dice-formula.ts';
-import type StatBonus from './stat-bonus.ts';
+import type { ActorSize } from './actor-size.js';
+import type ActorSkill from './actor-skill.js';
+import type Attack from './attack.js';
+import DamageReduction from './damage-reduction.js';
+import type DiceFormula from './dice-formula.js';
+import type StatBonus from './stat-bonus.js';
 import pc from 'picocolors';
 
 export default class Actor {

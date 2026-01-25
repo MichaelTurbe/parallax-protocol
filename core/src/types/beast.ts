@@ -1,6 +1,6 @@
-import Actor from './actor.ts';
+import Actor from './actor.js';
 import pc from 'picocolors';
-import { SkillCategories } from './skill-category.ts';
+import { SkillCategories } from './skill-category.js';
 
 export default class Beast extends Actor {
   singleSavingThrowTarget: number;

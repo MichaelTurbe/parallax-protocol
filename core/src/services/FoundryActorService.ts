@@ -1,8 +1,8 @@
-import type Actor from '../types/actor.ts';
-import type Attack from '../types/attack.ts';
-import type { SkillName } from '../types/skill-name.ts';
-import { SkillNames } from '../types/skill-name.ts';
-import Skill from '../types/skill.ts';
+import type Actor from '../types/actor.js';
+import type Attack from '../types/attack.js';
+import type { SkillName } from '../types/skill-name.js';
+import { SkillNames } from '../types/skill-name.js';
+import Skill from '../types/skill.js';
 import { writeFile } from 'node:fs/promises';
 
 export default class FoundryActorService {
