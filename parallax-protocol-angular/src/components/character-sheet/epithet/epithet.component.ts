@@ -1,10 +1,11 @@
 import { Component, Signal } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {form, FormField, required, email} from '@angular/forms/signals';
 
 
 @Component({
   selector: 'app-epithet',
-  imports: [],
+  imports: [FormField],
   templateUrl: './epithet.component.html',
   styleUrl: './epithet.component.scss'
 })

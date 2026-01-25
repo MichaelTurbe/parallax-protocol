@@ -6,85 +6,54 @@ import type { KineticDamageType } from './kinetic-damage-types.ts';
 import type Skill from './skill.ts';
 
 export default class Weapon extends Item {
-    #primaryDamageType: DamageType;
-    #primarySubDamageType: KineticDamageType | EnergyDamageType;
-    #hasSecondaryDamageType: boolean;
-    #secondarySubDamageType: KineticDamageType | EnergyDamageType | null;
-    #secondaryDamageType: DamageType | null;
-    #damage: DiceFormula;
-    #secondaryDamage: DiceFormula | null;
-    #associatedSkill: Skill | null;
-    constructor(
-        name: string,
-        primaryDamageType: DamageType,
-        primarySubDamageType: KineticDamageType | EnergyDamageType,
-        damage: DiceFormula,
-        bulk: number = 0,
-        price: number = 0,
-        associatedSkill: Skill | null
-    ) {
-        super(name, bulk, price);
-        this.#primaryDamageType = primaryDamageType;
-        this.#primarySubDamageType = primarySubDamageType;
-        this.#hasSecondaryDamageType = false;
-        this.#secondaryDamage = null;
-        this.#secondaryDamageType = null;
-        this.#secondarySubDamageType = null;
-        this.#damage = damage;
-        this.#secondaryDamageType = null;
-        this.#associatedSkill = associatedSkill;
-    }
+  primaryDamageType: DamageType;
+  primarySubDamageType: KineticDamageType | EnergyDamageType;
 
-    get primaryDamageType(): DamageType {
-        return this.#primaryDamageType;
-    }
+  // If you want “hasSecondaryDamageType” as a *derived truth*,
+  // you can omit this property and compute it from secondaryDamageType !== null.
+  // But I'm keeping it because your original class stored it explicitly.
+  hasSecondaryDamageType: boolean;
 
-    set primaryDamageType(value: DamageType) {
-        this.#primaryDamageType = value;
-    }
+  secondaryDamageType: DamageType | null;
+  secondarySubDamageType: KineticDamageType | EnergyDamageType | null;
 
-    get primarySubDamageType(): KineticDamageType | EnergyDamageType {
-        return this.#primarySubDamageType;
-    }
+  damage: DiceFormula;
+  secondaryDamage: DiceFormula | null;
 
-    set primarySubDamageType(value: KineticDamageType | EnergyDamageType) {
-        this.#primarySubDamageType = value;
-    }
+  associatedSkill: Skill | null;
 
-    get secondaryDamageType(): DamageType | null {
-        return this.#secondaryDamageType;
-    }
+  constructor(
+    name: string,
+    primaryDamageType: DamageType,
+    primarySubDamageType: KineticDamageType | EnergyDamageType,
+    damage: DiceFormula,
+    bulk: number = 0,
+    price: number = 0,
+    associatedSkill: Skill | null
+  ) {
+    super(name, bulk, price);
 
-    set secondaryDamageType(value: DamageType) {
-        this.#hasSecondaryDamageType = true;
-        this.#secondaryDamageType = value;
-    }
+    this.primaryDamageType = primaryDamageType;
+    this.primarySubDamageType = primarySubDamageType;
 
-    set secondarySubDamageType(value: KineticDamageType | EnergyDamageType | null) {
-        this.#secondarySubDamageType = value;
-    }
+    this.damage = damage;
 
-    get secondarySubDamageType(): KineticDamageType | EnergyDamageType | null {
-        return this.#secondarySubDamageType;
-    }
+    this.secondaryDamage = null;
+    this.secondaryDamageType = null;
+    this.secondarySubDamageType = null;
 
-    get hasSecondaryDamageType(): boolean {
-        return this.#hasSecondaryDamageType;
-    }
+    this.hasSecondaryDamageType = false;
 
-    get damage(): DiceFormula {
-        return this.#damage;
-    }
+    this.associatedSkill = associatedSkill;
+  }
 
-    get secondaryDamage(): DiceFormula | null {
-        return this.#secondaryDamage;
-    }
-
-    set secondaryDamage(value: DiceFormula | null) {
-        this.#secondaryDamage = value;
-    }
-
-    get associatedSkill(): Skill | null {
-        return this.#associatedSkill;
-    }
+  /**
+   * Optional helper to preserve your old setter semantics:
+   * setting a secondary damage type also flips the flag.
+   * (Not required, but it keeps call sites clean.)
+   */
+  setSecondaryDamageType(value: DamageType | null): void {
+    this.secondaryDamageType = value;
+    this.hasSecondaryDamageType = value !== null;
+  }
 }

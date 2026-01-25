@@ -1,23 +1,15 @@
 export default class Item {
-    #bulk?: number;
-    #price?: number;
-    #name: string;
+  name: string;
+  bulk: number;
+  price: number;
 
-    constructor(name: string, bulk: number = 0, price: number = 0) {
-        this.#bulk = bulk;
-        this.#price = price;
-        this.#name = name;
-    }
-
-    get bulk(): number {
-        return this.#bulk ?? 0;
-    }
-
-    get price(): number {
-        return this.#price || 0;
-    }
-
-    get name(): string {
-        return this.#name;
-    }
+  constructor(
+    name: string,
+    bulk: number = 0,
+    price: number = 0
+  ) {
+    this.name = name;
+    this.bulk = bulk;
+    this.price = price;
+  }
 }
