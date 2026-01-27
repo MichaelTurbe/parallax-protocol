@@ -1,3 +1,17 @@
+This project is a "monorepo". To get it to run and build both the Typescript and Angular project, you need to open it in two terminals:
+
+In the core folder, run:
+
+```bash
+npm run build:watch
+```
+
+In the angular folder, run:
+
+```bash
+ng serve
+```
+
 # ParallaxProtocolAngular
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.17.
