@@ -1,0 +1,91 @@
+<div class="parallax-item-sheet">
+    <div class="identity-grid">
+        <div class="field-span-2">
+            <label>Name</label>
+            <input type="text" name="name" value="{{item.name}}" />
+        </div>
+    </div>
+
+    {{#if isWeapon}}
+    <div class="two-col top-gap">
+        <label>Classification
+            <select name="system.classification">
+                {{selectOptions weaponClassifications selected=system.classification}}
+            </select>
+        </label>
+        <label>Linked Skill
+            <select name="system.linkedSkill">
+                {{selectOptions skillOptions selected=system.linkedSkill}}
+            </select>
+        </label>
+        <label>Attack Mode
+            <select name="system.attackBonusMode">
+                {{selectOptions attackModeOptions selected=system.attackBonusMode}}
+            </select>
+        </label>
+        <label>Manual Attack Bonus <input type="number" name="system.manualAttackBonus" value="{{system.manualAttackBonus}}" /></label>
+        <label>Single Damage <input type="text" name="system.damageSingle" value="{{system.damageSingle}}" /></label>
+        <label>Automatic Damage <input type="text" name="system.damageAutomatic" value="{{system.damageAutomatic}}" /></label>
+        <label>Damage Type
+            <select name="system.damageType">
+                {{selectOptions damageTypes selected=system.damageType}}
+            </select>
+        </label>
+        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Short Range <input type="number" name="system.rangeShort" value="{{system.rangeShort}}" /></label>
+        <label>Long Range <input type="number" name="system.rangeLong" value="{{system.rangeLong}}" /></label>
+        <label>Max Range <input type="number" name="system.rangeMax" value="{{system.rangeMax}}" /></label>
+    </div>
+    {{/if}}
+
+    {{#if isArmor}}
+    <div class="two-col top-gap">
+        <label>DEX Penalty <input type="number" name="system.dexPenalty" value="{{system.dexPenalty}}" /></label>
+        <label>Speed Penalty <input type="number" name="system.speedPenalty" value="{{system.speedPenalty}}" /></label>
+        <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
+        <label>Energy DR <input type="number" name="system.energyDr" value="{{system.energyDr}}" /></label>
+    </div>
+    {{/if}}
+
+    {{#if isField}}
+    <div class="two-col top-gap">
+        <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
+        <label>Energy DR <input type="number" name="system.energyDr" value="{{system.energyDr}}" /></label>
+    </div>
+    {{/if}}
+
+    {{#if isGear}}
+    <div class="two-col top-gap">
+        <label>Category
+            <select name="system.category">
+                {{selectOptions gearCategories selected=system.category}}
+            </select>
+        </label>
+        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label class="checkbox-line"><input type="checkbox" name="system.inPack" {{checked system.inPack}} /> In Pack</label>
+    </div>
+    {{/if}}
+
+    {{#if isSpeciesTrait}}
+    <div class="two-col top-gap">
+        <label>Hereditary Kinetic DR <input type="number" name="system.hereditaryArmorKinetic" value="{{system.hereditaryArmorKinetic}}" /></label>
+        <label>Hereditary Energy DR <input type="number" name="system.hereditaryArmorEnergy" value="{{system.hereditaryArmorEnergy}}" /></label>
+    </div>
+    <table class="top-gap">
+        <thead><tr><th>Save</th><th>Bonus</th></tr></thead>
+        <tbody>
+            <tr><td>Allergy</td><td><input type="number" name="system.saveBonuses.allergy" value="{{system.saveBonuses.allergy}}" /></td></tr>
+            <tr><td>Disease</td><td><input type="number" name="system.saveBonuses.disease" value="{{system.saveBonuses.disease}}" /></td></tr>
+            <tr><td>Gas</td><td><input type="number" name="system.saveBonuses.gas" value="{{system.saveBonuses.gas}}" /></td></tr>
+            <tr><td>Poison</td><td><input type="number" name="system.saveBonuses.poison" value="{{system.saveBonuses.poison}}" /></td></tr>
+            <tr><td>Radiation</td><td><input type="number" name="system.saveBonuses.radiation" value="{{system.saveBonuses.radiation}}" /></td></tr>
+            <tr><td>Stun</td><td><input type="number" name="system.saveBonuses.stun" value="{{system.saveBonuses.stun}}" /></td></tr>
+        </tbody>
+    </table>
+    {{/if}}
+
+    <section class="card top-gap">
+        <h3>Notes</h3>
+        <textarea name="system.notes">{{system.notes}}</textarea>
+    </section>
+</div>

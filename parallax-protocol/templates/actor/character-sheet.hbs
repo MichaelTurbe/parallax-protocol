@@ -1,0 +1,315 @@
+<div class="parallax-sheet">
+    <header class="sheet-header">
+        <div class="header-main">
+            <div class="identity-grid">
+                <div class="field-span-2">
+                    <label>Name</label>
+                    <input type="text" name="name" value="{{actor.name}}" />
+                </div>
+                <div>
+                    <label>Species</label>
+                    <input type="text" name="system.identity.species" value="{{system.identity.species}}" />
+                </div>
+                <div>
+                    <label>Homeworld</label>
+                    <input type="text" name="system.identity.homeworld" value="{{system.identity.homeworld}}" />
+                </div>
+                <div>
+                    <label>Level</label>
+                    <input type="number" name="system.identity.level" value="{{system.identity.level}}" />
+                </div>
+                <div>
+                    <label>Hit Die</label>
+                    <input type="number" name="system.identity.hitDie" value="{{system.identity.hitDie}}" />
+                </div>
+                <div>
+                    <label>Max HP</label>
+                    <input type="number" name="system.hp.max" value="{{system.hp.max}}" />
+                </div>
+                <div>
+                    <label>Current HP</label>
+                    <input type="number" name="system.hp.value" value="{{system.hp.value}}" />
+                </div>
+            </div>
+        </div>
+        <nav class="sheet-tabs">
+            <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-action="tab" data-tab-id="overview">Overview</button>
+            <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-action="tab" data-tab-id="skills">Skills & Saves</button>
+            <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-action="tab" data-tab-id="items">Items</button>
+        </nav>
+    </header>
+
+    <section class="sheet-body">
+        <div class="tab-panel {{#unless (eq activeTab 'overview')}}hidden{{/unless}}">
+            <div class="three-col">
+                <section class="card">
+                    <h3>Stats</h3>
+                    <div class="stat-grid">
+                        <label>STR <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
+                        <label>DEX <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
+                        <label>CON <input type="number" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
+                        <label>INT <input type="number" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
+                        <label>WIS <input type="number" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>
+                        <label>CHA <input type="number" name="system.stats.cha.value" value="{{system.stats.cha.value}}" /></label>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h3>Movement & Load</h3>
+                    <div class="summary-grid">
+                        <label>Base Speed <input type="number" name="system.movement.base" value="{{system.movement.base}}" /></label>
+                        <label>Armor Penalty <input type="number" name="system.movement.armorPenalty" value="{{system.movement.armorPenalty}}" /></label>
+                        <label>With Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithPack" value="{{system.movement.burdenedPenaltyWithPack}}" /></label>
+                        <label>Without Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithoutPack" value="{{system.movement.burdenedPenaltyWithoutPack}}" /></label>
+                        <div>Load Rating <strong>{{system.load.rating}}</strong></div>
+                        <div>Total Bulk With Pack <strong>{{system.load.totalBulkWithPack}}</strong></div>
+                        <div>Total Bulk Without Pack <strong>{{system.load.totalBulkWithoutPack}}</strong></div>
+                        <div>Speed With Pack <strong>{{system.movement.totalWithPack}}</strong></div>
+                        <div>Speed Without Pack <strong>{{system.movement.totalWithoutPack}}</strong></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h3>Combat Summary</h3>
+                    <div class="summary-grid compact">
+                        <div>Awareness Bonus <strong>{{system.combat.awareness.totalBonus}}</strong></div>
+                        <div>Deflection Bonus <strong>{{system.combat.deflection.totalBonus}}</strong></div>
+                        <div>Evasion Bonus <strong>{{system.combat.evasion.totalBonus}}</strong></div>
+                        <div>Initiative Bonus <strong>{{system.combat.initiativeBonus}}</strong></div>
+                        <button type="button" data-action="rollInitiative">Roll Initiative</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="two-col wide-gap">
+                <section class="card">
+                    <h3>Damage Reduction</h3>
+                    <table>
+                        <thead>
+                            <tr><th></th><th>Kinetic</th><th>Energy</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Body</td>
+                                <td><input type="number" name="system.armorSummary.body.kinetic" value="{{system.armorSummary.body.kinetic}}" /></td>
+                                <td><input type="number" name="system.armorSummary.body.energy" value="{{system.armorSummary.body.energy}}" /></td>
+                            </tr>
+                            <tr><td>Armor</td><td>{{system.armorSummary.armor.kinetic}}</td><td>{{system.armorSummary.armor.energy}}</td></tr>
+                            <tr><td>Field</td><td>{{system.armorSummary.field.kinetic}}</td><td>{{system.armorSummary.field.energy}}</td></tr>
+                            <tr class="total-row"><td>Total</td><td>{{system.armorSummary.total.kinetic}}</td><td>{{system.armorSummary.total.energy}}</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="card">
+                    <h3>Weapons</h3>
+                    <div class="inline-actions">
+                        <button type="button" data-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee Weapon</button>
+                        <button type="button" data-action="createItem" data-item-type="weapon" data-classification="smallArms">+ Ranged Weapon</button>
+                    </div>
+                    <h4>Melee</h4>
+                    <table>
+                        <thead><tr><th>Name</th><th>Atk</th><th>Dmg</th><th>Type</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each meleeWeapons}}
+                            <tr>
+                                <td>{{name}}</td>
+                                <td>{{attackBonus}}</td>
+                                <td>{{system.damageSingle}}</td>
+                                <td>{{system.damageType}}</td>
+                                <td class="row-actions">
+                                    <button type="button" data-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                    <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                    <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    <h4>Ranged</h4>
+                    <table>
+                        <thead><tr><th>Name</th><th>Atk</th><th>Single</th><th>Auto</th><th>Rng</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each rangedWeapons}}
+                            <tr>
+                                <td>{{name}}</td>
+                                <td>{{attackBonus}}</td>
+                                <td>{{system.damageSingle}}</td>
+                                <td>{{system.damageAutomatic}}</td>
+                                <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
+                                <td class="row-actions">
+                                    <button type="button" data-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                    <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                    <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+        <div class="tab-panel {{#unless (eq activeTab 'skills')}}hidden{{/unless}}">
+            <div class="two-col">
+                <section class="card">
+                    <h3>Skill Focus Priorities</h3>
+                    <div class="priority-grid">
+                        <label>First
+                            <select name="system.priorities.first">
+                                {{selectOptions priorities selected=system.priorities.first}}
+                            </select>
+                        </label>
+                        <label>Second
+                            <select name="system.priorities.second">
+                                {{selectOptions priorities selected=system.priorities.second}}
+                            </select>
+                        </label>
+                        <label>Third
+                            <select name="system.priorities.third">
+                                {{selectOptions priorities selected=system.priorities.third}}
+                            </select>
+                        </label>
+                        <label>Fourth
+                            <select name="system.priorities.fourth">
+                                {{selectOptions priorities selected=system.priorities.fourth}}
+                            </select>
+                        </label>
+                    </div>
+                    <div class="summary-grid compact top-gap">
+                        <div>Martial <strong>{{system.trainedSkillBonuses.martial}}</strong></div>
+                        <div>Intellectual <strong>{{system.trainedSkillBonuses.intellectual}}</strong></div>
+                        <div>Physical <strong>{{system.trainedSkillBonuses.physical}}</strong></div>
+                        <div>Subtle <strong>{{system.trainedSkillBonuses.subtle}}</strong></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h3>Saving Throws</h3>
+                    <table>
+                        <thead><tr><th>Save</th><th>Her.</th><th>Item</th><th>Target</th><th></th></tr></thead>
+                        <tbody>
+                            {{#each system.saves as |save key|}}
+                            <tr>
+                                <td>{{save.label}}</td>
+                                <td><input type="number" name="system.saves.{{key}}.hereditaryBonus" value="{{save.hereditaryBonus}}" /></td>
+                                <td><input type="number" name="system.saves.{{key}}.itemBonus" value="{{save.itemBonus}}" /></td>
+                                <td>{{save.target}}</td>
+                                <td class="row-actions">
+                                    <button type="button" data-action="rollSave" data-save-key="{{key}}">Roll</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+            {{#each skillsByCategory as |skills categoryKey|}}
+            <section class="card top-gap">
+                <h3>{{lookup ../skillCategories categoryKey}} Skills</h3>
+                <table>
+                    <thead>
+                        <tr><th>Skill</th><th>Stat</th><th>Trained</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        {{#each skills}}
+                        <tr>
+                            <td>{{label}}</td>
+                            <td>{{statLabel}}</td>
+                            <td><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
+                            <td><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
+                            <td>{{totalBonus}}</td>
+                            <td>{{target}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-action="rollSkillCheck" data-skill-key="{{key}}">Check</button>
+                                <button type="button" data-action="rollSkillContest" data-skill-key="{{key}}">Contest</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
+            {{/each}}
+        </div>
+
+        <div class="tab-panel {{#unless (eq activeTab 'items')}}hidden{{/unless}}">
+            <div class="three-col">
+                <section class="card">
+                    <h3>Armor</h3>
+                    <div class="inline-actions"><button type="button" data-action="createItem" data-item-type="armor">+ Armor</button></div>
+                    <ul class="item-list">
+                        {{#each armorItems}}
+                        <li>
+                            <span>{{name}}</span>
+                            <span class="row-actions">
+                                <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </span>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </section>
+
+                <section class="card">
+                    <h3>Fields</h3>
+                    <div class="inline-actions"><button type="button" data-action="createItem" data-item-type="field">+ Field</button></div>
+                    <ul class="item-list">
+                        {{#each fieldItems}}
+                        <li>
+                            <span>{{name}}</span>
+                            <span class="row-actions">
+                                <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </span>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </section>
+
+                <section class="card">
+                    <h3>Species Traits</h3>
+                    <div class="inline-actions"><button type="button" data-action="createItem" data-item-type="speciesTrait">+ Trait</button></div>
+                    <ul class="item-list">
+                        {{#each speciesTraits}}
+                        <li>
+                            <span>{{name}}</span>
+                            <span class="row-actions">
+                                <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </span>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </section>
+            </div>
+
+            <section class="card top-gap">
+                <h3>Gear</h3>
+                <div class="inline-actions"><button type="button" data-action="createItem" data-item-type="gear">+ Gear</button></div>
+                <table>
+                    <thead><tr><th>Name</th><th>Type</th><th>Bulk</th><th>Pack?</th><th></th></tr></thead>
+                    <tbody>
+                        {{#each gear}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{system.category}}</td>
+                            <td>{{system.bulk}}</td>
+                            <td>{{#if system.inPack}}Yes{{else}}No{{/if}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card top-gap">
+                <h3>Notes</h3>
+                <textarea name="system.notes">{{system.notes}}</textarea>
+            </section>
+        </div>
+    </section>
+</div>
