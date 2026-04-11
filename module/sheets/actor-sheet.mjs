@@ -11,18 +11,18 @@ const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api
 
 export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     _rollMode = "normal";
+    _pendingScrollTop = null;
 
     static DEFAULT_OPTIONS = foundry.utils.mergeObject(super.DEFAULT_OPTIONS, {
-        id: "parallax-character-sheet",
         classes: ["parallax", "sheet", "actor", "character-sheet"],
         tag: "form",
         window: {
             title: "Parallax Protocol Character",
-            resizable: true,
+            resizable: false,
         },
         position: {
-            width: 980,
-            height: 820,
+            width: 1280,
+            height: 860,
         },
         form: {
             submitOnChange: false,
@@ -42,6 +42,26 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
 
     get title() {
         return `${this.document.name} — Parallax Protocol`;
+    }
+
+    _getSheetBody() {
+        return this.element?.querySelector?.(".sheet-body") ?? null;
+    }
+
+    _captureScrollTop() {
+        const body = this._getSheetBody();
+        this._pendingScrollTop = body ? body.scrollTop : null;
+    }
+
+    async _onRender(context, options) {
+        await super._onRender(context, options);
+
+        if (Number.isFinite(this._pendingScrollTop)) {
+            const body = this._getSheetBody();
+            if (body) body.scrollTop = this._pendingScrollTop;
+        }
+
+        this._pendingScrollTop = null;
     }
 
     async _prepareContext(options) {
@@ -101,6 +121,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             ...context,
             actor,
             system,
+            actorImage: actor.img || "icons/svg/mystery-man.svg",
             editable: this.isEditable,
             activeTab: this.tabGroups?.primary ?? "overview",
             rollMode: this._rollMode ?? "normal",
@@ -135,6 +156,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
     }
 
     async _onChangeInput(event) {
+        this._captureScrollTop();
+
         const element = event.currentTarget;
         if (!element?.name) return;
 
@@ -174,6 +197,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
     }
 
     async _consumeRollMode(callback) {
+        this._captureScrollTop();
+
         const mode = this._rollMode ?? "normal";
         await callback(mode);
         this._rollMode = "normal";
@@ -188,13 +213,33 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         const actor = this.document;
 
         if (action === "tab") {
+            this._captureScrollTop();
             this.tabGroups.primary = target.dataset.tabId ?? "overview";
             return this.render();
         }
 
         if (action === "setRollMode") {
+            this._captureScrollTop();
             this._rollMode = target.dataset.rollMode ?? "normal";
             return this.render();
+        }
+
+        if (action === "choosePortrait") {
+            const picker = new foundry.applications.apps.FilePicker({
+                type: "image",
+                current: this.document.img || "",
+                callback: async (path) => {
+                    this._captureScrollTop();
+                    await this.document.update({ img: path });
+                },
+            });
+
+            return picker.browse(this.document.img || "");
+        }
+
+        if (action === "clearPortrait") {
+            this._captureScrollTop();
+            return this.document.update({ img: "icons/svg/mystery-man.svg" });
         }
 
         if (action === "createItem") {
@@ -230,7 +275,16 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
 
         if (action === "editItem") {
             const item = actor.items.get(target.dataset.itemId);
-            if (item?.sheet) item.sheet.render(true);
+            if (!item?.sheet) return;
+
+            item.sheet._parentSheet = this;
+            await item.sheet.render(true);
+
+            const actorPosition = this.position ?? {};
+            item.sheet.setPosition?.({
+                left: Number(actorPosition.left ?? 120) + 40,
+                top: Number(actorPosition.top ?? 80) + 40,
+            });
             return;
         }
 
@@ -247,7 +301,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         }
 
         if (action === "rollInitiative") {
-            return this._consumeRollMode(() => rollInitiative(actor));
+            return this._consumeRollMode((mode) => rollInitiative(actor, false, mode));
         }
 
         if (action === "rollWeaponAttack") {

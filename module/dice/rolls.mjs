@@ -7,17 +7,68 @@ function modeLabel(mode = "normal") {
     return mode.charAt(0).toUpperCase() + mode.slice(1);
 }
 
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+}
+
+function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill) {
+    const actorUuid = escapeHtml(actor.uuid);
+    const weaponId = escapeHtml(weapon.id);
+    const weaponName = escapeHtml(weapon.name);
+    const skillLabel = escapeHtml(linkedSkill?.label ?? weapon.system.linkedSkill ?? "Weapon Skill");
+    const classification = weapon.system.classification;
+
+    const guidance = classification === "melee"
+        ? "Opposed by Evasion or Deflection. Unaware targets are hit automatically."
+        : "Opposed by Evasion if the target is aware. Unaware targets are attacked as a skill check with advantage.";
+
+    const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
+
+    if (String(weapon.system.damageAutomatic ?? "").trim()) {
+        damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
+    }
+
+    return `
+        <div class="parallax-chat-card">
+            <div><strong>${weaponName} Attack</strong></div>
+            <div>${skillLabel} • ${modeLabel(mode)} • Attack Bonus ${attackBonus}</div>
+            <div class="parallax-chat-note">${escapeHtml(guidance)}</div>
+            <div class="parallax-chat-actions">${damageButtons.join(" ")}</div>
+        </div>
+    `;
+}
+
+function buildDamageFlavor(weapon, damageMode, formula, damageType, strBonusApplied) {
+    const label = damageMode === "automatic" ? "Auto Damage" : "Damage";
+    const suffix = strBonusApplied ? ` + STR` : "";
+
+    return `
+        <div class="parallax-chat-card">
+            <div><strong>${escapeHtml(weapon.name)} ${label}</strong></div>
+            <div>${escapeHtml(formula)}${suffix} • ${escapeHtml(damageType)}</div>
+        </div>
+    `;
+}
+
 export async function rollSkillCheck(actor, skillKey, mode = "normal") {
     const skill = actor.system.skills[skillKey];
     if (!skill) return;
 
+    const target = Number(skill.target ?? 20);
+    const label = skill.label ?? skillKey;
+
     const roll = await new Roll(resolveRollFormula(mode)).evaluate();
     const total = roll.total;
-    const success = total >= skill.target;
+    const success = total >= target;
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${skill.label} Check (${modeLabel(mode)}) — target ${skill.target} — ${success ? "Success" : "Failure"}`,
+        flavor: `${label} Check (${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
     });
 }
 
@@ -25,36 +76,48 @@ export async function rollSkillContest(actor, skillKey, mode = "normal") {
     const skill = actor.system.skills[skillKey];
     if (!skill) return;
 
-    const roll = await new Roll(resolveRollFormula(mode, true), { bonus: skill.totalBonus }).evaluate();
+    const bonus = Number(skill.totalBonus ?? skill.bonus ?? 0);
+    const label = skill.label ?? skillKey;
+
+    const roll = await new Roll(resolveRollFormula(mode, true), { bonus }).evaluate();
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${skill.label} Contest (${modeLabel(mode)}) — total bonus ${skill.totalBonus}`,
+        flavor: `${label} Contest (${modeLabel(mode)}) — total bonus ${bonus}`,
     });
 }
 
 export async function rollSave(actor, saveKey, mode = "normal") {
-    const save = actor.system.saves[saveKey];
+    const save = actor?.system?.saves?.[saveKey];
     if (!save) return;
 
     const roll = await new Roll(resolveRollFormula(mode)).evaluate();
     const total = roll.total;
     const success = total >= save.target;
+    const speaker = actor instanceof Actor ? ChatMessage.getSpeaker({ actor }) : ChatMessage.getSpeaker();
+    const actorPrefix = actor?.name ? `${actor.name} — ` : "";
 
     await roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${save.label} Save (${modeLabel(mode)}) — target ${save.target} — ${success ? "Success" : "Failure"}`,
+        speaker,
+        flavor: `${actorPrefix}${save.label} Save (${modeLabel(mode)}) — target ${save.target} — ${success ? "Success" : "Failure"}`,
     });
 }
 
-export async function rollInitiative(actor) {
-    const roll = await new Roll("1d20 + @bonus", {
-        bonus: actor.system.combat.initiativeBonus,
-    }).evaluate();
+export async function rollInitiative(actor, isStatblock = false, mode = "normal") {
+    const awareness = isStatblock
+        ? actor.system.skills?.awareness
+        : actor.system.skills?.awareness;
+
+    const target = Number(awareness?.target ?? 20);
+    const bonus = Number(awareness?.totalBonus ?? awareness?.bonus ?? actor.system.combat?.initiativeBonus ?? actor.system.defenses?.initiativeBonus ?? 0);
+
+    const roll = await new Roll(resolveRollFormula(mode)).evaluate();
+    const total = roll.total;
+    const success = total >= target;
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `Initiative — awareness bonus ${actor.system.combat.initiativeBonus}`,
+        flavor: `Initiative / Awareness Check (${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
     });
 }
 
@@ -68,6 +131,31 @@ export async function rollWeaponAttack(actor, weapon, mode = "normal") {
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${weapon.name} Attack (${modeLabel(mode)}) — bonus ${attackBonus}`,
+        flavor: buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill),
+    });
+}
+
+export async function rollWeaponDamage(actor, weapon, damageMode = "single") {
+    const mode = damageMode === "automatic" ? "automatic" : "single";
+    const baseFormula = mode === "automatic"
+        ? String(weapon.system.damageAutomatic ?? "").trim()
+        : String(weapon.system.damageSingle ?? "").trim();
+
+    if (!baseFormula) {
+        ui.notifications?.warn(`No ${mode === "automatic" ? "automatic " : ""}damage formula is set for ${weapon.name}.`);
+        return;
+    }
+
+    const isMelee = weapon.system.classification === "melee";
+    const strBonus = Number(actor.system.stats?.str?.value ?? 0);
+    const strBonusApplied = isMelee && mode === "single" && strBonus !== 0;
+    const formula = strBonusApplied ? `${baseFormula} + @str` : baseFormula;
+
+    const roll = await new Roll(formula, { str: strBonus }).evaluate();
+    const damageType = weapon.system.damageType ?? "";
+
+    await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: buildDamageFlavor(weapon, mode, formula, damageType, strBonusApplied),
     });
 }

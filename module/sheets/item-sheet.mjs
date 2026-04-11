@@ -1,10 +1,14 @@
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
 
 export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
+    get title() {
+        return `${this.document.name} — Parallax Item`;
+    }
+
     static DEFAULT_OPTIONS = foundry.utils.mergeObject(super.DEFAULT_OPTIONS, {
-        classes: ["parallax", "sheet", "item"],
+        classes: ["parallax", "sheet", "item", "item-sheet"],
         tag: "form",
-        position: { width: 520, height: 520 },
+        position: { width: 560, height: 620 },
         window: { resizable: true },
         form: {
             submitOnChange: true,
@@ -43,5 +47,16 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
             },
             skillOptions: Object.fromEntries(Object.entries(skills).map(([key, value]) => [key, value.label])),
         };
+    }
+
+    async close(options) {
+        const result = await super.close(options);
+
+        if (this._parentSheet) {
+            await this._parentSheet.render(false);
+            this._parentSheet.bringToFront?.();
+        }
+
+        return result;
     }
 }

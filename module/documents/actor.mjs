@@ -1,12 +1,30 @@
 import { PARALLAX } from "../config.mjs";
 
+const STATBLOCK_CORE_SKILLS = ["awareness", "deflection", "evasion"];
+
 export class ParallaxActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
 
-        if (this.type !== "character") return;
-
         const system = this.system;
+
+        if (["npc", "robot", "creature"].includes(this.type)) {
+            system.skills ??= {};
+            system.summary ??= {};
+            system.defenses ??= {};
+
+            for (const skillKey of STATBLOCK_CORE_SKILLS) {
+                const configSkill = PARALLAX.skills[skillKey];
+                system.skills[skillKey] ??= {};
+                system.skills[skillKey].label ??= configSkill?.label ?? skillKey;
+                system.skills[skillKey].bonus ??= 0;
+                system.skills[skillKey].target ??= 20;
+                system.skills[skillKey].isCore ??= true;
+            }
+            return;
+        }
+
+        if (this.type !== "character") return;
 
         system.skills ??= {};
         system.saves ??= {};
@@ -35,6 +53,11 @@ export class ParallaxActor extends Actor {
     prepareDerivedData() {
         super.prepareDerivedData();
 
+        if (["npc", "robot", "creature"].includes(this.type)) {
+            this._prepareStatblockData();
+            return;
+        }
+
         if (this.type !== "character") return;
 
         const rawLevel = Number(this.system?.identity?.level || 1);
@@ -48,6 +71,23 @@ export class ParallaxActor extends Actor {
         this._prepareLoad();
         this._prepareMovement();
         this._prepareDr();
+    }
+
+    _prepareStatblockData() {
+        const skills = this.system.skills ?? {};
+
+        for (const skill of Object.values(skills)) {
+            const bonus = Number(skill?.bonus ?? 0);
+            skill.target = 20 - bonus;
+        }
+
+        const awareness = Number(skills.awareness?.bonus ?? 0);
+        const deflection = Number(skills.deflection?.bonus ?? 0);
+        const evasion = Number(skills.evasion?.bonus ?? 0);
+
+        this.system.defenses.evasion = evasion;
+        this.system.defenses.deflection = deflection;
+        this.system.defenses.initiativeBonus = awareness;
     }
 
     _preparePriorityBonuses(level) {

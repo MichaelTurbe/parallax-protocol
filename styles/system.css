@@ -1,6 +1,6 @@
 .parallax.sheet form,
-.parallax-sheet,
-.parallax-item-sheet {
+.parallax.sheet .parallax-sheet,
+.parallax.sheet .parallax-item-sheet {
     height: 100%;
 }
 
@@ -9,151 +9,206 @@
     --pp-border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.parallax .window-content,
 .parallax.sheet .window-content {
     padding: 0.75rem;
     overflow: auto;
 }
 
-.parallax-sheet {
+.parallax.sheet.actor.character-sheet .window-content,
+.parallax.sheet.actor.statblock-sheet .window-content {
+    overflow: hidden;
+}
+
+.parallax.sheet .parallax-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.parallax.sheet .sheet-header {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.sheet-header {
-    display: flex;
-    flex-direction: column;
+.parallax.sheet .header-main-with-portrait {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
     gap: 0.75rem;
+    align-items: start;
 }
 
-.identity-grid,
-.three-col,
-.two-col,
-.summary-grid,
-.priority-grid,
-.stat-grid {
+.parallax.sheet .portrait-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.parallax.sheet .portrait-wrapper {
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+    overflow: hidden;
+    border: var(--pp-border);
+    background: rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parallax.sheet .statblock-portrait-wrapper {
+    aspect-ratio: 1 / 1.2;
+}
+
+.parallax.sheet .actor-portrait {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.parallax.sheet .portrait-actions,
+.parallax.sheet .identity-grid,
+.parallax.sheet .three-col,
+.parallax.sheet .two-col,
+.parallax.sheet .summary-grid,
+.parallax.sheet .priority-grid,
+.parallax.sheet .stat-grid {
     display: grid;
     gap: var(--pp-gap);
 }
 
-.identity-grid {
+.parallax.sheet .identity-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.three-col {
+.parallax.sheet .three-col {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.two-col {
+.parallax.sheet .two-col {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.summary-grid,
-.priority-grid,
-.stat-grid {
+.parallax.sheet .summary-grid,
+.parallax.sheet .priority-grid,
+.parallax.sheet .stat-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.field-span-2 {
+.parallax.sheet .field-span-2 {
     grid-column: span 2;
 }
 
-.card {
+.parallax.sheet .card {
     border: var(--pp-border);
     border-radius: 10px;
     padding: 0.75rem;
     background: rgba(0, 0, 0, 0.08);
 }
 
-.card h3,
-.card h4 {
+.parallax.sheet .card h3,
+.parallax.sheet .card h4 {
     margin: 0 0 0.5rem;
 }
 
-label {
+.parallax.sheet label {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
     font-size: 0.85rem;
 }
 
-input[type="text"],
-input[type="number"],
-select,
-textarea,
-button {
+.parallax.sheet input[type="text"],
+.parallax.sheet input[type="number"],
+.parallax.sheet select,
+.parallax.sheet textarea,
+.parallax.sheet button {
     width: 100%;
 }
 
-textarea {
+.parallax.sheet textarea {
     min-height: 100px;
     resize: vertical;
 }
 
-.sheet-tabs {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.tab-button {
+.parallax.sheet .sheet-controls {
     flex: 0 0 auto;
-    width: auto;
-    min-width: 0;
-    padding-inline: 0.9rem;
-}
-
-.tab-button.active {
-    outline: 2px solid var(--color-warm-2);
-}
-
-.tab-panel.hidden {
-    display: none;
-}
-
-.sheet-body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    padding-block: 0.2rem 0.35rem;
+    background: var(--color-bg-window, rgba(20, 20, 24, 0.95));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
 }
 
-.inline-actions,
-.row-actions {
+.parallax.sheet .sheet-tabs,
+.parallax.sheet .inline-actions,
+.parallax.sheet .row-actions,
+.parallax.sheet .roll-mode-bar,
+.parallax.sheet .roll-mode-buttons {
     display: flex;
-    gap: 0.35rem;
     align-items: center;
+    gap: 0.5rem;
 }
 
-.row-actions button {
+.parallax.sheet .sheet-tabs,
+.parallax.sheet .roll-mode-buttons {
+    flex-wrap: wrap;
+}
+
+.parallax.sheet .tab-button,
+.parallax.sheet .row-actions button,
+.parallax.sheet .roll-mode-button,
+.parallax.sheet .inline-actions button {
     width: auto;
+    min-width: 0;
 }
 
-table {
+.parallax.sheet .tab-button.active,
+.parallax.sheet .roll-mode-button.active {
+    outline: 2px solid var(--color-warm-2, #a66);
+}
+
+.parallax.sheet .tab-panel.hidden {
+    display: none;
+}
+
+.parallax.sheet .sheet-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.1rem;
+}
+
+.parallax.sheet table {
     width: 100%;
     border-collapse: collapse;
 }
 
-table th,
-table td {
+.parallax.sheet table th,
+.parallax.sheet table td {
     padding: 0.35rem;
     border-bottom: var(--pp-border);
     text-align: left;
     vertical-align: middle;
 }
 
-.total-row {
+.parallax.sheet .total-row {
     font-weight: bold;
 }
 
-.item-list {
+.parallax.sheet .item-list {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.item-list li {
+.parallax.sheet .item-list li {
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
@@ -161,60 +216,109 @@ table td {
     border-bottom: var(--pp-border);
 }
 
-.top-gap {
+.parallax.sheet .top-gap {
     margin-top: 0.75rem;
 }
 
-.wide-gap {
+.parallax.sheet .wide-gap {
     gap: 1rem;
 }
 
-.compact {
+.parallax.sheet .compact {
     gap: 0.35rem;
 }
 
-.checkbox-line {
+.parallax.sheet .checkbox-line {
     flex-direction: row;
     align-items: center;
     gap: 0.4rem;
 }
 
+.parallax.sheet.item .window-content {
+    overflow: auto;
+}
+
+.parallax.sheet.item label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+}
+
+.parallax.sheet.item input[type="text"],
+.parallax.sheet.item input[type="number"],
+.parallax.sheet.item select,
+.parallax.sheet.item textarea,
+.parallax.sheet.item button {
+    width: 100%;
+}
+
+.parallax.sheet.item table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.parallax.sheet.item table th,
+.parallax.sheet.item table td {
+    padding: 0.35rem;
+    border-bottom: var(--pp-border);
+}
+
 @media (max-width: 900px) {
-    .three-col,
-    .two-col,
-    .identity-grid {
+    .parallax.sheet .three-col,
+    .parallax.sheet .two-col,
+    .parallax.sheet .identity-grid,
+    .parallax.sheet .header-main-with-portrait {
         grid-template-columns: 1fr;
     }
 
-    .field-span-2 {
+    .parallax.sheet .field-span-2 {
         grid-column: auto;
+    }
+
+    .parallax.sheet .portrait-card {
+        max-width: 220px;
     }
 }
 
-
-.roll-mode-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 12px;
+.parallax.sheet .statblock-skill-picker-row select {
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-.roll-mode-label {
-    font-weight: 700;
+.parallax.sheet .statblock-skill-picker-row button {
+    flex: 0 0 auto;
 }
 
-.roll-mode-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+
+.parallax.sheet .statblock-skill-picker-row {
+    align-items: stretch;
 }
 
-.roll-mode-button {
+.parallax.sheet .statblock-skill-picker-row .statblock-skill-select {
+    flex: 1 1 auto;
     width: auto;
+    min-width: 0;
 }
 
-.roll-mode-button.active {
-    outline: 2px solid var(--color-warm-2, #a66);
-    outline-offset: 0;
+.parallax.sheet .statblock-skill-picker-row .add-skill-button {
+    flex: 0 0 auto;
+    width: auto;
+    white-space: nowrap;
+}
+
+.parallax.sheet .save-target-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: end;
+}
+
+.parallax.sheet .save-target-row label {
+    flex: 1 1 auto;
+}
+
+.parallax.sheet .save-target-row .save-roll-button {
+    flex: 0 0 auto;
+    width: auto;
+    white-space: nowrap;
 }

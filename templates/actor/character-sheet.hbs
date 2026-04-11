@@ -1,6 +1,16 @@
 <div class="parallax-sheet">
     <header class="sheet-header">
-        <div class="header-main">
+        <div class="header-main header-main-with-portrait">
+            <section class="card portrait-card">
+                <div class="portrait-wrapper">
+                    <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" />
+                </div>
+                <div class="portrait-actions">
+                    <button type="button" data-pp-action="choosePortrait">Choose Art</button>
+                    <button type="button" data-pp-action="clearPortrait">Clear</button>
+                </div>
+            </section>
+
             <div class="identity-grid">
                 <div class="field-span-2">
                     <label>Name</label>
@@ -32,21 +42,24 @@
                 </div>
             </div>
         </div>
-        <nav class="sheet-tabs">
-            <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab" data-tab-id="overview">Overview</button>
-            <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab" data-tab-id="skills">Skills & Saves</button>
-            <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab" data-tab-id="items">Items</button>
-        </nav>
-
-    <section class="roll-mode-bar card">
-        <div class="roll-mode-label">Next Roll</div>
-        <div class="roll-mode-buttons">
-            <button type="button" class="roll-mode-button {{#if (eq rollMode 'normal')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="normal">Normal</button>
-            <button type="button" class="roll-mode-button {{#if (eq rollMode 'advantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="advantage">Advantage</button>
-            <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
-        </div>
-    </section>
     </header>
+
+    <div class="sheet-controls">
+        <nav class="sheet-tabs">
+                <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab" data-tab-id="overview">Overview</button>
+                <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab" data-tab-id="skills">Skills & Saves</button>
+                <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab" data-tab-id="items">Items</button>
+            </nav>
+
+        <section class="roll-mode-bar card">
+            <div class="roll-mode-label">Next Roll</div>
+            <div class="roll-mode-buttons">
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'normal')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="normal">Normal</button>
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'advantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="advantage">Advantage</button>
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
+            </div>
+        </section>
+    </div>
 
     <section class="sheet-body">
         <div class="tab-panel {{#unless (eq activeTab 'overview')}}hidden{{/unless}}">
