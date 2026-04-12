@@ -1,7 +1,7 @@
 {
     "id": "parallax-protocol",
     "title": "Parallax Protocol",
-    "version": "0.0.14",
+    "version": "0.0.21",
     "description": "Prototype Foundry VTT system for Parallax Protocol.",
     "authors": [
         {

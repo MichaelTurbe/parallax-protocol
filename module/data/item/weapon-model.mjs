@@ -7,6 +7,7 @@ export class ParallaxWeaponData extends foundry.abstract.TypeDataModel {
             linkedSkill: new fields.StringField({ initial: "meleeWeapons" }),
             attackBonusMode: new fields.StringField({ initial: "linked" }),
             manualAttackBonus: new fields.NumberField({ initial: 0, integer: true }),
+            damageClass: new fields.StringField({ initial: "kinetic" }),
             damageSingle: new fields.StringField({ initial: "1d6" }),
             damageAutomatic: new fields.StringField({ initial: "" }),
             damageType: new fields.StringField({ initial: "p" }),

@@ -95,6 +95,9 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
 
         this._restoreBodyScroll(htmlElement);
 
+        htmlElement.addEventListener("dragover", (event) => this._onDragOver(event));
+        htmlElement.addEventListener("drop", (event) => this._onDrop(event));
+
         htmlElement.querySelectorAll("[data-pp-action]").forEach((element) => {
             element.addEventListener("click", (event) => this._onClickAction(event, element));
         });
@@ -104,6 +107,72 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         });
 
         this._refreshRollModeButtons(htmlElement);
+    }
+
+    _onDragOver(event) {
+        event.preventDefault();
+        if (event.dataTransfer) event.dataTransfer.dropEffect = "copy";
+    }
+
+    async _onDrop(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const itemData = await this._getDroppedItemData(event);
+        if (!itemData) return;
+
+        this._captureBodyScroll();
+        await this.document.createEmbeddedDocuments("Item", [itemData]);
+    }
+
+    async _getDroppedItemData(event) {
+        let data;
+        try {
+            data = TextEditor.getDragEventData(event);
+        } catch (_error) {
+            return null;
+        }
+
+        const droppedType = data?.type ?? data?.documentName;
+        if (droppedType !== "Item") {
+            ui.notifications?.warn("Only items can be dropped on this sheet.");
+            return null;
+        }
+
+        let sourceItem = null;
+        if (data.uuid) {
+            sourceItem = await fromUuid(data.uuid);
+        } else if (data.pack && data.id) {
+            sourceItem = await game.packs.get(data.pack)?.getDocument(data.id);
+        }
+
+        if (!sourceItem && data.data) {
+            sourceItem = data.data;
+        }
+
+        if (!sourceItem) {
+            ui.notifications?.warn("Could not import the dropped item.");
+            return null;
+        }
+
+        const itemObject = typeof sourceItem.toObject === "function"
+            ? sourceItem.toObject()
+            : foundry.utils.deepClone(sourceItem);
+
+        const allowedTypes = new Set(["weapon", "armor", "field", "gear", "speciesTrait"]);
+        if (!allowedTypes.has(itemObject.type)) {
+            ui.notifications?.warn(`Unsupported item type: ${itemObject.type ?? "unknown"}.`);
+            return null;
+        }
+
+        delete itemObject._id;
+        delete itemObject.folder;
+        delete itemObject.sort;
+        delete itemObject.ownership;
+        delete itemObject.pack;
+        delete itemObject._stats;
+
+        return itemObject;
     }
 
 

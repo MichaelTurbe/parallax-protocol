@@ -27,10 +27,16 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
         const config = game.parallax?.config ?? {};
         const skills = config.skills ?? {};
 
+        const system = this.document.system;
+        const damageClass = system.damageClass ?? "kinetic";
+        const damageTypeOptions = damageClass === "energy"
+            ? (config.energyDamageTypes ?? {})
+            : (config.kineticDamageTypes ?? {});
+
         return {
             ...context,
             item: this.document,
-            system: this.document.system,
+            system,
             editable: this.isEditable,
             itemType: this.document.type,
             isWeapon: this.document.type === "weapon",
@@ -39,7 +45,8 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
             isGear: this.document.type === "gear",
             isSpeciesTrait: this.document.type === "speciesTrait",
             weaponClassifications: config.weaponClassifications ?? {},
-            damageTypes: config.damageTypes ?? {},
+            damageClasses: config.damageClasses ?? {},
+            damageTypeOptions,
             gearCategories: config.gearCategories ?? {},
             attackBonusModes: {
                 linked: "Linked",

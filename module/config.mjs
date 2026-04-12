@@ -58,14 +58,27 @@ PARALLAX.weaponClassifications = {
     grenade: "Grenade",
 };
 
-PARALLAX.damageTypes = {
+PARALLAX.damageClasses = {
+    kinetic: "Kinetic",
+    energy: "Energy",
+};
+
+PARALLAX.kineticDamageTypes = {
     p: "Piercing",
     s: "Slashing",
     b: "Bludgeoning",
+};
+
+PARALLAX.energyDamageTypes = {
     f: "Fire",
     c: "Cold",
     a: "Acid",
     e: "Electrical",
+};
+
+PARALLAX.damageTypes = {
+    ...PARALLAX.kineticDamageTypes,
+    ...PARALLAX.energyDamageTypes,
 };
 
 PARALLAX.gearCategories = {
