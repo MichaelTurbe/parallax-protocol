@@ -1,6 +1,50 @@
 <div class="parallax-sheet">
     <header class="sheet-header">
-        <div class="header-main header-main-with-portrait">
+        <div class="character-header">
+            <div class="character-header-main">
+                <div class="character-summary-fields">
+                    <div class="field-group">
+                        <label>name</label>
+                        <input type="text" name="name" value="{{actor.name}}"/>
+                    </div>
+        
+                    <div class="field-group">
+                        <label>Level</label>
+                        <input type="number" name="system.identity.level" value="{{system.identity.level}}"/>
+                    </div>
+        
+                    <div class="field-group">
+                        <label>Max HP</label>
+                        <input type="number" name="system.hp.max" value="{{system.hp.max}}"/>
+                    </div>
+        
+                    <div class="field-group">
+                        <label>Current XP</label>
+                        <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
+                    </div>
+                </div>
+        
+                <div class="sheet-tabs">
+                    <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="overview">Combat</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="skills">Skills & Saves</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="items">Items</button>
+                </div>
+            </div>
+        
+            <div class="next-roll-panel">
+                <label>Next Roll:</label>
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'normal')}}active{{/if}}" data-pp-action="setRollMode"
+                    data-roll-mode="normal">Normal</button>
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'advantage')}}active{{/if}}"
+                    data-pp-action="setRollMode" data-roll-mode="advantage">Advantage</button>
+                <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}"
+                    data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
+            </div>
+        </div>
+        {{!-- <div class="header-main header-main-with-portrait">
             <section class="card portrait-card">
                 <div class="portrait-wrapper">
                     <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" />
@@ -41,16 +85,17 @@
                     <input type="number" name="system.hp.value" value="{{system.hp.value}}" />
                 </div>
             </div>
-        </div>
+        </div> --}}
     </header>
 
-    <div class="sheet-controls">
+    {{!-- <div class="sheet-controls">
+        <section>
         <nav class="sheet-tabs">
-                <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab" data-tab-id="overview">Overview</button>
+                <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab" data-tab-id="overview">Combat</button>
                 <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab" data-tab-id="skills">Skills & Saves</button>
                 <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab" data-tab-id="items">Items</button>
             </nav>
-
+        </section>
         <section class="roll-mode-bar card">
             <div class="roll-mode-label">Next Roll</div>
             <div class="roll-mode-buttons">
@@ -59,7 +104,7 @@
                 <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
             </div>
         </section>
-    </div>
+    </div> --}}
 
     <section class="sheet-body">
         <div class="tab-panel {{#unless (eq activeTab 'overview')}}hidden{{/unless}}">

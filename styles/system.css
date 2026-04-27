@@ -30,7 +30,7 @@
 .parallax.sheet .sheet-header {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.75rem;   
 }
 
 .parallax.sheet .header-main-with-portrait {
@@ -145,7 +145,7 @@
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
 }
 
-.parallax.sheet .sheet-tabs,
+
 .parallax.sheet .inline-actions,
 .parallax.sheet .row-actions,
 .parallax.sheet .roll-mode-bar,
@@ -155,7 +155,6 @@
     gap: 0.5rem;
 }
 
-.parallax.sheet .sheet-tabs,
 .parallax.sheet .roll-mode-buttons {
     flex-wrap: wrap;
 }
@@ -321,4 +320,43 @@
     flex: 0 0 auto;
     width: auto;
     white-space: nowrap;
+}
+
+.character-header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.character-header-main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.character-summary-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet-tabs {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    gap: 10px;
+}
+
+.sheet-tabs button {
+    flex-basis: 100%;
+}
+
+.next-roll-panel {
+    display: flex;
+    flex-direction: column;
 }
