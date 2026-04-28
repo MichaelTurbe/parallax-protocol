@@ -37,7 +37,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
     };
 
     tabGroups = {
-        primary: "overview",
+        primary: "dossier",
     };
 
     get title() {
@@ -123,7 +123,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             system,
             actorImage: actor.img || "icons/svg/mystery-man.svg",
             editable: this.isEditable,
-            activeTab: this.tabGroups?.primary ?? "overview",
+            activeTab: this.tabGroups?.primary ?? "dossier",
             rollMode: this._rollMode ?? "normal",
             rollModes: {
                 normal: "Normal",
@@ -283,7 +283,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
 
         if (action === "tab") {
             this._captureScrollTop();
-            this.tabGroups.primary = target.dataset.tabId ?? "overview";
+            this.tabGroups.primary = target.dataset.tabId ?? "dossier";
             return this.render();
         }
 
