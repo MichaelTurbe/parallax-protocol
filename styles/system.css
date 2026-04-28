@@ -158,6 +158,9 @@
 .parallax.sheet .roll-mode-buttons {
     flex-wrap: wrap;
 }
+.tab-button {
+    border-radius: 6pt 6pt 0 0;
+}
 
 .parallax.sheet .tab-button,
 .parallax.sheet .row-actions button,

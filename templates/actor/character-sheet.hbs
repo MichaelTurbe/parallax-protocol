@@ -19,20 +19,20 @@
                     </div>
         
                     <div class="field-group" style="flex: 1 1 0">
-                        <label>Current XP</label>
+                        <label style="white-space: nowrap;">Current HP</label>
                         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
                     </div>
                 </div>
         
                 <div class="sheet-tabs">
-                    <a class="tab-button {{#if (eq activeTab 'dossier')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="dossier">Dossier</a>
-                    <a type="button" class="tab-button {{#if (eq activeTab 'combat')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="combat">Combat</a>
-                    <a type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="skills">Skills</a>
-                    <a type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="items">Items</a>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'dossier')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="dossier">Dossier</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'combat')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="combat">Combat</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="skills">Skills</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab"
+                        data-tab-id="items">Items</button>
                 </div>
             </div>
         
@@ -163,6 +163,74 @@
 
         </div>
         <div class="tab-panel {{#unless (eq activeTab 'combat')}}hidden{{/unless}}">
+                        <section class="card" style="width: 100%;">
+                            <div style="display: flex; flex-direction:row; justify-content:space-between">
+                                <h3>Weapons</h3>
+                                <div class="inline-actions" style="display: flex; flex-direction:row;">
+                                    <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee
+                                        Weapon</button>
+                                    <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">+
+                                        Ranged Weapon</button>
+                                </div>
+                            </div>
+                            
+                            <h4>Melee</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Atk</th>
+                                        <th>Dmg</th>
+                                        <th>Type</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each meleeWeapons}}
+                                    <tr>
+                                        <td>{{name}}</td>
+                                        <td>{{attackBonus}}</td>
+                                        <td>{{system.damageSingle}}</td>
+                                        <td>{{system.damageType}}</td>
+                                        <td class="row-actions">
+                                            <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                            <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <h4>Ranged</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Atk</th>
+                                        <th>Single</th>
+                                        <th>Auto</th>
+                                        <th>Rng</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each rangedWeapons}}
+                                    <tr>
+                                        <td>{{name}}</td>
+                                        <td>{{attackBonus}}</td>
+                                        <td>{{system.damageSingle}}</td>
+                                        <td>{{system.damageAutomatic}}</td>
+                                        <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
+                                        <td class="row-actions">
+                                            <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                            <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </section>
             <div class="three-col">
 
                 <section class="card">
@@ -212,52 +280,7 @@
                     </table>
                 </section>
 
-                <section class="card">
-                    <h3>Weapons</h3>
-                    <div class="inline-actions">
-                        <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee Weapon</button>
-                        <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">+ Ranged Weapon</button>
-                    </div>
-                    <h4>Melee</h4>
-                    <table>
-                        <thead><tr><th>Name</th><th>Atk</th><th>Dmg</th><th>Type</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each meleeWeapons}}
-                            <tr>
-                                <td>{{name}}</td>
-                                <td>{{attackBonus}}</td>
-                                <td>{{system.damageSingle}}</td>
-                                <td>{{system.damageType}}</td>
-                                <td class="row-actions">
-                                    <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
-                                    <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                    <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                    <h4>Ranged</h4>
-                    <table>
-                        <thead><tr><th>Name</th><th>Atk</th><th>Single</th><th>Auto</th><th>Rng</th><th></th></tr></thead>
-                        <tbody>
-                            {{#each rangedWeapons}}
-                            <tr>
-                                <td>{{name}}</td>
-                                <td>{{attackBonus}}</td>
-                                <td>{{system.damageSingle}}</td>
-                                <td>{{system.damageAutomatic}}</td>
-                                <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
-                                <td class="row-actions">
-                                    <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
-                                    <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                    <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
-                </section>
+
             </div>
         </div>
 

@@ -1,65 +1,49 @@
 {
-    "id": "parallax-protocol",
-    "title": "Parallax Protocol",
-    "version": "0.0.21",
-    "description": "Prototype Foundry VTT system for Parallax Protocol.",
-    "authors": [
-        {
-            "name": "Ecstatic Entropy Games"
-        }
-    ],
-    "compatibility": {
-        "minimum": "14",
-        "verified": "14.359"
+  "id": "parallax-protocol",
+  "title": "Parallax Protocol",
+  "version": "0.0.22",
+  "description": "Prototype Foundry VTT system for Parallax Protocol.",
+  "authors": [
+    {
+      "name": "Ecstatic Entropy Games"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.359"
+  },
+  "esmodules": ["parallax-protocol.mjs"],
+  "styles": ["styles/system.css"],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["system.notes"]
+      },
+      "npc": {},
+      "robot": {},
+      "creature": {}
     },
-    "esmodules": [
-        "parallax-protocol.mjs"
-    ],
-    "styles": [
-        "styles/system.css"
-    ],
-    "documentTypes": {
-        "Actor": {
-            "character": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            },
-            "npc": {},
-            "robot": {},
-            "creature": {}
-        },
-        "Item": {
-            "weapon": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            },
-            "armor": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            },
-            "field": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            },
-            "gear": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            },
-            "speciesTrait": {
-                "htmlFields": [
-                    "system.notes"
-                ]
-            }
-        }
-    },
-    "primaryTokenAttribute": "hp",
-    "secondaryTokenAttribute": null,
-    "url": "",
-    "manifest": "",
-    "download": ""
+    "Item": {
+      "weapon": {
+        "htmlFields": ["system.notes"]
+      },
+      "armor": {
+        "htmlFields": ["system.notes"]
+      },
+      "field": {
+        "htmlFields": ["system.notes"]
+      },
+      "gear": {
+        "htmlFields": ["system.notes"]
+      },
+      "speciesTrait": {
+        "htmlFields": ["system.notes"]
+      }
+    }
+  },
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": null,
+  "url": "",
+  "manifest": "",
+  "download": ""
 }
