@@ -93,20 +93,3 @@ PARALLAX.gearCategories = {
 };
 
 PARALLAX.priorityRanks = ["first", "second", "third", "fourth"];
-
-PARALLAX.trainedSkillBonusByLevel = {
-    1: { first: 4, second: 3, third: 2, fourth: 1 },
-    2: { first: 5, second: 4, third: 3, fourth: 2 },
-    3: { first: 6, second: 5, third: 4, fourth: 3 },
-    4: { first: 7, second: 6, third: 5, fourth: 4 },
-    5: { first: 8, second: 7, third: 6, fourth: 5 },
-    6: { first: 9, second: 8, third: 7, fourth: 6 },
-    7: { first: 10, second: 9, third: 8, fourth: 7 },
-    8: { first: 11, second: 10, third: 9, fourth: 8 },
-    9: { first: 12, second: 11, third: 10, fourth: 9 },
-    10: { first: 13, second: 12, third: 11, fourth: 10 },
-    11: { first: 14, second: 13, third: 12, fourth: 11 },
-    12: { first: 15, second: 14, third: 13, fourth: 12 },
-    13: { first: 16, second: 15, third: 14, fourth: 13 },
-    14: { first: 17, second: 16, third: 15, fourth: 14 },
-};

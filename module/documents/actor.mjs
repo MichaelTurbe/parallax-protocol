@@ -38,7 +38,17 @@ export class ParallaxActor extends Actor {
             system.skills[key].itemBonus ??= 0;
             system.skills[key].totalBonus ??= 0;
             system.skills[key].target ??= 20;
-            system.skills[key].frozenTrainedBonus ??= null;
+            // Free-entry trained skill bonus. The trained checkbox is only a marker;
+            // it does not gate or calculate this value.
+            if (system.skills[key].trainedSkillBonus === undefined || system.skills[key].trainedSkillBonus === null) {
+                if (Number.isFinite(Number(system.skills[key].frozenTrainedBonus))) {
+                    system.skills[key].trainedSkillBonus = Number(system.skills[key].frozenTrainedBonus);
+                } else if (system.skills[key].trained) {
+                    system.skills[key].trainedSkillBonus = Number(system.trainedSkillBonuses?.[skill.category] ?? 0);
+                } else {
+                    system.skills[key].trainedSkillBonus = 0;
+                }
+            }
         }
 
         for (const [key, label] of Object.entries(PARALLAX.saveTypes)) {
@@ -63,7 +73,6 @@ export class ParallaxActor extends Actor {
         const rawLevel = Number(this.system?.identity?.level || 1);
         const level = Math.max(1, Math.min(14, Number.isFinite(rawLevel) ? rawLevel : 1));
 
-        this._preparePriorityBonuses(level);
         this._prepareSkills();
         this._prepareSaves(level);
         this._prepareItemsAndArmor();
@@ -90,42 +99,14 @@ export class ParallaxActor extends Actor {
         this.system.defenses.initiativeBonus = awareness;
     }
 
-    _preparePriorityBonuses(level) {
-        const table = PARALLAX.trainedSkillBonusByLevel[level];
-        const priorities = this.system.priorities;
-
-        const bonuses = {
-            martial: 0,
-            intellectual: 0,
-            physical: 0,
-            subtle: 0,
-        };
-
-        bonuses[priorities.first] = table.first;
-        bonuses[priorities.second] = table.second;
-        bonuses[priorities.third] = table.third;
-        bonuses[priorities.fourth] = table.fourth;
-
-        this.system.trainedSkillBonuses.martial = bonuses.martial;
-        this.system.trainedSkillBonuses.intellectual = bonuses.intellectual;
-        this.system.trainedSkillBonuses.physical = bonuses.physical;
-        this.system.trainedSkillBonuses.subtle = bonuses.subtle;
-    }
-
     _prepareSkills() {
         for (const skill of Object.values(this.system.skills ?? {})) {
             const statBonus = Number(this.system.stats?.[skill.stat]?.value ?? 0);
+            const trainedSkillBonus = Number(skill.trainedSkillBonus ?? 0);
             const itemBonus = Number(skill.itemBonus ?? 0);
 
-            let trainedSkillBonus = 0;
-            if (skill.trained) {
-                if (Number.isInteger(skill.frozenTrainedBonus)) {
-                    trainedSkillBonus = Number(skill.frozenTrainedBonus);
-                } else {
-                    trainedSkillBonus = Number(this.system.trainedSkillBonuses?.[skill.category] ?? 0);
-                }
-            }
-
+            // The trained checkbox is intentionally not part of this calculation.
+            // It only records whether the character is trained for rules/UI purposes.
             skill.totalBonus = statBonus + trainedSkillBonus + itemBonus;
             skill.target = 20 - skill.totalBonus;
         }

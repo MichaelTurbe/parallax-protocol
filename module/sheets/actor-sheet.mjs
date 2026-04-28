@@ -21,8 +21,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             resizable: false,
         },
         position: {
-            width: 1280,
-            height: 860,
+            width: 700,
+            height: 640,
         },
         form: {
             submitOnChange: false,

@@ -1,8 +1,8 @@
 {
   "id": "parallax-protocol",
   "title": "Parallax Protocol",
-  "version": "0.0.22",
-  "description": "Prototype Foundry VTT system for Parallax Protocol.",
+  "version": "0.0.24",
+  "description": "Prototype Foundry VTT system for Parallax Protocol. v23: trained skill bonuses are free-entry skill fields.",
   "authors": [
     {
       "name": "Ecstatic Entropy Games"

@@ -1,10 +1,10 @@
 <div class="parallax-sheet">
-    <header class="sheet-header">
+    <header class="sheet-header" style="border: 3px; border-color:#2A7586; border-style:solid; padding-left: 10px; padding-right: 10px; padding-bottom:0px; padding-top: 10px;">
         <div class="character-header">
             <div class="character-header-main">
                 <div class="character-summary-fields">
                     <div class="field-group" style="flex: 4 1 0">
-                        <label>name</label>
+                        <label>Name</label>
                         <input type="text" name="name" value="{{actor.name}}"/>
                     </div>
         
@@ -23,16 +23,62 @@
                         <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
                     </div>
                 </div>
-        
+                <div style="width: 100%; display: flex; gap:10px; justify-content: space-between; flex-wrap:nowrap;">
+                    <button type="button" class="pp-icon-button" data-pp-action="rollInitiative">
+                    
+                        <span class="pp-icon-button__text">Roll Initiative</span>
+                    
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/coinflip.svg" alt=""
+                            aria-hidden="true" />
+                    
+                    </button>
+                    <button type="button" class="pp-icon-button" data-pp-action="rollInitiative">
+                    
+                        <span class="pp-icon-button__text">Deflect</span>
+                    
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/divert.svg" alt=""
+                            aria-hidden="true" />
+                    
+                    </button>
+                    <button type="button" class="pp-icon-button" data-pp-action="rollInitiative">
+                    
+                        <span class="pp-icon-button__text">Evade</span>
+                    
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/shield-reflect.svg" alt=""
+                            aria-hidden="true" />
+                    
+                    </button>
+                </div>
                 <div class="sheet-tabs">
-                    <button type="button" class="tab-button {{#if (eq activeTab 'dossier')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="dossier">Dossier</button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'combat')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="combat">Combat</button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="skills">Skills</button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab"
-                        data-tab-id="items">Items</button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'dossier')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
+                        data-tab-id="dossier">
+                        <span class="pp-icon-button__text">Dossier</span>
+                        
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/body-attribute.svg" alt=""
+                            aria-hidden="true" />
+
+                    </button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'combat')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
+                        data-tab-id="combat">
+                        <span class="pp-icon-button__text">Combat</span>
+                        
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/combat.svg" alt="" aria-hidden="true" />
+
+                    </button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
+                        data-tab-id="skills" >
+                        <span class="pp-icon-button__text">Skills</span>
+                        
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/skill.svg" alt="" aria-hidden="true" />
+
+                    </button>
+                    <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
+                        data-tab-id="items">
+                        <span class="pp-icon-button__text">Inventory</span>
+                        
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/inventory.svg" alt="" aria-hidden="true" />
+
+                    </button>
                 </div>
             </div>
         
@@ -89,26 +135,7 @@
             </div>
         </div> --}}
     </header>
-
-    {{!-- <div class="sheet-controls">
-        <section>
-        <nav class="sheet-tabs">
-                <button type="button" class="tab-button {{#if (eq activeTab 'overview')}}active{{/if}}" data-pp-action="tab" data-tab-id="overview">Combat</button>
-                <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active{{/if}}" data-pp-action="tab" data-tab-id="skills">Skills & Saves</button>
-                <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active{{/if}}" data-pp-action="tab" data-tab-id="items">Items</button>
-            </nav>
-        </section>
-        <section class="roll-mode-bar card">
-            <div class="roll-mode-label">Next Roll</div>
-            <div class="roll-mode-buttons">
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'normal')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="normal">Normal</button>
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'advantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="advantage">Advantage</button>
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
-            </div>
-        </section>
-    </div> --}}
-
-    <section class="sheet-body">
+    <section class="sheet-body" style="border: 3px; border-color:#2A7586; border-style:solid; border-top: none;">
         <div class="tab-panel {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}" style="display: flex; flex-direction:row; gap: 5px">
             <section class="card portrait-card">
                 <div class="portrait-wrapper">
@@ -121,7 +148,7 @@
             </section>
             <section style="display: flex; flex-direction:column">
                 <section class="card">
-                    <h3>Stats</h3>
+                    <h4>Stats<h4>
                     <div class="stat-grid">
                         <label>STR <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
                         <label>DEX <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
@@ -133,7 +160,7 @@
                 </section>
             </section>
                             <section class="card">
-                                <h3>Saving Throws</h3>
+                                <h4>Saving Throws</h4>
                                 <table>
                                     <thead>
                                         <tr>
@@ -165,7 +192,7 @@
         <div class="tab-panel {{#unless (eq activeTab 'combat')}}hidden{{/unless}}">
                         <section class="card" style="width: 100%;">
                             <div style="display: flex; flex-direction:row; justify-content:space-between">
-                                <h3>Weapons</h3>
+                                <h4>Weapons</h4>
                                 <div class="inline-actions" style="display: flex; flex-direction:row;">
                                     <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee
                                         Weapon</button>
@@ -234,7 +261,7 @@
             <div class="three-col">
 
                 <section class="card">
-                    <h3>Movement & Load</h3>
+                    <h4>Movement & Load</h4>
                     <div class="summary-grid">
                         <label>Base Speed <input type="number" name="system.movement.base" value="{{system.movement.base}}" /></label>
                         <label>Armor Penalty <input type="number" name="system.movement.armorPenalty" value="{{system.movement.armorPenalty}}" /></label>
@@ -249,20 +276,28 @@
                 </section>
 
                 <section class="card">
-                    <h3>Combat Summary</h3>
+                    <h4>Combat Summary</h4>
                     <div class="summary-grid compact">
                         <div>Awareness Bonus <strong>{{system.combat.awareness.totalBonus}}</strong></div>
                         <div>Deflection Bonus <strong>{{system.combat.deflection.totalBonus}}</strong></div>
                         <div>Evasion Bonus <strong>{{system.combat.evasion.totalBonus}}</strong></div>
                         <div>Initiative Bonus <strong>{{system.combat.initiativeBonus}}</strong></div>
-                        <button type="button" data-pp-action="rollInitiative">Roll Initiative</button>
+                        {{!-- <button type="button" data-pp-action="rollInitiative">Roll Initiative</button> --}}
+                        <button type="button" class="pp-icon-button" data-pp-action="rollInitiative">
+                        
+                            <span class="pp-icon-button__text">Roll Initiative</span>
+                        
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/coinflip.svg" alt=""
+                                aria-hidden="true" />
+                        
+                        </button>
                     </div>
                 </section>
             </div>
 
             <div class="two-col wide-gap">
                 <section class="card">
-                    <h3>Damage Reduction</h3>
+                    <h4>Damage Reduction</h4>
                     <table>
                         <thead>
                             <tr><th></th><th>Kinetic</th><th>Energy</th></tr>
@@ -287,7 +322,7 @@
         <div class="tab-panel {{#unless (eq activeTab 'skills')}}hidden{{/unless}}">
             <div style="display: flex;"">
                 <section class="card" style="width: 100%; display: flex; flex-direction: row;">
-                    <h3>Skill Focus Priorities</h3>
+                    <h4>Skill Focus Priorities</h4>
                     <div style="display: flex; flex-direction:row; gap: 5px;">
                         <label>First
                             <select name="system.priorities.first">
@@ -323,10 +358,10 @@
 
             {{#each skillsByCategory as |skills categoryKey|}}
             <section class="card top-gap">
-                <h3>{{lookup ../skillCategories categoryKey}} Skills</h3>
+                <h4>{{lookup ../skillCategories categoryKey}} Skills</h4>
                 <table>
                     <thead>
-                        <tr><th>Skill</th><th>Stat</th><th>Trained</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
+                        <tr><th>Skill</th><th>Stat</th><th>Trained</th><th>Trained Skill Bonus</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
                     </thead>
                     <tbody>
                         {{#each skills}}
@@ -334,6 +369,7 @@
                             <td>{{label}}</td>
                             <td>{{statLabel}}</td>
                             <td><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
+                            <td><input type="number" name="system.skills.{{key}}.trainedSkillBonus" value="{{trainedSkillBonus}}" /></td>
                             <td><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
                             <td>{{totalBonus}}</td>
                             <td>{{target}}</td>
@@ -352,7 +388,7 @@
         <div class="tab-panel {{#unless (eq activeTab 'items')}}hidden{{/unless}}">
             <div class="three-col">
                 <section class="card">
-                    <h3>Armor</h3>
+                    <h4>Armor</h4>
                     <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="armor">+ Armor</button></div>
                     <ul class="item-list">
                         {{#each armorItems}}
@@ -368,7 +404,7 @@
                 </section>
 
                 <section class="card">
-                    <h3>Fields</h3>
+                    <h4>Fields</h4>
                     <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="field">+ Field</button></div>
                     <ul class="item-list">
                         {{#each fieldItems}}
@@ -384,7 +420,7 @@
                 </section>
 
                 <section class="card">
-                    <h3>Species Traits</h3>
+                    <h4>Species Traits</h4>
                     <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="speciesTrait">+ Trait</button></div>
                     <ul class="item-list">
                         {{#each speciesTraits}}
@@ -401,7 +437,7 @@
             </div>
 
             <section class="card top-gap">
-                <h3>Gear</h3>
+                <h4>Gear</h4>
                 <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="gear">+ Gear</button></div>
                 <table>
                     <thead><tr><th>Name</th><th>Type</th><th>Bulk</th><th>Pack?</th><th></th></tr></thead>
@@ -423,7 +459,7 @@
             </section>
 
             <section class="card top-gap">
-                <h3>Notes</h3>
+                <h4>Notes</h4>
                 <textarea name="system.notes">{{system.notes}}</textarea>
             </section>
         </div>
