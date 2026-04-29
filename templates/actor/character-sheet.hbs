@@ -175,11 +175,7 @@
         <div class="tab-panel dossier-layout {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}">
             <section class="card portrait-card">
                 <div class="portrait-wrapper">
-                    <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" />
-                </div>
-                <div class="portrait-actions">
-                    <button type="button" data-pp-action="choosePortrait">Choose Art</button>
-                    <button type="button" data-pp-action="clearPortrait">Clear</button>
+                    <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="choosePortrait" title="Click to change image" />
                 </div>
             </section>
             <section class="stats-column">
