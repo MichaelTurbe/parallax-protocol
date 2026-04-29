@@ -14,6 +14,10 @@
     --pp-border: 1px solid rgba(255, 255, 255, 0.12);
     --pp-rules-element: #2A7586;
     --pp-stat-block:  #F2EABD;
+    --pp-light-icon-foreground: #F2EABD;
+    --pp-item: #CA1527;
+    --pp-weapon: #09293B;
+
 }
 
 .parallax.sheet .window-content {
@@ -169,7 +173,13 @@
 .tab-button {
     border-color: var(--pp-rules-element);
     border-radius: 6pt 6pt 0 0;
+    border-width: 3px;
 }
+
+/* .tab-button:hover {
+    border-color: var(--pp-item);
+    
+} */
 
 .parallax.sheet .tab-button,
 .parallax.sheet .row-actions button,
@@ -181,11 +191,11 @@
 
 .parallax.sheet,
 .parallax.sheet .roll-mode-button.active {
-    outline: 2px solid var(--color-warm-2, #a66);
+    outline: 3px solid var(--color-warm-2, #a66);
 }
 
 .active-tab{
-    border: 2px solid var(--pp-stat-block);
+    border: 3px solid var(--pp-stat-block);
     border-bottom: none;
 }
 
@@ -399,6 +409,14 @@
     padding: 3px 8px;
 
     cursor: pointer;
+    
+}
+
+.pp-action-button{
+    
+    background-color: var(--pp-item);
+    border-radius: 10pt;
+    width: 75px;
 }
 
 .pp-icon-button__text {

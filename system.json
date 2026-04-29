@@ -1,7 +1,7 @@
 {
   "id": "parallax-protocol",
   "title": "Parallax Protocol",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Prototype Foundry VTT system for Parallax Protocol. v26: character sheet defaults to 700x640, remains resizable, and enforces that as minimum size.",
   "authors": [
     {
@@ -12,18 +12,12 @@
     "minimum": "14",
     "verified": "14.359"
   },
-  "esmodules": [
-    "parallax-protocol.mjs"
-  ],
-  "styles": [
-    "styles/system.css"
-  ],
+  "esmodules": ["parallax-protocol.mjs"],
+  "styles": ["styles/system.css"],
   "documentTypes": {
     "Actor": {
       "character": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       },
       "npc": {},
       "robot": {},
@@ -31,29 +25,19 @@
     },
     "Item": {
       "weapon": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       },
       "armor": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       },
       "field": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       },
       "gear": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       },
       "speciesTrait": {
-        "htmlFields": [
-          "system.notes"
-        ]
+        "htmlFields": ["system.notes"]
       }
     }
   },
