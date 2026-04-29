@@ -236,76 +236,95 @@
 
         </div>
         <div class="tab-panel {{#unless (eq activeTab 'combat')}}hidden{{/unless}}">
-                        <section class="card" style="width: 100%;">
-                            <div style="display: flex; flex-direction:row; justify-content:space-between">
-                                <h4>Weapons</h4>
-                                <div class="inline-actions" style="display: flex; flex-direction:row;">
-                                    <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee
-                                        Weapon</button>
-                                    <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">+
-                                        Ranged Weapon</button>
-                                </div>
-                            </div>
-                            
-                            <h4>Melee</h4>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Atk</th>
-                                        <th>Dmg</th>
-                                        <th>Type</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each meleeWeapons}}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td>{{attackBonus}}</td>
-                                        <td>{{system.damageSingle}}</td>
-                                        <td>{{system.damageType}}</td>
-                                        <td class="row-actions">
-                                            <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
-                                            <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
-                                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                            <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                            <h4>Ranged</h4>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Atk</th>
-                                        <th>Single</th>
-                                        <th>Auto</th>
-                                        <th>Rng</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each rangedWeapons}}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td>{{attackBonus}}</td>
-                                        <td>{{system.damageSingle}}</td>
-                                        <td>{{system.damageAutomatic}}</td>
-                                        <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
-                                        <td class="row-actions">
-                                            <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
-                                            <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
-                                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                            <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
-                        </section>
+            <section class="card" style="width: 100%;">
+                {{!-- <div style="display: flex; flex-direction:row; justify-content:space-between">
+                    <h4>Weapons</h4>
+                    <div class="inline-actions" style="display: flex; flex-direction:row;">
+                        <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee
+                            Weapon</button>
+                        <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">+
+                            Ranged Weapon</button>
+                    </div>
+                </div> --}}
+                
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Melee Weapons</h4>
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button weapons"
+                        style="width:75px; border-width:1px"
+                        data-pp-action="createItem" data-item-type="weapon" data-classification="melee">
+                        <span class="pp-icon-button__text">add</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/melee-weapons.svg" alt=""
+                            aria-hidden="true" />
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Atk</th>
+                            <th>Dmg</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each meleeWeapons}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{attackBonus}}</td>
+                            <td>{{system.damageSingle}}</td>
+                            <td>{{system.damageType}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
+                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Ranged Weapons</h4>
+                    <button type="button" class="roll-mode-button pp-icon-button pp-selectable-button weapons"
+                        style="width:75px; border-width:1px" data-pp-action="createItem" data-item-type="weapon"
+                        data-classification="smallArms">
+                        <span class="pp-icon-button__text">add</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/small-arms.svg" alt=""
+                            aria-hidden="true" />
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Atk</th>
+                            <th>Single</th>
+                            <th>Auto</th>
+                            <th>Rng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each rangedWeapons}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{attackBonus}}</td>
+                            <td>{{system.damageSingle}}</td>
+                            <td>{{system.damageAutomatic}}</td>
+                            <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
+                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
             <div class="three-col">
 
                 <section class="card">
@@ -368,9 +387,11 @@
         </div>
 
         <div class="tab-panel {{#unless (eq activeTab 'skills')}}hidden{{/unless}}">
-            <div style="display: flex;"">
-                <section class="card" style="width: 100%; display: flex; flex-direction: row;">
-                    <h4>Skill Focus Priorities</h4>
+       
+                <section class="card" style="width: 100%; display: flex; flex-direction: row; justify-content:space-between; align-items: stretch; padding: 3px 3px 3px 12px;">
+                    <div style="display: flex; align-items: center;">
+                        <h4 class="tight-text">Skill Focus Priorities</h4>
+                    </div>
                     <div style="display: flex; flex-direction:row; gap: 5px;">
                         <label>First
                             <select name="system.priorities.first">
@@ -402,11 +423,11 @@
                 </section>
 
 
-            </div>
+    
 
             {{#each skillsByCategory as |skills categoryKey|}}
             <section class="card top-gap">
-                <h4>{{lookup ../skillCategories categoryKey}} Skills</h4>
+                <h4 class="tight-text">{{lookup ../skillCategories categoryKey}} Skills</h4>
                 <table>
                     <thead>
                         <tr><th>Skill</th><th>Stat</th><th>Trained</th><th>Trained Skill Bonus</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>

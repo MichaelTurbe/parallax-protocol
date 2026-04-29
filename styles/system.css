@@ -21,6 +21,10 @@
 
 }
 
+.tight-text{
+    margin: 0;
+}
+
 .parallax.sheet .window-content {
     padding: 5px;
     overflow: auto;
@@ -121,8 +125,8 @@
     background: rgba(0, 0, 0, 0.08);
 }
 
-.parallax.sheet .card h3,
-.parallax.sheet .card h4 {
+.parallax.sheet .card,
+.parallax.sheet .card {
     margin: 0 0 0.5rem;
 }
 
@@ -476,7 +480,11 @@
 }
 
 .rules-element{
-    background-color: #2A7586;
+    background-color: var(--pp-rules-element)
+}
+
+.weapons{
+    background-color:var(--pp-weapon)
 }
 
 /* v25 character sheet layout fixes */
