@@ -1,104 +1,132 @@
 <div class="parallax-sheet">
-    <header class="sheet-header" style="border: 3px; border-color:#F2EABD; border-style:solid; border-bottom: none;padding-left: 10px; border-radius: 10pt 10pt 0 0; padding-right: 10px; padding-bottom:0px; padding-top: 10px;">
-        <div class="character-header">
-            <div class="character-header-main">
-                <div class="character-summary-fields">
-                    <div class="field-group" style="flex: 4 1 0">
-                        <label>Name</label>
-                        <input type="text" name="name" value="{{actor.name}}"/>
+    <header class="sheet-header" >
+        <div class="character-header">  
+            <div class="character-header-full">
+                <div class="character-header-main yellow-border">
+                    <div class="character-summary-fields">
+                        <div class="field-group" style="flex: 4 1 0">
+                            <h5>Name</h5>
+                            <input class="dossier-input" type="text" name="name" value="{{actor.name}}"/>
+                        </div>
+            
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5>Level</h5>
+                            <input class="dossier-input" type="number" name="system.identity.level" value="{{system.identity.level}}"/>
+                        </div>
+            
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5 style="white-space: nowrap;">Max HP</h5>
+                            <input class="dossier-input" type="number" name="system.hp.max" value="{{system.hp.max}}"/>
+                        </div>
+            
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5 style="white-space: nowrap;">Current HP</h5>
+                            <input class="dossier-input" type="number" name="system.hp.value" value="{{system.hp.value}}"/>
+                        </div>
                     </div>
-        
-                    <div class="field-group" style="flex: 1 1 0">
-                        <label>Level</label>
-                        <input type="number" name="system.identity.level" value="{{system.identity.level}}"/>
-                    </div>
-        
-                    <div class="field-group" style="flex: 1 1 0">
-                        <label>Max HP</label>
-                        <input type="number" name="system.hp.max" value="{{system.hp.max}}"/>
-                    </div>
-        
-                    <div class="field-group" style="flex: 1 1 0">
-                        <label style="white-space: nowrap;">Current HP</label>
-                        <input type="number" name="system.hp.value" value="{{system.hp.value}}"/>
-                    </div>
+                    <div style="width: 100%; display: flex; gap:10px; justify-content: flex-end; flex-wrap:nowrap;">
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
+                        
+                            <span class="pp-icon-button__text">Roll Initiative</span>
+                        
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/initiative.svg" alt=""
+                                aria-hidden="true" />
+                        
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
+                        
+                            <span class="pp-icon-button__text">Awareness</span>
+                        
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/awareness.svg" alt=""
+                                aria-hidden="true" />
+                        
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
+                        
+                            <span class="pp-icon-button__text">Deflect</span>
+                        
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/divert.svg" alt=""
+                                aria-hidden="true" />
+                        
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
+                        
+                            <span class="pp-icon-button__text">Evade</span>
+                        
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/shield-reflect.svg" alt=""
+                                aria-hidden="true" />
+                        
+                        </button>
+                    </div>  
                 </div>
-                <div style="width: 100%; display: flex; gap:10px; justify-content: flex-end; flex-wrap:nowrap;">
-                    <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                    
-                        <span class="pp-icon-button__text">Roll Initiative</span>
-                    
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/initiative.svg" alt=""
+                <div class="next-roll-panel yellow-border">
+                    <div class="pp-icon-button">
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/d10.svg" alt="" aria-hidden="true" />
+                        <span class="pp-icon-button__text" style="text-align: center;">next roll:</span>
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/d10.svg" alt="" aria-hidden="true" />
+                    </div>
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'advantage')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="advantage">
+                        <span class="pp-icon-button__dark-text">advantage</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/advantage.svg" alt=""
                             aria-hidden="true" />
-                    
                     </button>
-                    <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                    
-                        <span class="pp-icon-button__text">Awareness</span>
-                    
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/awareness.svg" alt=""
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'normal')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="normal">
+                        <span class="pp-icon-button__dark-text">normal</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/normal-roll.svg" alt=""
                             aria-hidden="true" />
-                    
                     </button>
-                    <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                    
-                        <span class="pp-icon-button__text">Deflect</span>
-                    
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/divert.svg" alt=""
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="disadvantage">
+                        <span class="pp-icon-button__dark-text">disadvantage</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/disadvantage.svg" alt=""
                             aria-hidden="true" />
-                    
-                    </button>
-                    <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                    
-                        <span class="pp-icon-button__text">Evade</span>
-                    
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/shield-reflect.svg" alt=""
-                            aria-hidden="true" />
-                    
-                    </button>
-                </div>
-                <div class="sheet-tabs">
-                    <button type="button" class="tab-button {{#if (eq activeTab 'dossier')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
-                        data-tab-id="dossier">
-                        <span class="pp-icon-button__text">Dossier</span>
-                        
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/body-attribute.svg" alt=""
-                            aria-hidden="true" />
-
-                    </button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'combat')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
-                        data-tab-id="combat">
-                        <span class="pp-icon-button__text">Combat</span>
-                        
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/combat.svg" alt="" aria-hidden="true" />
-
-                    </button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'skills')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
-                        data-tab-id="skills" >
-                        <span class="pp-icon-button__text">Skills</span>
-                        
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/skill.svg" alt="" aria-hidden="true" />
-
-                    </button>
-                    <button type="button" class="tab-button {{#if (eq activeTab 'items')}}active-tab{{/if}} pp-icon-button rules-element" data-pp-action="tab"
-                        data-tab-id="items">
-                        <span class="pp-icon-button__text">Inventory</span>
-                        
-                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/inventory.svg" alt="" aria-hidden="true" />
-
                     </button>
                 </div>
             </div>
-        
-            <div class="next-roll-panel card">
-                <label>Next Roll:</label>
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'normal')}}active{{/if}}" data-pp-action="setRollMode"
-                    data-roll-mode="normal">Normal</button>
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'advantage')}}active{{/if}}"
-                    data-pp-action="setRollMode" data-roll-mode="advantage">Advantage</button>
-                <button type="button" class="roll-mode-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}"
-                    data-pp-action="setRollMode" data-roll-mode="disadvantage">Disadvantage</button>
+            <div class="sheet-tabs">
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'dossier')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="dossier">
+                    <span class="pp-icon-button__text">Dossier</span>
+            
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/body-attribute.svg" alt=""
+                        aria-hidden="true" />
+            
+                </button>
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'combat')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="combat">
+                    <span class="pp-icon-button__text">Combat</span>
+            
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/combat.svg" alt=""
+                        aria-hidden="true" />
+            
+                </button>
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'skills')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="skills">
+                    <span class="pp-icon-button__text">Skills</span>
+            
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/skill.svg" alt=""
+                        aria-hidden="true" />
+            
+                </button>
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'items')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="items">
+                    <span class="pp-icon-button__text">Inventory</span>
+            
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/inventory.svg" alt=""
+                        aria-hidden="true" />
+            
+                </button>
             </div>
+            
         </div>
         {{!-- <div class="header-main header-main-with-portrait">
             <section class="card portrait-card">
@@ -143,7 +171,7 @@
             </div>
         </div> --}}
     </header>
-    <section class="sheet-body" style="border: 3px; border-color:#2A7586; border-style:solid; border-radius: 0 0 10pt 10pt;">
+    <section class="sheet-body" >
         <div class="tab-panel dossier-layout {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}">
             <section class="card portrait-card">
                 <div class="portrait-wrapper">

@@ -17,11 +17,12 @@
     --pp-light-icon-foreground: #F2EABD;
     --pp-item: #CA1527;
     --pp-weapon: #09293B;
+    --pp-dark-red: #7A000C;
 
 }
 
 .parallax.sheet .window-content {
-    padding: 0.75rem;
+    padding: 5px;
     overflow: auto;
 }
 
@@ -137,7 +138,7 @@
 .parallax.sheet input[type="number"],
 .parallax.sheet select,
 .parallax.sheet textarea,
-.parallax.sheet button {
+.parallax.sheet {
     width: 100%;
 }
 
@@ -173,7 +174,7 @@
 .tab-button {
     border-color: var(--pp-rules-element);
     border-radius: 6pt 6pt 0 0;
-    border-width: 3px;
+    border-width: 1px;
 }
 
 /* .tab-button:hover {
@@ -185,17 +186,20 @@
 .parallax.sheet .row-actions button,
 .parallax.sheet .roll-mode-button,
 .parallax.sheet .inline-actions button {
-    width: auto;
+    /* width: auto; */
     min-width: 0;
 }
 
-.parallax.sheet,
-.parallax.sheet .roll-mode-button.active {
-    outline: 3px solid var(--color-warm-2, #a66);
+.roll-mode-button{
+    border: 3px solid var(--pp-light-icon-foreground);
+}
+
+.roll-mode-button.active {
+    border: 3px solid var(--pp-dark-red);
 }
 
 .active-tab{
-    border: 3px solid var(--pp-stat-block);
+    border: 2px solid var(--pp-stat-block);
     border-bottom: none;
 }
 
@@ -212,8 +216,11 @@
     min-height: 0;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 0.1rem;
-    
+    padding: 5px;
+    border: 1px;
+    border-color: #2A7586;
+    border-style: solid;
+    border-radius: 0 0 10pt 10pt;
 }
 
 .parallax.sheet table {
@@ -357,16 +364,31 @@
 
 .character-header {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.character-header-full{
+    display: flex;
     flex-direction: row;
     gap: 10px;
-    justify-content: space-between;
+
+}
+
+.yellow-border{
+    border: 1px;
+        border-color: var(--pp-light-icon-foreground);
+        border-style: solid;
+        border-radius: 5pt;
+        padding: 5px
 }
 
 .character-header-main {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .character-summary-fields {
@@ -384,23 +406,24 @@
 .sheet-tabs {
     display: flex;
     flex-direction: row;
-    align-content: stretch;
+    align-content: flex-end;
     gap: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
 }
 
-.sheet-tabs button {
+/* .sheet-tabs button {
     flex-basis: 100%;
-}
+} */
 
 .next-roll-panel {
     display: flex;
     flex-direction: column;
+    gap: 3px;
 }
 
 .pp-icon-button {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
@@ -415,8 +438,14 @@
 .pp-action-button{
     
     background-color: var(--pp-item);
-    border-radius: 10pt;
-    width: 75px;
+    border-radius: 5pt;
+
+}
+
+.pp-selectable-button {
+    background-color: var(--pp-stat-block);
+    border-radius: 3pt;
+    min-height: 30px;
 }
 
 .pp-icon-button__text {
@@ -425,10 +454,24 @@
     white-space: nowrap;
 }
 
+.pp-icon-button__dark-text {
+    flex: 1 1 auto;
+    text-align: left;
+    white-space: nowrap;
+    color: var(--pp-dark-red);
+}
+
 .pp-icon-button__icon {
     flex: 0 0 30px;
     width: 30px;
     height: 30px;
+    object-fit: contain;
+}
+
+.pp-icon-button__small-icon {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
 }
 
@@ -476,4 +519,10 @@
 .parallax.sheet .row-actions {
     flex-wrap: nowrap;
     white-space: nowrap;
+}
+
+.dossier-input{
+    height: 2rem;
+    font-size: large;
+    text-align: center;
 }
