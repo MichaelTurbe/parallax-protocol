@@ -136,7 +136,7 @@
         </div> --}}
     </header>
     <section class="sheet-body" style="border: 3px; border-color:#2A7586; border-style:solid; border-top: none;">
-        <div class="tab-panel {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}" style="display: flex; flex-direction:row; gap: 5px">
+        <div class="tab-panel dossier-layout {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}">
             <section class="card portrait-card">
                 <div class="portrait-wrapper">
                     <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" />
@@ -146,17 +146,27 @@
                     <button type="button" data-pp-action="clearPortrait">Clear</button>
                 </div>
             </section>
-            <section style="display: flex; flex-direction:column">
+            <section class="stats-column">
                 <section class="card">
-                    <h4>Stats<h4>
-                    <div class="stat-grid">
-                        <label>STR <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
-                        <label>DEX <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
-                        <label>CON <input type="number" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
-                        <label>INT <input type="number" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
-                        <label>WIS <input type="number" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>
-                        <label>CHA <input type="number" name="system.stats.cha.value" value="{{system.stats.cha.value}}" /></label>
+                    <h4>Stats</h4>
+                    <div class="stat-grid character-stat-grid">
+                        <label><span class="stat-label">STR</span> <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
+                        <label><span class="stat-label">DEX</span> <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
+                        <label><span class="stat-label">CON</span> <input type="number" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
+                        <label><span class="stat-label">INT</span> <input type="number" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
+                        <label><span class="stat-label">WIS</span> <input type="number" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>
+                        <label><span class="stat-label">CHA</span> <input type="number" name="system.stats.cha.value" value="{{system.stats.cha.value}}" /></label>
                     </div>
+                </section>
+
+                <section class="card hit-die-card top-gap">
+                    <h4>Hit Die</h4>
+                    <label>Hit Die
+                        <select name="system.identity.hitDie">
+                            {{selectOptions hitDieOptions selected=system.identity.hitDie}}
+                        </select>
+                    </label>
+                    <button type="button" class="top-gap" data-pp-action="rollHitDie">Roll Hit Die</button>
                 </section>
             </section>
                             <section class="card">
@@ -220,7 +230,8 @@
                                         <td>{{system.damageSingle}}</td>
                                         <td>{{system.damageType}}</td>
                                         <td class="row-actions">
-                                            <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                            <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                            <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
                                             <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
                                             <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
                                         </td>
@@ -249,7 +260,8 @@
                                         <td>{{system.damageAutomatic}}</td>
                                         <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
                                         <td class="row-actions">
-                                            <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
+                                            <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                            <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
                                             <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
                                             <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
                                         </td>
@@ -365,14 +377,14 @@
                     </thead>
                     <tbody>
                         {{#each skills}}
-                        <tr>
+                        <tr data-skill-row="{{key}}">
                             <td>{{label}}</td>
                             <td>{{statLabel}}</td>
                             <td><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
                             <td><input type="number" name="system.skills.{{key}}.trainedSkillBonus" value="{{trainedSkillBonus}}" /></td>
                             <td><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
-                            <td>{{totalBonus}}</td>
-                            <td>{{target}}</td>
+                            <td data-skill-total>{{totalBonus}}</td>
+                            <td data-skill-target>{{target}}</td>
                             <td class="row-actions">
                                 <button type="button" data-pp-action="rollSkillCheck" data-skill-key="{{key}}">Check</button>
                                 <button type="button" data-pp-action="rollSkillContest" data-skill-key="{{key}}">Contest</button>

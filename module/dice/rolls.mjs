@@ -121,7 +121,7 @@ export async function rollInitiative(actor, isStatblock = false, mode = "normal"
     });
 }
 
-export async function rollWeaponAttack(actor, weapon, mode = "normal") {
+export async function rollWeaponAttackContest(actor, weapon, mode = "normal") {
     const linkedSkill = actor.system.skills?.[weapon.system.linkedSkill];
     const skillBonus = linkedSkill?.totalBonus ?? 0;
     const manual = Number(weapon.system.manualAttackBonus ?? 0);
@@ -132,6 +132,39 @@ export async function rollWeaponAttack(actor, weapon, mode = "normal") {
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
         flavor: buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill),
+    });
+}
+
+export async function rollWeaponAttackCheck(actor, weapon, mode = "normal") {
+    const linkedSkill = actor.system.skills?.[weapon.system.linkedSkill];
+    const skillBonus = linkedSkill?.totalBonus ?? 0;
+    const manual = Number(weapon.system.manualAttackBonus ?? 0);
+    const attackBonus = weapon.system.attackBonusMode === "manual" ? manual : skillBonus;
+    const target = 20 - attackBonus;
+    const skillLabel = linkedSkill?.label ?? weapon.system.linkedSkill ?? "Weapon Skill";
+
+    const roll = await new Roll(resolveRollFormula(mode)).evaluate();
+    const total = roll.total;
+    const success = total >= target;
+
+    await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: `${weapon.name} Attack Check (${skillLabel}, ${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
+    });
+}
+
+export async function rollWeaponAttack(actor, weapon, mode = "normal") {
+    return rollWeaponAttackContest(actor, weapon, mode);
+}
+
+export async function rollHitDie(actor) {
+    const hitDie = Number(actor.system.identity?.hitDie ?? 8);
+    const die = Math.max(1, Math.trunc(Number.isFinite(hitDie) ? hitDie : 8));
+    const roll = await new Roll(`1d${die}`).evaluate();
+
+    await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        flavor: `${actor.name} Hit Die — d${die}`,
     });
 }
 

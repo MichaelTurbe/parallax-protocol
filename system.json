@@ -1,8 +1,8 @@
 {
   "id": "parallax-protocol",
   "title": "Parallax Protocol",
-  "version": "0.0.24",
-  "description": "Prototype Foundry VTT system for Parallax Protocol. v23: trained skill bonuses are free-entry skill fields.",
+  "version": "0.0.25",
+  "description": "Prototype Foundry VTT system for Parallax Protocol. v25: sheet sizing, stat styling, skill input stability, weapon check/contest rolls, and hit die controls.",
   "authors": [
     {
       "name": "Ecstatic Entropy Games"
@@ -12,12 +12,18 @@
     "minimum": "14",
     "verified": "14.359"
   },
-  "esmodules": ["parallax-protocol.mjs"],
-  "styles": ["styles/system.css"],
+  "esmodules": [
+    "parallax-protocol.mjs"
+  ],
+  "styles": [
+    "styles/system.css"
+  ],
   "documentTypes": {
     "Actor": {
       "character": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       },
       "npc": {},
       "robot": {},
@@ -25,19 +31,29 @@
     },
     "Item": {
       "weapon": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       },
       "armor": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       },
       "field": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       },
       "gear": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       },
       "speciesTrait": {
-        "htmlFields": ["system.notes"]
+        "htmlFields": [
+          "system.notes"
+        ]
       }
     }
   },

@@ -5,30 +5,45 @@ import {
     rollSkillCheck,
     rollSkillContest,
     rollWeaponAttack,
+    rollWeaponAttackCheck,
+    rollWeaponAttackContest,
+    rollHitDie,
 } from "../dice/rolls.mjs";
 
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
 
+const HIT_DIE_BY_FIRST_PRIORITY = {
+    martial: 10,
+    intellectual: 6,
+    physical: 12,
+    subtle: 8,
+};
+
 export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     _rollMode = "normal";
     _pendingScrollTop = null;
+    _hasAppliedDefaultPosition = false;
 
-    static DEFAULT_OPTIONS = foundry.utils.mergeObject(super.DEFAULT_OPTIONS, {
+    static DEFAULT_OPTIONS = {
+        ...super.DEFAULT_OPTIONS,
         classes: ["parallax", "sheet", "actor", "character-sheet"],
         tag: "form",
         window: {
+            ...super.DEFAULT_OPTIONS.window,
             title: "Parallax Protocol Character",
             resizable: false,
         },
         position: {
+            ...super.DEFAULT_OPTIONS.position,
             width: 700,
             height: 640,
         },
         form: {
+            ...super.DEFAULT_OPTIONS.form,
             submitOnChange: false,
             closeOnSubmit: false,
         },
-    });
+    };
 
     static PARTS = {
         body: {
@@ -55,6 +70,11 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
 
     async _onRender(context, options) {
         await super._onRender(context, options);
+
+        if (!this._hasAppliedDefaultPosition) {
+            this.setPosition({ width: 700, height: 640 });
+            this._hasAppliedDefaultPosition = true;
+        }
 
         if (Number.isFinite(this._pendingScrollTop)) {
             const body = this._getSheetBody();
@@ -134,6 +154,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             skillsByCategory,
             saveTypes: PARALLAX.saveTypes,
             priorities: PARALLAX.skillCategories,
+            hitDieOptions: { 6: "d6", 8: "d8", 10: "d10", 12: "d12" },
             meleeWeapons,
             rangedWeapons,
             gear,
@@ -224,6 +245,27 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         return itemObject;
     }
 
+    _getDefaultHitDie(firstPriority) {
+        return HIT_DIE_BY_FIRST_PRIORITY[firstPriority] ?? 8;
+    }
+
+    _refreshSkillRow(skillKey) {
+        const row = this.element?.querySelector?.(`[data-skill-row="${skillKey}"]`);
+        const skill = this.document.system.skills?.[skillKey];
+        if (!row || !skill) return;
+
+        const statBonus = Number(this.document.system.stats?.[skill.stat]?.value ?? 0);
+        const trainedSkillBonus = Number(skill.trainedSkillBonus ?? 0);
+        const itemBonus = Number(skill.itemBonus ?? 0);
+        const totalBonus = statBonus + trainedSkillBonus + itemBonus;
+        const skillTarget = 20 - totalBonus;
+
+        const total = row.querySelector("[data-skill-total]");
+        const target = row.querySelector("[data-skill-target]");
+        if (total) total.textContent = String(totalBonus);
+        if (target) target.textContent = String(skillTarget);
+    }
+
     async _onChangeInput(event) {
         this._captureScrollTop();
 
@@ -242,13 +284,22 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             value = element.value;
         }
 
+        if (path === "system.priorities.first") {
+            await this.document.update({
+                [path]: value,
+                "system.identity.hitDie": this._getDefaultHitDie(value),
+            });
+            return;
+        }
+
         if (path.startsWith("system.skills.")) {
             const parts = path.split(".");
             const skillKey = parts[2];
             const fieldKey = parts[3];
             const currentSkill = foundry.utils.deepClone(this.document.system.skills?.[skillKey] ?? {});
             currentSkill[fieldKey] = value;
-            await this.document.update({ [`system.skills.${skillKey}`]: currentSkill });
+            await this.document.update({ [`system.skills.${skillKey}`]: currentSkill }, { render: false });
+            this._refreshSkillRow(skillKey);
             return;
         }
 
@@ -377,6 +428,22 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             const weapon = actor.items.get(target.dataset.itemId);
             if (!weapon) return;
             return this._consumeRollMode((mode) => rollWeaponAttack(actor, weapon, mode));
+        }
+
+        if (action === "rollWeaponAttackCheck") {
+            const weapon = actor.items.get(target.dataset.itemId);
+            if (!weapon) return;
+            return this._consumeRollMode((mode) => rollWeaponAttackCheck(actor, weapon, mode));
+        }
+
+        if (action === "rollWeaponAttackContest") {
+            const weapon = actor.items.get(target.dataset.itemId);
+            if (!weapon) return;
+            return this._consumeRollMode((mode) => rollWeaponAttackContest(actor, weapon, mode));
+        }
+
+        if (action === "rollHitDie") {
+            return rollHitDie(actor);
         }
     }
 }

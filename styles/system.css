@@ -412,3 +412,45 @@
 .rules-element{
     background-color: #2A7586;
 }
+
+/* v25 character sheet layout fixes */
+.parallax.sheet .tab-panel.hidden {
+    display: none !important;
+}
+
+.parallax.sheet .dossier-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.parallax.sheet .stats-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.parallax.sheet .character-stat-grid label {
+    align-items: center;
+    text-align: center;
+}
+
+.parallax.sheet .character-stat-grid .stat-label {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.parallax.sheet .character-stat-grid input[type="number"] {
+    min-width: 40px;
+    text-align: center;
+}
+
+.parallax.sheet .hit-die-card select,
+.parallax.sheet .hit-die-card button {
+    min-width: 40px;
+}
+
+.parallax.sheet .row-actions {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
