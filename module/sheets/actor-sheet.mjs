@@ -31,7 +31,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         window: {
             ...super.DEFAULT_OPTIONS.window,
             title: "Parallax Protocol Character",
-            resizable: false,
+            resizable: true,
         },
         position: {
             ...super.DEFAULT_OPTIONS.position,
@@ -72,7 +72,9 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         await super._onRender(context, options);
 
         if (!this._hasAppliedDefaultPosition) {
-            this.setPosition({ width: 700, height: 640 });
+            const width = Math.max(this.position?.width ?? 700, 700);
+            const height = Math.max(this.position?.height ?? 640, 640);
+            this.setPosition({ width, height });
             this._hasAppliedDefaultPosition = true;
         }
 
