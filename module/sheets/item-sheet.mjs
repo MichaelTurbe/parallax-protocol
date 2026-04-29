@@ -26,9 +26,29 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
     _attachPartListeners(partId, htmlElement, options) {
         super._attachPartListeners(partId, htmlElement, options);
 
+        htmlElement.querySelectorAll("[data-pp-action]").forEach((element) => {
+            element.addEventListener("click", (event) => this._onClickAction(event, element));
+        });
+
         htmlElement.querySelectorAll("input, select, textarea").forEach((element) => {
             element.addEventListener("change", () => this._queueParentSheetRefresh());
         });
+    }
+
+    async _onClickAction(event, target) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (target.dataset.ppAction === "choosePortrait") {
+            const picker = new foundry.applications.apps.FilePicker({
+                type: "image",
+                current: this.document.img || "",
+                callback: async (path) => {
+                    await this.document.update({ img: path });
+                },
+            });
+            return picker.browse(this.document.img || "");
+        }
     }
 
     _queueParentSheetRefresh() {

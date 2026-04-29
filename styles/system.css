@@ -118,6 +118,20 @@
     grid-column: span 2;
 }
 
+.parallax.sheet .field-span-3 {
+    grid-column: span 3;
+}
+
+.parallax.sheet .item-portrait img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 6px;
+    cursor: pointer;
+    border: var(--pp-border);
+    background: rgba(0, 0, 0, 0.15);
+}
+
 .parallax.sheet .card {
     border: var(--pp-border);
     border-radius: 10px;

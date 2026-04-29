@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '3823,3900p' /tmp/parallax-manual.txt)",
+      "Bash(sed -n '4178,4260p' /tmp/parallax-manual.txt)",
+      "Bash(sed -n '4252,4360p' /tmp/parallax-manual.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 63 -l 64 /tmp/parallax-armor.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 64 -l 66 /tmp/parallax-armor.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 57 -l 59 /tmp/parallax-heavyarms.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 44 -l 56 /tmp/parallax-meleeweapons.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 57 -l 61 /tmp/parallax-heavyarms.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 71 -l 75 /tmp/parallax-gear.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 72 -l 80 /tmp/parallax-gear2.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 78 -l 80 /tmp/parallax-infil.txt)",
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 79 -l 82 /tmp/parallax-infil2.txt)"
+    ]
+  }
+}

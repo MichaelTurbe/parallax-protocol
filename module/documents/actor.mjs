@@ -181,7 +181,7 @@ export class ParallaxActor extends Actor {
                 else equipmentBulkNotInPack += bulk;
             }
 
-            if (item.type === "weapon") {
+            if (item.type === "weapon" || item.type === "armor" || item.type === "field") {
                 equipmentBulkNotInPack += Number(item.system.bulk ?? 0);
             }
         }

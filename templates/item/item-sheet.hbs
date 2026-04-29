@@ -1,6 +1,9 @@
 <div class="parallax-item-sheet">
     <div class="identity-grid">
-        <div class="field-span-2">
+        <div class="item-portrait">
+            <img src="{{item.img}}" alt="{{item.name}}" data-pp-action="choosePortrait" title="Click to change image" />
+        </div>
+        <div class="field-span-3">
             <label>Name</label>
             <input type="text" name="name" value="{{item.name}}" />
         </div>
@@ -45,6 +48,7 @@
 
     {{#if isArmor}}
     <div class="two-col top-gap">
+        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>DEX Penalty <input type="number" name="system.dexPenalty" value="{{system.dexPenalty}}" /></label>
         <label>Speed Penalty <input type="number" name="system.speedPenalty" value="{{system.speedPenalty}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
@@ -54,6 +58,7 @@
 
     {{#if isField}}
     <div class="two-col top-gap">
+        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
         <label>Energy DR <input type="number" name="system.energyDr" value="{{system.energyDr}}" /></label>
     </div>
