@@ -1,49 +1,65 @@
 {
-  "id": "parallax-protocol",
-  "title": "Parallax Protocol",
-  "version": "0.0.28",
-  "description": "Prototype Foundry VTT system for Parallax Protocol. v26: character sheet defaults to 700x640, remains resizable, and enforces that as minimum size.",
-  "authors": [
-    {
-      "name": "Ecstatic Entropy Games"
-    }
-  ],
-  "compatibility": {
-    "minimum": "14",
-    "verified": "14.359"
-  },
-  "esmodules": ["parallax-protocol.mjs"],
-  "styles": ["styles/system.css"],
-  "documentTypes": {
-    "Actor": {
-      "character": {
-        "htmlFields": ["system.notes"]
-      },
-      "npc": {},
-      "robot": {},
-      "creature": {}
+    "id": "parallax-protocol",
+    "title": "Parallax Protocol",
+    "version": "0.0.30",
+    "description": "Prototype Foundry VTT system for Parallax Protocol. v29: header skill rolls, revised combat movement/load layout, and inventory-derived save/DR refresh fixes.",
+    "authors": [
+        {
+            "name": "Ecstatic Entropy Games"
+        }
+    ],
+    "compatibility": {
+        "minimum": "14",
+        "verified": "14.359"
     },
-    "Item": {
-      "weapon": {
-        "htmlFields": ["system.notes"]
-      },
-      "armor": {
-        "htmlFields": ["system.notes"]
-      },
-      "field": {
-        "htmlFields": ["system.notes"]
-      },
-      "gear": {
-        "htmlFields": ["system.notes"]
-      },
-      "speciesTrait": {
-        "htmlFields": ["system.notes"]
-      }
-    }
-  },
-  "primaryTokenAttribute": "hp",
-  "secondaryTokenAttribute": null,
-  "url": "",
-  "manifest": "",
-  "download": ""
+    "esmodules": [
+        "parallax-protocol.mjs"
+    ],
+    "styles": [
+        "styles/system.css"
+    ],
+    "documentTypes": {
+        "Actor": {
+            "character": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
+            "npc": {},
+            "robot": {},
+            "creature": {}
+        },
+        "Item": {
+            "weapon": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
+            "armor": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
+            "field": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
+            "gear": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
+            "speciesTrait": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            }
+        }
+    },
+    "primaryTokenAttribute": "hp",
+    "secondaryTokenAttribute": null,
+    "url": "",
+    "manifest": "",
+    "download": ""
 }

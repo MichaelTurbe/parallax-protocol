@@ -22,6 +22,24 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
         },
     };
 
+
+    _attachPartListeners(partId, htmlElement, options) {
+        super._attachPartListeners(partId, htmlElement, options);
+
+        htmlElement.querySelectorAll("input, select, textarea").forEach((element) => {
+            element.addEventListener("change", () => this._queueParentSheetRefresh());
+        });
+    }
+
+    _queueParentSheetRefresh() {
+        if (!this._parentSheet) return;
+
+        window.clearTimeout(this._parentSheetRefreshTimeout);
+        this._parentSheetRefreshTimeout = window.setTimeout(() => {
+            this._parentSheet?.render(false);
+        }, 150);
+    }
+
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
         const config = game.parallax?.config ?? {};

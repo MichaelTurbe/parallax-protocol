@@ -24,6 +24,9 @@
                             <input class="dossier-input" type="number" name="system.hp.value" value="{{system.hp.value}}"/>
                         </div>
                     </div>
+                    <div style="display:flex; justify-content:baseline; align-items:center">
+                        <label style="font-size: small;">quick actions:</label>
+                    </div>
                     <div style="width: 100%; display: flex; gap:10px; justify-content: flex-end; flex-wrap:nowrap;">
                         <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
                         
@@ -33,24 +36,21 @@
                                 aria-hidden="true" />
                         
                         </button>
-                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                        
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillCheck" data-skill-key="awareness">
                             <span class="pp-icon-button__text">Awareness</span>
                         
                             <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/awareness.svg" alt=""
                                 aria-hidden="true" />
                         
                         </button>
-                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                        
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillContest" data-skill-key="deflection">
                             <span class="pp-icon-button__text">Deflect</span>
                         
                             <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/divert.svg" alt=""
                                 aria-hidden="true" />
                         
                         </button>
-                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
-                        
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillContest" data-skill-key="evasion">
                             <span class="pp-icon-button__text">Evade</span>
                         
                             <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/shield-reflect.svg" alt=""
@@ -325,42 +325,23 @@
                     </tbody>
                 </table>
             </section>
-            <div class="three-col">
+            <section class="card movement-load-card">
+                <h4>Movement & Load</h4>
+                <div class="movement-load-edit-row">
+                    <label>Base Speed <input type="number" name="system.movement.base" value="{{system.movement.base}}" /></label>
+                    <label>Armor Penalty <input type="number" name="system.movement.armorPenalty" value="{{system.movement.armorPenalty}}" /></label>
+                    <label>With Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithPack" value="{{system.movement.burdenedPenaltyWithPack}}" /></label>
+                    <label>Without Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithoutPack" value="{{system.movement.burdenedPenaltyWithoutPack}}" /></label>
+                </div>
+                <div class="movement-load-summary-row">
+                    <div>Load Rating <strong>{{system.load.rating}}</strong></div>
+                    <div>Total Bulk With Pack <strong>{{system.load.totalBulkWithPack}}</strong></div>
+                    <div>Total Bulk Without Pack <strong>{{system.load.totalBulkWithoutPack}}</strong></div>
+                    <div>Speed With Pack <strong>{{system.movement.totalWithPack}}</strong></div>
+                    <div>Speed Without Pack <strong>{{system.movement.totalWithoutPack}}</strong></div>
+                </div>
+            </section>
 
-                <section class="card">
-                    <h4>Movement & Load</h4>
-                    <div class="summary-grid">
-                        <label>Base Speed <input type="number" name="system.movement.base" value="{{system.movement.base}}" /></label>
-                        <label>Armor Penalty <input type="number" name="system.movement.armorPenalty" value="{{system.movement.armorPenalty}}" /></label>
-                        <label>With Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithPack" value="{{system.movement.burdenedPenaltyWithPack}}" /></label>
-                        <label>Without Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithoutPack" value="{{system.movement.burdenedPenaltyWithoutPack}}" /></label>
-                        <div>Load Rating <strong>{{system.load.rating}}</strong></div>
-                        <div>Total Bulk With Pack <strong>{{system.load.totalBulkWithPack}}</strong></div>
-                        <div>Total Bulk Without Pack <strong>{{system.load.totalBulkWithoutPack}}</strong></div>
-                        <div>Speed With Pack <strong>{{system.movement.totalWithPack}}</strong></div>
-                        <div>Speed Without Pack <strong>{{system.movement.totalWithoutPack}}</strong></div>
-                    </div>
-                </section>
-
-                <section class="card">
-                    <h4>Combat Summary</h4>
-                    <div class="summary-grid compact">
-                        <div>Awareness Bonus <strong>{{system.combat.awareness.totalBonus}}</strong></div>
-                        <div>Deflection Bonus <strong>{{system.combat.deflection.totalBonus}}</strong></div>
-                        <div>Evasion Bonus <strong>{{system.combat.evasion.totalBonus}}</strong></div>
-                        <div>Initiative Bonus <strong>{{system.combat.initiativeBonus}}</strong></div>
-                        {{!-- <button type="button" data-pp-action="rollInitiative">Roll Initiative</button> --}}
-                        <button type="button" class="pp-icon-button" data-pp-action="rollInitiative">
-                        
-                            <span class="pp-icon-button__text">Roll Initiative</span>
-                        
-                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/coinflip.svg" alt=""
-                                aria-hidden="true" />
-                        
-                        </button>
-                    </div>
-                </section>
-            </div>
 
             <div class="two-col wide-gap">
                 <section class="card">
@@ -428,21 +409,31 @@
             {{#each skillsByCategory as |skills categoryKey|}}
             <section class="card top-gap">
                 <h4 class="tight-text">{{lookup ../skillCategories categoryKey}} Skills</h4>
-                <table>
+                <table class="pp-skill-table">
+                    <colgroup>
+                        <col class="pp-skill-name-col" />
+                        <col class="pp-skill-stat-col" />
+                        <col class="pp-skill-trained-col" />
+                        <col class="pp-skill-trained-bonus-col" />
+                        <col class="pp-skill-item-bonus-col" />
+                        <col class="pp-skill-total-col" />
+                        <col class="pp-skill-target-col" />
+                        <col class="pp-skill-actions-col" />
+                    </colgroup>
                     <thead>
-                        <tr><th>Skill</th><th>Stat</th><th>Trained</th><th>Trained Skill Bonus</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
+                        <tr><th class="pp-skill-name-cell">Skill</th><th>Stat</th><th>Trained</th><th>Trained Skill Bonus</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
                     </thead>
                     <tbody>
                         {{#each skills}}
                         <tr data-skill-row="{{key}}">
-                            <td>{{label}}</td>
-                            <td>{{statLabel}}</td>
-                            <td><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
-                            <td><input type="number" name="system.skills.{{key}}.trainedSkillBonus" value="{{trainedSkillBonus}}" /></td>
-                            <td><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
-                            <td data-skill-total>{{totalBonus}}</td>
-                            <td data-skill-target>{{target}}</td>
-                            <td class="row-actions">
+                            <td class="pp-skill-name-cell">{{label}}</td>
+                            <td class="pp-skill-stat-cell">{{statLabel}}</td>
+                            <td class="pp-skill-trained-cell"><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
+                            <td class="pp-skill-trained-bonus-cell"><input type="number" name="system.skills.{{key}}.trainedSkillBonus" value="{{trainedSkillBonus}}" /></td>
+                            <td class="pp-skill-item-bonus-cell"><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
+                            <td class="pp-skill-total-cell" data-skill-total>{{totalBonus}}</td>
+                            <td class="pp-skill-target-cell" data-skill-target>{{target}}</td>
+                            <td class="row-actions pp-skill-actions-cell">
                                 <button type="button" data-pp-action="rollSkillCheck" data-skill-key="{{key}}">Check</button>
                                 <button type="button" data-pp-action="rollSkillContest" data-skill-key="{{key}}">Contest</button>
                             </td>

@@ -74,8 +74,8 @@ export class ParallaxActor extends Actor {
         const level = Math.max(1, Math.min(14, Number.isFinite(rawLevel) ? rawLevel : 1));
 
         this._prepareSkills();
-        this._prepareSaves(level);
         this._prepareItemsAndArmor();
+        this._prepareSaves(level);
         this._prepareCombat();
         this._prepareLoad();
         this._prepareMovement();

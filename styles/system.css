@@ -258,6 +258,82 @@
     border-bottom: var(--pp-border);
 }
 
+
+.parallax.sheet .pp-skill-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-name-col {
+    width: auto;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-stat-col {
+    width: 52px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-trained-col {
+    width: 70px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-col {
+    width: 96px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-item-bonus-col {
+    width: 64px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-total-col,
+.parallax.sheet .pp-skill-table .pp-skill-target-col {
+    width: 60px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-actions-col {
+    width: 150px;
+}
+
+.parallax.sheet .pp-skill-table th,
+.parallax.sheet .pp-skill-table td {
+    overflow: hidden;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-name-cell {
+    white-space: normal;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-stat-cell,
+.parallax.sheet .pp-skill-table .pp-skill-trained-cell,
+.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-cell,
+.parallax.sheet .pp-skill-table .pp-skill-item-bonus-cell,
+.parallax.sheet .pp-skill-table .pp-skill-total-cell,
+.parallax.sheet .pp-skill-table .pp-skill-target-cell {
+    text-align: center;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-trained-cell input[type="checkbox"] {
+    width: auto;
+    margin-inline: auto;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-cell input,
+.parallax.sheet .pp-skill-table .pp-skill-item-bonus-cell input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-actions-cell {
+    justify-content: flex-start;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-actions-cell button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0.35rem;
+}
+
 .parallax.sheet .top-gap {
     margin-top: 0.75rem;
 }
@@ -391,7 +467,8 @@
 .character-header-main {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    row-gap: 2px;
+    column-gap: 10px;
     justify-content: space-around;
 }
 
@@ -533,4 +610,39 @@
     height: 2rem;
     font-size: large;
     text-align: center;
+}
+
+/* v29 combat movement/load layout */
+.parallax.sheet .movement-load-card {
+    width: 100%;
+}
+
+.parallax.sheet .movement-load-edit-row,
+.parallax.sheet .movement-load-summary-row {
+    display: grid;
+    gap: var(--pp-gap);
+    align-items: stretch;
+}
+
+.parallax.sheet .movement-load-edit-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-bottom: 0.6rem;
+}
+
+.parallax.sheet .movement-load-summary-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.parallax.sheet .movement-load-summary-row > div {
+    border: var(--pp-border);
+    border-radius: 6px;
+    padding: 0.35rem;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .parallax.sheet .movement-load-edit-row,
+    .parallax.sheet .movement-load-summary-row {
+        grid-template-columns: 1fr;
+    }
 }
