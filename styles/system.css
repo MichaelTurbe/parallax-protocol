@@ -597,6 +597,12 @@
 
 .parallax.sheet .dossier-layout {
     display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.parallax.sheet .dossier-top-row {
+    display: flex;
     flex-direction: row;
     gap: 5px;
 }
@@ -637,6 +643,27 @@
     font-size: large;
     text-align: center;
 }
+
+.parallax.sheet .pp-header-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+}
+
+.parallax.sheet .pp-header-stats .field-group {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 4px;
+    flex: 0 0 auto;
+}
+
+.parallax.sheet .pp-header-stats h5 {
+    margin: 0;
+    white-space: nowrap;
+}
+
 
 .parallax.sheet .pp-delete-btn {
     width: fit-content;

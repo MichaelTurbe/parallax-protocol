@@ -8,24 +8,38 @@
                             <h5>Name</h5>
                             <input class="dossier-input" type="text" name="name" value="{{actor.name}}"/>
                         </div>
-            
+
                         <div class="field-group" style="flex: 1 1 0">
                             <h5>Level</h5>
                             <input class="dossier-input" type="number" name="system.identity.level" value="{{system.identity.level}}"/>
                         </div>
-            
+
                         <div class="field-group" style="flex: 1 1 0">
                             <h5 style="white-space: nowrap;">Max HP</h5>
                             <input class="dossier-input" type="number" name="system.hp.max" value="{{system.hp.max}}"/>
                         </div>
-            
+
                         <div class="field-group" style="flex: 1 1 0">
                             <h5 style="white-space: nowrap;">Current HP</h5>
                             <input class="dossier-input" type="number" name="system.hp.value" value="{{system.hp.value}}"/>
                         </div>
                     </div>
-                    <div style="display:flex; justify-content:baseline; align-items:center">
+                    <div style="display:flex; justify-content:space-between; align-items:center">
                         <label style="font-size: small;">quick actions:</label>
+                        <div class="pp-header-stats">
+                            <div class="field-group">
+                                <h5>Speed:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.movement.totalWithPack}}" />
+                            </div>
+                            <div class="field-group">
+                                <h5>KDR:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.armorSummary.total.kinetic}}" />
+                            </div>
+                            <div class="field-group">
+                                <h5>EDR:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.armorSummary.total.energy}}" />
+                            </div>
+                        </div>
                     </div>
                     <div style="width: 100%; display: flex; gap:10px; justify-content: flex-end; flex-wrap:nowrap;">
                         <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
@@ -173,63 +187,80 @@
     </header>
     <section class="sheet-body" >
         <div class="tab-panel dossier-layout {{#unless (eq activeTab 'dossier')}}hidden{{/unless}}">
-            <section class="card portrait-card">
-                <div class="portrait-wrapper">
-                    <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="choosePortrait" title="Click to change image" />
-                </div>
-            </section>
-            <section class="stats-column">
-                <section class="card">
-                    <h4>Stats</h4>
-                    <div class="stat-grid character-stat-grid">
-                        <label><span class="stat-label">STR</span> <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
-                        <label><span class="stat-label">DEX</span> <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
-                        <label><span class="stat-label">CON</span> <input type="number" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
-                        <label><span class="stat-label">INT</span> <input type="number" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
-                        <label><span class="stat-label">WIS</span> <input type="number" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>
-                        <label><span class="stat-label">CHA</span> <input type="number" name="system.stats.cha.value" value="{{system.stats.cha.value}}" /></label>
+            <div class="dossier-top-row">
+                <section class="card portrait-card">
+                    <div class="portrait-wrapper">
+                        <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="choosePortrait" title="Click to change image" />
                     </div>
                 </section>
-
-                <section class="card hit-die-card top-gap">
-                    <h4>Hit Die</h4>
-                    <label>Hit Die
-                        <select name="system.identity.hitDie">
-                            {{selectOptions hitDieOptions selected=system.identity.hitDie}}
-                        </select>
-                    </label>
-                    <button type="button" class="top-gap" data-pp-action="rollHitDie">Roll Hit Die</button>
+                <section class="stats-column">
+                    <section class="card">
+                        <h4>Stats</h4>
+                        <div class="stat-grid character-stat-grid">
+                            <label><span class="stat-label">STR</span> <input type="number" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
+                            <label><span class="stat-label">DEX</span> <input type="number" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
+                            <label><span class="stat-label">CON</span> <input type="number" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
+                            <label><span class="stat-label">INT</span> <input type="number" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
+                            <label><span class="stat-label">WIS</span> <input type="number" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>
+                            <label><span class="stat-label">CHA</span> <input type="number" name="system.stats.cha.value" value="{{system.stats.cha.value}}" /></label>
+                        </div>
+                    </section>
+                    <section class="card hit-die-card top-gap">
+                        <h4>Hit Die</h4>
+                        <label>Hit Die
+                            <select name="system.identity.hitDie">
+                                {{selectOptions hitDieOptions selected=system.identity.hitDie}}
+                            </select>
+                        </label>
+                        <button type="button" class="top-gap" data-pp-action="rollHitDie">Roll Hit Die</button>
+                    </section>
                 </section>
+                <section class="card">
+                    <h4>Saving Throws</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Save</th>
+                                <th>Her.</th>
+                                <th>Item</th>
+                                <th>Armor</th>
+                                <th>Target</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each system.saves as |save key|}}
+                            <tr>
+                                <td>{{save.label}}</td>
+                                <td><input type="number" name="system.saves.{{key}}.hereditaryBonus" value="{{save.hereditaryBonus}}" /></td>
+                                <td><input type="number" name="system.saves.{{key}}.itemBonus" value="{{save.itemBonus}}" /></td>
+                                <td>{{save.armorBonus}}</td>
+                                <td>{{save.target}}</td>
+                                <td class="row-actions">
+                                    <button type="button" data-pp-action="rollSave" data-save-key="{{key}}">Roll</button>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+            <section class="card top-gap">
+                <h4>Species Traits</h4>
+                <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="speciesTrait">+ Trait</button></div>
+                <ul class="item-list">
+                    {{#each speciesTraits}}
+                    <li>
+                        <span>{{name}}</span>
+                        <span class="row-actions">
+                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                            <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
+                        </span>
+                    </li>
+                    {{/each}}
+                </ul>
             </section>
-                            <section class="card">
-                                <h4>Saving Throws</h4>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Save</th>
-                                            <th>Her.</th>
-                                            <th>Item</th>
-                                            <th>Armor</th>
-                                            <th>Target</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each system.saves as |save key|}}
-                                        <tr>
-                                            <td>{{save.label}}</td>
-                                            <td><input type="number" name="system.saves.{{key}}.hereditaryBonus" value="{{save.hereditaryBonus}}" /></td>
-                                            <td><input type="number" name="system.saves.{{key}}.itemBonus" value="{{save.itemBonus}}" /></td>
-                                            <td>{{save.armorBonus}}</td>
-                                            <td>{{save.target}}</td>
-                                            <td class="row-actions">
-                                                <button type="button" data-pp-action="rollSave" data-save-key="{{key}}">Roll</button>
-                                            </td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </section>
 
         </div>
         <div class="tab-panel {{#unless (eq activeTab 'combat')}}hidden{{/unless}}">
@@ -447,55 +478,89 @@
         </div>
 
         <div class="tab-panel {{#unless (eq activeTab 'items')}}hidden{{/unless}}">
-            <div class="three-col">
-                <section class="card">
+            <section class="card">
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
                     <h4>Armor</h4>
-                    <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="armor">+ Armor</button></div>
-                    <ul class="item-list">
+                    <button type="button" class="roll-mode-button pp-icon-button pp-selectable-button" style="width:75px; border-width:1px" data-pp-action="createItem" data-item-type="armor">
+                        <span class="pp-icon-button__text">add</span>
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pp-weapon-icon-col"></th>
+                            <th>Name</th>
+                            <th>KDR</th>
+                            <th>EDR</th>
+                            <th>Bulk</th>
+                            <th>DEX Pen.</th>
+                            <th>Spd Pen.</th>
+                            <th>Save Rad</th>
+                            <th>Save Stun</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {{#each armorItems}}
-                        <li>
-                            <span>{{name}}</span>
-                            <span class="row-actions">
+                        <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
+                            <td>{{name}}</td>
+                            <td>{{system.kineticDr}}</td>
+                            <td>{{system.energyDr}}</td>
+                            <td>{{system.bulk}}</td>
+                            <td>{{system.dexPenalty}}</td>
+                            <td>{{system.speedPenalty}}</td>
+                            <td>{{system.saveBonuses.radiation}}</td>
+                            <td>{{system.saveBonuses.stun}}</td>
+                            <td class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
                                 <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
-                            </span>
-                        </li>
+                            </td>
+                        </tr>
                         {{/each}}
-                    </ul>
-                </section>
+                    </tbody>
+                </table>
+            </section>
 
-                <section class="card">
-                    <h4>Fields</h4>
-                    <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="field">+ Field</button></div>
-                    <ul class="item-list">
+            <section class="card top-gap">
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Field Generators</h4>
+                    <button type="button" class="roll-mode-button pp-icon-button pp-selectable-button" style="width:75px; border-width:1px" data-pp-action="createItem" data-item-type="field">
+                        <span class="pp-icon-button__text">add</span>
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pp-weapon-icon-col"></th>
+                            <th>Name</th>
+                            <th>KDR</th>
+                            <th>EDR</th>
+                            <th>Bulk</th>
+                            <th>Save Rad</th>
+                            <th>Save Stun</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {{#each fieldItems}}
-                        <li>
-                            <span>{{name}}</span>
-                            <span class="row-actions">
+                        <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
+                            <td>{{name}}</td>
+                            <td>{{system.kineticDr}}</td>
+                            <td>{{system.energyDr}}</td>
+                            <td>{{system.bulk}}</td>
+                            <td>{{system.saveBonuses.radiation}}</td>
+                            <td>{{system.saveBonuses.stun}}</td>
+                            <td class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
                                 <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
-                            </span>
-                        </li>
+                            </td>
+                        </tr>
                         {{/each}}
-                    </ul>
-                </section>
-
-                <section class="card">
-                    <h4>Species Traits</h4>
-                    <div class="inline-actions"><button type="button" data-pp-action="createItem" data-item-type="speciesTrait">+ Trait</button></div>
-                    <ul class="item-list">
-                        {{#each speciesTraits}}
-                        <li>
-                            <span>{{name}}</span>
-                            <span class="row-actions">
-                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
-                            </span>
-                        </li>
-                        {{/each}}
-                    </ul>
-                </section>
-            </div>
+                    </tbody>
+                </table>
+            </section>
 
             <section class="card top-gap">
                 <h4>Gear</h4>
