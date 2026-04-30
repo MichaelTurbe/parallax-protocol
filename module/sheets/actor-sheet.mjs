@@ -306,6 +306,15 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             return;
         }
 
+        if (path.startsWith("items.")) {
+            const parts = path.split(".");
+            const itemId = parts[1];
+            const fieldPath = parts.slice(2).join(".");
+            const item = this.document.items.get(itemId);
+            if (item) await item.update({ [fieldPath]: value });
+            return;
+        }
+
         if (path.startsWith("system.saves.")) {
             const parts = path.split(".");
             const saveKey = parts[2];

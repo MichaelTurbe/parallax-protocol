@@ -638,6 +638,19 @@
     text-align: center;
 }
 
+.parallax.sheet .pp-delete-btn {
+    width: fit-content;
+    padding: 2px 4px;
+    line-height: 0;
+}
+
+.parallax.sheet .pp-delete-btn__icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    object-fit: contain;
+}
+
 /* v29 combat movement/load layout */
 .parallax.sheet .movement-load-card {
     width: 100%;

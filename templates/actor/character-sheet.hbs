@@ -278,7 +278,7 @@
                                 <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
                                 <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </td>
                         </tr>
                         {{/each}}
@@ -319,7 +319,7 @@
                                 <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
                                 <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </td>
                         </tr>
                         {{/each}}
@@ -457,7 +457,7 @@
                             <span>{{name}}</span>
                             <span class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </span>
                         </li>
                         {{/each}}
@@ -473,7 +473,7 @@
                             <span>{{name}}</span>
                             <span class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </span>
                         </li>
                         {{/each}}
@@ -489,7 +489,7 @@
                             <span>{{name}}</span>
                             <span class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </span>
                         </li>
                         {{/each}}
@@ -508,10 +508,10 @@
                             <td>{{name}}</td>
                             <td>{{system.category}}</td>
                             <td>{{system.bulk}}</td>
-                            <td>{{#if system.inPack}}Yes{{else}}No{{/if}}</td>
+                            <td><input type="checkbox" name="items.{{id}}.system.inPack" {{checked system.inPack}} /></td>
                             <td class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                                <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </td>
                         </tr>
                         {{/each}}
