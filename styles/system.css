@@ -43,6 +43,14 @@
 .pp-font-raleway    { font-family: 'Raleway', sans-serif; }
 .pp-font-rationale  { font-family: 'Rationale', sans-serif; }
 
+h4{
+    font-family: 'Oxanium', sans-serif;
+}
+
+h5 {
+    font-family: 'Electrolize', sans-serif;
+}
+
 /* ── End Custom Fonts ─────────────────────────────────────────────────────── */
 
 .application.parallax.character-sheet {
@@ -65,7 +73,11 @@
     --pp-item: #CA1527;
     --pp-weapon: #09293B;
     --pp-dark-red: #7A000C;
+    font-family: 'Oxanium', sans-serif;
+}
 
+.parallax.sheet button{
+    font-family: 'Oxanium', sans-serif;
 }
 
 .tight-text{
@@ -603,6 +615,7 @@
     flex: 1 1 auto;
     text-align: left;
     white-space: nowrap;
+    font-family: 'Oxanium', sans-serif;
 }
 
 .pp-icon-button__dark-text {
