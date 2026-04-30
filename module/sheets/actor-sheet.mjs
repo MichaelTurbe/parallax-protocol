@@ -125,6 +125,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             const row = {
                 id: weapon.id,
                 name: weapon.name,
+                img: weapon.img,
                 classification: weapon.system.classification,
                 attackBonus,
                 system: weapon.system,

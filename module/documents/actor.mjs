@@ -118,7 +118,8 @@ export class ParallaxActor extends Actor {
         for (const save of Object.values(this.system.saves ?? {})) {
             const hereditaryBonus = Number(save.hereditaryBonus ?? 0);
             const itemBonus = Number(save.itemBonus ?? 0);
-            save.target = 20 - conBonus - level - hereditaryBonus - itemBonus;
+            const armorBonus = Number(save.armorBonus ?? 0);
+            save.target = 20 - conBonus - level - hereditaryBonus - itemBonus - armorBonus;
         }
     }
 
@@ -151,8 +152,14 @@ export class ParallaxActor extends Actor {
         this.system.armorSummary.body.energy = speciesEnergy;
         this.system.movement.armorPenalty = Number(armorItem?.system.speedPenalty ?? 0);
 
+        const equippedSaveBonuses = {
+            radiation: Number(armorItem?.system.saveBonuses?.radiation ?? 0) + Number(fieldItem?.system.saveBonuses?.radiation ?? 0),
+            stun: Number(armorItem?.system.saveBonuses?.stun ?? 0) + Number(fieldItem?.system.saveBonuses?.stun ?? 0),
+        };
+
         for (const [saveKey, save] of Object.entries(this.system.saves ?? {})) {
             save.hereditaryBonus = Number(speciesSaveBonuses[saveKey] ?? save.hereditaryBonus ?? 0);
+            save.armorBonus = Number(equippedSaveBonuses[saveKey] ?? 0);
         }
     }
 

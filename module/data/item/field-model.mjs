@@ -6,6 +6,10 @@ export class ParallaxFieldData extends foundry.abstract.TypeDataModel {
             bulk: new fields.NumberField({ initial: 0, min: 0 }),
             kineticDr: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             energyDr: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+            saveBonuses: new fields.SchemaField({
+                radiation: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                stun: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+            }),
             notes: new fields.HTMLField({ initial: "" }),
         };
     }

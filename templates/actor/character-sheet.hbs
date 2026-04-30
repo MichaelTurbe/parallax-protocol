@@ -209,6 +209,7 @@
                                             <th>Save</th>
                                             <th>Her.</th>
                                             <th>Item</th>
+                                            <th>Armor</th>
                                             <th>Target</th>
                                             <th></th>
                                         </tr>
@@ -217,9 +218,9 @@
                                         {{#each system.saves as |save key|}}
                                         <tr>
                                             <td>{{save.label}}</td>
-                                            <td><input type="number" name="system.saves.{{key}}.hereditaryBonus" value="{{save.hereditaryBonus}}" />
-                                            </td>
+                                            <td><input type="number" name="system.saves.{{key}}.hereditaryBonus" value="{{save.hereditaryBonus}}" /></td>
                                             <td><input type="number" name="system.saves.{{key}}.itemBonus" value="{{save.itemBonus}}" /></td>
+                                            <td>{{save.armorBonus}}</td>
                                             <td>{{save.target}}</td>
                                             <td class="row-actions">
                                                 <button type="button" data-pp-action="rollSave" data-save-key="{{key}}">Roll</button>
@@ -257,6 +258,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th class="pp-weapon-icon-col"></th>
                             <th>Name</th>
                             <th>Atk</th>
                             <th>Dmg</th>
@@ -267,6 +269,7 @@
                     <tbody>
                         {{#each meleeWeapons}}
                         <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
                             <td>{{name}}</td>
                             <td>{{attackBonus}}</td>
                             <td>{{system.damageSingle}}</td>
@@ -294,6 +297,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th class="pp-weapon-icon-col"></th>
                             <th>Name</th>
                             <th>Atk</th>
                             <th>Single</th>
@@ -305,6 +309,7 @@
                     <tbody>
                         {{#each rangedWeapons}}
                         <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
                             <td>{{name}}</td>
                             <td>{{attackBonus}}</td>
                             <td>{{system.damageSingle}}</td>

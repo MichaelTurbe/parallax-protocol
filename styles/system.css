@@ -575,6 +575,17 @@
     background-color: var(--pp-rules-element)
 }
 
+.parallax.sheet .pp-weapon-icon-col {
+    width: 32px;
+}
+
+.parallax.sheet .pp-weapon-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
 .weapons{
     background-color:var(--pp-weapon)
 }

@@ -12,7 +12,9 @@
       "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 71 -l 75 /tmp/parallax-gear.txt)",
       "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 72 -l 80 /tmp/parallax-gear2.txt)",
       "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 78 -l 80 /tmp/parallax-infil.txt)",
-      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 79 -l 82 /tmp/parallax-infil2.txt)"
+      "Bash(pdftotext -layout \"/Users/michaelturbe/development/Foundry14/Data/systems/parallax-protocol/parallax-protocol-2d10-trade-rgb-9-5-lite.pdf\" -f 79 -l 82 /tmp/parallax-infil2.txt)",
+      "Read(//Applications/**)",
+      "Read(//Users/michaelturbe/Library/**)"
     ]
   }
 }

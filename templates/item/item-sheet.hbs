@@ -53,6 +53,8 @@
         <label>Speed Penalty <input type="number" name="system.speedPenalty" value="{{system.speedPenalty}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
         <label>Energy DR <input type="number" name="system.energyDr" value="{{system.energyDr}}" /></label>
+        <label>Radiation Save Bonus <input type="number" name="system.saveBonuses.radiation" value="{{system.saveBonuses.radiation}}" /></label>
+        <label>Stun Save Bonus <input type="number" name="system.saveBonuses.stun" value="{{system.saveBonuses.stun}}" /></label>
     </div>
     {{/if}}
 
@@ -61,6 +63,8 @@
         <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
         <label>Energy DR <input type="number" name="system.energyDr" value="{{system.energyDr}}" /></label>
+        <label>Radiation Save Bonus <input type="number" name="system.saveBonuses.radiation" value="{{system.saveBonuses.radiation}}" /></label>
+        <label>Stun Save Bonus <input type="number" name="system.saveBonuses.stun" value="{{system.saveBonuses.stun}}" /></label>
     </div>
     {{/if}}
 
@@ -96,6 +100,6 @@
 
     <section class="card top-gap">
         <h3>Notes</h3>
-        <textarea name="system.notes">{{system.notes}}</textarea>
+        <prose-mirror name="system.notes" value="{{system.notes}}" toggled>{{{enrichedNotes}}}</prose-mirror>
     </section>
 </div>

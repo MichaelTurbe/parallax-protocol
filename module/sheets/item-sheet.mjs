@@ -30,7 +30,7 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
             element.addEventListener("click", (event) => this._onClickAction(event, element));
         });
 
-        htmlElement.querySelectorAll("input, select, textarea").forEach((element) => {
+        htmlElement.querySelectorAll("input, select, textarea, prose-mirror").forEach((element) => {
             element.addEventListener("change", () => this._queueParentSheetRefresh());
         });
     }
@@ -71,10 +71,13 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
             ? (config.energyDamageTypes ?? {})
             : (config.kineticDamageTypes ?? {});
 
+        const enrichedNotes = await TextEditor.enrichHTML(system.notes ?? "");
+
         return {
             ...context,
             item: this.document,
             system,
+            enrichedNotes,
             editable: this.isEditable,
             itemType: this.document.type,
             isWeapon: this.document.type === "weapon",

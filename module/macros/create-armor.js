@@ -11,7 +11,8 @@ const items = [
             energyDr: 1,
             dexPenalty: 0,
             speedPenalty: 0,
-            notes: "<p>Radiation Save Bonus: +1.</p>",
+            saveBonuses: { radiation: 1, stun: 0 },
+            notes: "",
         },
     },
     {
@@ -24,6 +25,7 @@ const items = [
             energyDr: 0,
             dexPenalty: 0,
             speedPenalty: 0,
+            saveBonuses: { radiation: 0, stun: 0 },
             notes: "",
         },
     },
@@ -37,7 +39,8 @@ const items = [
             energyDr: 2,
             dexPenalty: 1,
             speedPenalty: 5,
-            notes: "<p>Radiation Save Bonus: +4. Stun Save Bonus: +2. Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
+            saveBonuses: { radiation: 4, stun: 2 },
+            notes: "<p>Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
         },
     },
     {
@@ -50,7 +53,8 @@ const items = [
             energyDr: 1,
             dexPenalty: 0,
             speedPenalty: 0,
-            notes: "<p>Radiation Save Bonus: +2. Stun Save Bonus: +1.</p>",
+            saveBonuses: { radiation: 2, stun: 1 },
+            notes: "",
         },
     },
     {
@@ -63,7 +67,8 @@ const items = [
             energyDr: 2,
             dexPenalty: 1,
             speedPenalty: 5,
-            notes: "<p>Radiation Save Bonus: +2. Stun Save Bonus: +2.</p>",
+            saveBonuses: { radiation: 2, stun: 2 },
+            notes: "",
         },
     },
     {
@@ -76,7 +81,8 @@ const items = [
             energyDr: 3,
             dexPenalty: 2,
             speedPenalty: 10,
-            notes: "<p>Radiation Save Bonus: +5. Stun Save Bonus: +3. Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
+            saveBonuses: { radiation: 5, stun: 3 },
+            notes: "<p>Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
         },
     },
     {
@@ -89,7 +95,8 @@ const items = [
             energyDr: 2,
             dexPenalty: 2,
             speedPenalty: 10,
-            notes: "<p>Radiation Save Bonus: +3. Stun Save Bonus: +3.</p>",
+            saveBonuses: { radiation: 3, stun: 3 },
+            notes: "",
         },
     },
     {
@@ -102,7 +109,8 @@ const items = [
             energyDr: 3,
             dexPenalty: 3,
             speedPenalty: 15,
-            notes: "<p>Radiation Save Bonus: +3. Stun Save Bonus: +4. Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
+            saveBonuses: { radiation: 3, stun: 4 },
+            notes: "<p>Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
         },
     },
     {
@@ -115,7 +123,8 @@ const items = [
             energyDr: 4,
             dexPenalty: 3,
             speedPenalty: 15,
-            notes: "<p>Radiation Save Bonus: +6. Stun Save Bonus: +4. Includes helmet &amp; atmo-canister. Includes propulsive pack. Self-healing to reasonable punctures. Vacuum safe.</p>",
+            saveBonuses: { radiation: 6, stun: 4 },
+            notes: "<p>Includes helmet &amp; atmo-canister. Includes propulsive pack. Self-healing to reasonable punctures. Vacuum safe.</p>",
         },
     },
     {
@@ -128,7 +137,8 @@ const items = [
             energyDr: 5,
             dexPenalty: 4,
             speedPenalty: 5,
-            notes: "<p>Radiation Save Bonus: +4. Stun Save Bonus: +5. Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
+            saveBonuses: { radiation: 4, stun: 5 },
+            notes: "<p>Includes helmet &amp; atmo-canister. Vacuum safe.</p>",
         },
     },
 ];

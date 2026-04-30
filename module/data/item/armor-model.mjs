@@ -8,6 +8,10 @@ export class ParallaxArmorData extends foundry.abstract.TypeDataModel {
             speedPenalty: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             kineticDr: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             energyDr: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+            saveBonuses: new fields.SchemaField({
+                radiation: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                stun: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+            }),
             notes: new fields.HTMLField({ initial: "" }),
         };
     }
