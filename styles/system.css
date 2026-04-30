@@ -1,3 +1,50 @@
+/* ── Custom Fonts ─────────────────────────────────────────────────────────── */
+
+@font-face {
+    font-family: 'Arimo';
+    src: url('../assets/fonts/Arimo-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Electrolize';
+    src: url('../assets/fonts/Electrolize-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    src: url('../assets/fonts/Orbitron-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Oxanium';
+    src: url('../assets/fonts/Oxanium-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../assets/fonts/Raleway-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Rationale';
+    src: url('../assets/fonts/Rationale-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+.pp-font-arimo      { font-family: 'Arimo', sans-serif; }
+.pp-font-electrolize { font-family: 'Electrolize', sans-serif; }
+.pp-font-orbitron   { font-family: 'Orbitron', sans-serif; }
+.pp-font-oxanium    { font-family: 'Oxanium', sans-serif; }
+.pp-font-raleway    { font-family: 'Raleway', sans-serif; }
+.pp-font-rationale  { font-family: 'Rationale', sans-serif; }
+
+/* ── End Custom Fonts ─────────────────────────────────────────────────────── */
+
 .application.parallax.character-sheet {
     min-width: 700px;
     min-height: 640px;
@@ -492,6 +539,14 @@
     display: flex;
     gap: 10px;
     justify-content: space-between;
+}
+
+.parallax.sheet .character-summary-fields .field-group:first-child .dossier-input {
+    text-align: left;
+}
+
+.parallax.sheet .character-summary-fields .field-group:not(:first-child) h5 {
+    text-align: center;
 }
 
 .field-group {
