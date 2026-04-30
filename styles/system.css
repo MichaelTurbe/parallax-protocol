@@ -680,9 +680,18 @@ h5 {
     flex-direction: column;
 }
 
+.parallax.sheet .character-stat-grid {
+    grid-template-columns: repeat(2, minmax(70px, 1fr));
+    gap: 6px;
+}
+
 .parallax.sheet .character-stat-grid label {
     align-items: center;
     text-align: center;
+    border: var(--pp-border);
+    border-radius: 6px;
+    padding: 4px 2px;
+    background: rgba(0, 0, 0, 0.15);
 }
 
 .parallax.sheet .character-stat-grid .stat-label {
@@ -779,4 +788,59 @@ h5 {
     .parallax.sheet .movement-load-summary-row {
         grid-template-columns: 1fr;
     }
+}
+
+/* ── GM Roll Toasts ───────────────────────────────────────────────────────── */
+
+#pp-roll-toast-container {
+    position: fixed;
+    top: 80px;
+    right: 320px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.pp-roll-toast {
+    pointer-events: auto;
+    cursor: pointer;
+    background: rgba(9, 41, 59, 0.95);
+    border: 1px solid #2A7586;
+    border-radius: 8px;
+    padding: 10px 16px;
+    color: #F2EABD;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.pp-roll-toast--visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.pp-roll-toast__speaker {
+    font-size: 0.72rem;
+    opacity: 0.65;
+    font-family: 'Electrolize', sans-serif;
+}
+
+.pp-roll-toast__flavor {
+    font-size: 0.7rem;
+    opacity: 0.55;
+    font-style: italic;
+}
+
+.pp-roll-toast__total {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1.1;
 }

@@ -12,6 +12,7 @@ import { ParallaxCharacterSheet } from "./module/sheets/actor-sheet.mjs";
 import { ParallaxStatblockSheet } from "./module/sheets/statblock-sheet.mjs";
 import { ParallaxItemSheet } from "./module/sheets/item-sheet.mjs";
 import { rollWeaponDamage } from "./module/dice/rolls.mjs";
+import { showRollToast } from "./module/ui/roll-toast.mjs";
 
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
@@ -58,6 +59,8 @@ Hooks.once("init", () => {
         label: "Parallax Item Sheet",
     });
 });
+
+Hooks.on("createChatMessage", (message) => showRollToast(message));
 
 Hooks.on("renderChatMessage", (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0] ?? null;
