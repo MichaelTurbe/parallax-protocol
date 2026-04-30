@@ -11,8 +11,8 @@ import { ParallaxSpeciesTraitData } from "./module/data/item/species-trait-model
 import { ParallaxCharacterSheet } from "./module/sheets/actor-sheet.mjs";
 import { ParallaxStatblockSheet } from "./module/sheets/statblock-sheet.mjs";
 import { ParallaxItemSheet } from "./module/sheets/item-sheet.mjs";
-import { rollWeaponDamage } from "./module/dice/rolls.mjs";
 import { showRollToast } from "./module/ui/roll-toast.mjs";
+import { attachChatButtonListeners } from "./module/ui/chat-buttons.mjs";
 
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
@@ -65,28 +65,5 @@ Hooks.on("createChatMessage", (message) => showRollToast(message));
 Hooks.on("renderChatMessage", (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0] ?? null;
     if (!(root instanceof HTMLElement)) return;
-
-    root.querySelectorAll("[data-parallax-chat-action]").forEach((button) => {
-        button.addEventListener("click", async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            const element = event.currentTarget;
-            const action = element?.dataset?.parallaxChatAction;
-            if (action !== "rollWeaponDamage") return;
-
-            const actorUuid = element.dataset.actorUuid;
-            const weaponId = element.dataset.weaponId;
-            const damageMode = element.dataset.damageMode ?? "single";
-
-            const actor = await fromUuid(actorUuid);
-            const weapon = actor?.items?.get?.(weaponId);
-            if (!actor || !weapon) {
-                ui.notifications?.warn("Could not find the actor or weapon for this damage roll.");
-                return;
-            }
-
-            await rollWeaponDamage(actor, weapon, damageMode);
-        });
-    });
+    attachChatButtonListeners(root);
 });

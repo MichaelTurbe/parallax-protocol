@@ -1,3 +1,5 @@
+import { attachChatButtonListeners } from './chat-buttons.mjs';
+
 const CONTAINER_ID = 'pp-roll-toast-container';
 const DURATION_MS = 4500;
 
@@ -31,6 +33,8 @@ export function showRollToast(message) {
         ${flavor ? `<div class="pp-roll-toast__flavor">${flavor}</div>` : ''}
         <div class="pp-roll-toast__total">${total}</div>
     `;
+
+    attachChatButtonListeners(toast);
 
     const container = getOrCreateContainer();
     container.appendChild(toast);

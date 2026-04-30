@@ -16,6 +16,36 @@ function escapeHtml(value) {
         .replaceAll("'", "&#39;");
 }
 
+const SKILL_TO_CLASSIFICATION = {
+    meleeWeapons: 'melee',
+    martialArts: 'melee',
+    firearmsSmall: 'smallArms',
+    firearmsLong: 'longArms',
+    firearmsHeavy: 'heavyArms',
+    grenades: 'grenade',
+};
+
+function buildSkillDamageButtons(actor, skillKey) {
+    const classification = SKILL_TO_CLASSIFICATION[skillKey];
+    if (!classification) return '';
+
+    const weapons = actor.items.filter(i => i.type === 'weapon' && i.system.classification === classification);
+    if (!weapons.length) return '';
+
+    const actorUuid = escapeHtml(actor.uuid);
+    const buttons = weapons.flatMap(weapon => {
+        const weaponId = escapeHtml(weapon.id);
+        const weaponName = escapeHtml(weapon.name);
+        const btns = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">${weaponName} Dmg</button>`];
+        if (String(weapon.system.damageAutomatic ?? '').trim()) {
+            btns.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">${weaponName} Auto Dmg</button>`);
+        }
+        return btns;
+    });
+
+    return `<div class="parallax-chat-actions">${buttons.join(' ')}</div>`;
+}
+
 function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill) {
     const actorUuid = escapeHtml(actor.uuid);
     const weaponId = escapeHtml(weapon.id);
@@ -65,10 +95,15 @@ export async function rollSkillCheck(actor, skillKey, mode = "normal") {
     const roll = await new Roll(resolveRollFormula(mode)).evaluate();
     const total = roll.total;
     const success = total >= target;
+    const damageButtons = buildSkillDamageButtons(actor, skillKey);
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${label} Check (${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
+        flavor: `
+            <div class="parallax-chat-card">
+                <div>${label} Check (${modeLabel(mode)}) — target ${target} — ${success ? 'Success' : 'Failure'}</div>
+                ${damageButtons}
+            </div>`,
     });
 }
 
@@ -80,10 +115,15 @@ export async function rollSkillContest(actor, skillKey, mode = "normal") {
     const label = skill.label ?? skillKey;
 
     const roll = await new Roll(resolveRollFormula(mode, true), { bonus }).evaluate();
+    const damageButtons = buildSkillDamageButtons(actor, skillKey);
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${label} Contest (${modeLabel(mode)}) — total bonus ${bonus}`,
+        flavor: `
+            <div class="parallax-chat-card">
+                <div>${label} Contest (${modeLabel(mode)}) — total bonus ${bonus}</div>
+                ${damageButtons}
+            </div>`,
     });
 }
 

@@ -44,6 +44,12 @@
         <label>Long Range <input type="number" name="system.rangeLong" value="{{system.rangeLong}}" /></label>
         <label>Max Range <input type="number" name="system.rangeMax" value="{{system.rangeMax}}" /></label>
     </div>
+    <div class="inline-actions top-gap">
+        <button type="button" data-pp-action="rollDamage">Roll Damage</button>
+        {{#if system.damageAutomatic}}
+        <button type="button" data-pp-action="rollAutoDamage">Roll Auto Damage</button>
+        {{/if}}
+    </div>
     {{/if}}
 
     {{#if isArmor}}

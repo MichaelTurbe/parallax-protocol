@@ -1,3 +1,5 @@
+import { rollWeaponDamage } from '../dice/rolls.mjs';
+
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
 
 export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
@@ -38,6 +40,18 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
     async _onClickAction(event, target) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (target.dataset.ppAction === 'rollDamage') {
+            const actor = this.document.parent;
+            if (!actor) return;
+            return rollWeaponDamage(actor, this.document, 'single');
+        }
+
+        if (target.dataset.ppAction === 'rollAutoDamage') {
+            const actor = this.document.parent;
+            if (!actor) return;
+            return rollWeaponDamage(actor, this.document, 'automatic');
+        }
 
         if (target.dataset.ppAction === "choosePortrait") {
             const picker = new foundry.applications.apps.FilePicker({
