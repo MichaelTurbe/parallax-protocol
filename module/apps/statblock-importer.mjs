@@ -148,11 +148,12 @@ export function parseStatblockText(rawText) {
             if (hit) continue;
         }
 
-        // Weapon: NAME [xN]: +BONUS FORMULA (kinetic|energy) (TYPE_LETTER)
+        // Weapon: NAME [xN]: +BONUS[,] FORMULA (kinetic|energy) (TYPE_LETTER)
         // e.g.  "CLAWS x2: +4 1d6 kinetic (S)"
+        //       "CLAWS x2: +7, 1d8 kinetic (S)"   ← comma variant
         //       "HEAVY LASER RIFLE: +6 2d8+2 energy (E)"
         const weaponMatch = line.match(
-            /^([A-Z][A-Z0-9\s'\-/]+?)(?:\s+x\d+)?:\s*\+(\d+)\s+(\d+d\d+(?:[+\-]\d+)?)\s+(kinetic|energy)\s+\(([A-Za-z])\)/i
+            /^([A-Z][A-Z0-9\s'\-/]+?)(?:\s+x\d+)?:\s*\+(\d+),?\s+(\d+d\d+(?:[+\-]\d+)?)\s+(kinetic|energy)\s+\(([A-Za-z])\)/i
         );
         if (weaponMatch) {
             const wName = weaponMatch[1].trim();
