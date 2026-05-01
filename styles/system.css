@@ -903,6 +903,70 @@ h5 {
     flex: 0 0 auto;
 }
 
+/* ── Chat Cards ──────────────────────────────────────────── */
+.parallax-chat-card {
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.parallax-chat-note {
+    color: #666;
+    font-style: italic;
+    margin: 2px 0;
+}
+
+.parallax-chat-actions {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.parallax-chat-button {
+    padding: 2px 8px;
+    font-size: 0.85em;
+    cursor: pointer;
+}
+
+.parallax-chat-defender {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.parallax-chat-defender-label {
+    font-weight: bold;
+    font-size: 0.85em;
+}
+
+.parallax-chat-contest-summary {
+    font-size: 0.85em;
+    color: #555;
+    margin: 2px 0;
+}
+
+.parallax-chat-result {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 4px 0;
+    letter-spacing: 0.05em;
+}
+
+.parallax-chat-result--hit {
+    color: #8b0000;
+}
+
+.parallax-chat-result--miss {
+    color: #2e6b2e;
+}
+
+.parallax-chat-dr-calc {
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
 /* sidebar inject button */
 .pp-import-statblock-btn {
     font-family: 'Oxanium', sans-serif;

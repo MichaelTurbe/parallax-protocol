@@ -16,6 +16,20 @@ function escapeHtml(value) {
         .replaceAll("'", "&#39;");
 }
 
+function getActorDR(actor, damageClass) {
+    if (actor.type === 'character') {
+        const key = damageClass === 'energy' ? 'energy' : 'kinetic';
+        return Number(actor.system.armorSummary?.total?.[key] ?? 0);
+    }
+    const key = damageClass === 'energy' ? 'energyDr' : 'kineticDr';
+    return Number(actor.system.defenses?.[key] ?? 0);
+}
+
+function getSkillBonus(actor, skillKey) {
+    const skill = actor.system.skills?.[skillKey];
+    return Number(skill?.totalBonus ?? skill?.bonus ?? 0);
+}
+
 const SKILL_TO_CLASSIFICATION = {
     meleeWeapons: 'melee',
     martialArts: 'melee',
@@ -46,21 +60,63 @@ function buildSkillDamageButtons(actor, skillKey) {
     return `<div class="parallax-chat-actions">${buttons.join(' ')}</div>`;
 }
 
-function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill) {
+function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill, attackerTotal, defenderActor) {
     const actorUuid = escapeHtml(actor.uuid);
     const weaponId = escapeHtml(weapon.id);
     const weaponName = escapeHtml(weapon.name);
     const skillLabel = escapeHtml(linkedSkill?.label ?? weapon.system.linkedSkill ?? "Weapon Skill");
     const classification = weapon.system.classification;
+    const damageClass = escapeHtml(weapon.system.damageClass ?? 'kinetic');
 
     const guidance = classification === "melee"
         ? "Opposed by Evasion or Deflection. Unaware targets are hit automatically."
         : "Opposed by Evasion if the target is aware. Unaware targets are attacked as a skill check with advantage.";
 
-    const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
+    let actionsSection;
 
-    if (String(weapon.system.damageAutomatic ?? "").trim()) {
-        damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
+    if (defenderActor) {
+        const defUuid = escapeHtml(defenderActor.uuid);
+        const defName = escapeHtml(defenderActor.name);
+        const escapedTotal = escapeHtml(String(attackerTotal));
+
+        if (classification === 'melee') {
+            const evasionBonus = getSkillBonus(defenderActor, 'evasion');
+            const deflectionBonus = getSkillBonus(defenderActor, 'deflection');
+            actionsSection = `
+                <div class="parallax-chat-defender">
+                    <span class="parallax-chat-defender-label">${defName} defends:</span>
+                    <button type="button" class="parallax-chat-button" data-parallax-chat-action="rollDefenseContest"
+                        data-defender-uuid="${defUuid}" data-skill-key="evasion"
+                        data-attacker-total="${escapedTotal}" data-actor-uuid="${actorUuid}"
+                        data-weapon-id="${weaponId}" data-damage-class="${damageClass}">
+                        Evasion (+${evasionBonus})
+                    </button>
+                    <button type="button" class="parallax-chat-button" data-parallax-chat-action="rollDefenseContest"
+                        data-defender-uuid="${defUuid}" data-skill-key="deflection"
+                        data-attacker-total="${escapedTotal}" data-actor-uuid="${actorUuid}"
+                        data-weapon-id="${weaponId}" data-damage-class="${damageClass}">
+                        Deflection (+${deflectionBonus})
+                    </button>
+                </div>`;
+        } else {
+            const evasionBonus = getSkillBonus(defenderActor, 'evasion');
+            actionsSection = `
+                <div class="parallax-chat-defender">
+                    <span class="parallax-chat-defender-label">${defName} defends:</span>
+                    <button type="button" class="parallax-chat-button" data-parallax-chat-action="rollDefenseContest"
+                        data-defender-uuid="${defUuid}" data-skill-key="evasion"
+                        data-attacker-total="${escapedTotal}" data-actor-uuid="${actorUuid}"
+                        data-weapon-id="${weaponId}" data-damage-class="${damageClass}">
+                        Evasion (+${evasionBonus})
+                    </button>
+                </div>`;
+        }
+    } else {
+        const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
+        if (String(weapon.system.damageAutomatic ?? "").trim()) {
+            damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
+        }
+        actionsSection = `<div class="parallax-chat-actions">${damageButtons.join(" ")}</div>`;
     }
 
     return `
@@ -68,12 +124,12 @@ function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill) {
             <div><strong>${weaponName} Attack</strong></div>
             <div>${skillLabel} • ${modeLabel(mode)} • Attack Bonus ${attackBonus}</div>
             <div class="parallax-chat-note">${escapeHtml(guidance)}</div>
-            <div class="parallax-chat-actions">${damageButtons.join(" ")}</div>
+            ${actionsSection}
         </div>
     `;
 }
 
-function buildDamageFlavor(weapon, damageMode, formula, damageType, strBonusApplied) {
+function buildDamageFlavor(weapon, damageMode, formula, damageType, strBonusApplied, drSection = '', applySection = '') {
     const label = damageMode === "automatic" ? "Auto Damage" : "Damage";
     const suffix = strBonusApplied ? ` + STR` : "";
 
@@ -81,6 +137,8 @@ function buildDamageFlavor(weapon, damageMode, formula, damageType, strBonusAppl
         <div class="parallax-chat-card">
             <div><strong>${escapeHtml(weapon.name)} ${label}</strong></div>
             <div>${escapeHtml(formula)}${suffix} • ${escapeHtml(damageType)}</div>
+            ${drSection}
+            ${applySection}
         </div>
     `;
 }
@@ -169,9 +227,13 @@ export async function rollWeaponAttackContest(actor, weapon, mode = "normal") {
 
     const roll = await new Roll(resolveRollFormula(mode, true), { bonus: attackBonus }).evaluate();
 
+    const targets = game.user?.targets ?? new Set();
+    const targetToken = targets.size > 0 ? targets.values().next().value : null;
+    const defenderActor = targetToken?.actor ?? null;
+
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill),
+        flavor: buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill, roll.total, defenderActor),
     });
 }
 
@@ -208,7 +270,46 @@ export async function rollHitDie(actor) {
     });
 }
 
-export async function rollWeaponDamage(actor, weapon, damageMode = "single") {
+export async function rollDefenseContest(defenderActor, skillKey, mode, attackerTotal, attackerActorUuid, weaponId, damageClass) {
+    const bonus = getSkillBonus(defenderActor, skillKey);
+    const skill = defenderActor.system.skills?.[skillKey];
+    const skillLabel = skill?.label ?? skillKey;
+
+    const roll = await new Roll(resolveRollFormula(mode, true), { bonus }).evaluate();
+    const defTotal = roll.total;
+    const attackerWins = attackerTotal > defTotal;
+
+    const actorUuid = escapeHtml(attackerActorUuid);
+    const defUuid = escapeHtml(defenderActor.uuid);
+    const escapedWeaponId = escapeHtml(weaponId);
+    const escapedDamageClass = escapeHtml(damageClass ?? 'kinetic');
+
+    let resultSection;
+    if (attackerWins) {
+        resultSection = `
+            <div class="parallax-chat-result parallax-chat-result--hit">HIT</div>
+            <div class="parallax-chat-actions">
+                <button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage"
+                    data-actor-uuid="${actorUuid}" data-weapon-id="${escapedWeaponId}"
+                    data-damage-mode="single" data-defender-uuid="${defUuid}"
+                    data-damage-class="${escapedDamageClass}">Roll Damage</button>
+            </div>`;
+    } else {
+        resultSection = `<div class="parallax-chat-result parallax-chat-result--miss">MISS</div>`;
+    }
+
+    await roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: defenderActor }),
+        flavor: `
+            <div class="parallax-chat-card">
+                <div><strong>${escapeHtml(defenderActor.name)}</strong> — ${escapeHtml(skillLabel)} (${modeLabel(mode)}) — bonus +${bonus}</div>
+                <div class="parallax-chat-contest-summary">Attacker: ${attackerTotal} vs Defender: ${defTotal} — ${attackerWins ? 'Attacker wins' : 'Defender wins (tie goes to defender)'}</div>
+                ${resultSection}
+            </div>`,
+    });
+}
+
+export async function rollWeaponDamage(actor, weapon, damageMode = "single", defenderUuid = null, damageClass = null) {
     const mode = damageMode === "automatic" ? "automatic" : "single";
     const baseFormula = mode === "automatic"
         ? String(weapon.system.damageAutomatic ?? "").trim()
@@ -227,8 +328,30 @@ export async function rollWeaponDamage(actor, weapon, damageMode = "single") {
     const roll = await new Roll(formula, { str: strBonus }).evaluate();
     const damageType = weapon.system.damageType ?? "";
 
+    let drSection = '';
+    let applySection = '';
+
+    if (defenderUuid) {
+        const defender = await fromUuid(defenderUuid);
+        if (defender) {
+            const effectiveClass = damageClass ?? weapon.system.damageClass ?? 'kinetic';
+            const dr = getActorDR(defender, effectiveClass);
+            const rawDamage = roll.total;
+            const netDamage = Math.max(0, rawDamage - dr);
+            const drLabel = effectiveClass === 'energy' ? 'Energy DR' : 'Kinetic DR';
+
+            drSection = `<div class="parallax-chat-dr-calc">${rawDamage} − ${dr} ${drLabel} = <strong>${netDamage} damage</strong></div>`;
+            applySection = `<div class="parallax-chat-actions">
+                <button type="button" class="parallax-chat-button" data-parallax-chat-action="applyDamage"
+                    data-defender-uuid="${escapeHtml(defenderUuid)}" data-damage-amount="${netDamage}">
+                    Apply ${netDamage} to ${escapeHtml(defender.name)}
+                </button>
+            </div>`;
+        }
+    }
+
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: buildDamageFlavor(weapon, mode, formula, damageType, strBonusApplied),
+        flavor: buildDamageFlavor(weapon, mode, formula, damageType, strBonusApplied, drSection, applySection),
     });
 }
