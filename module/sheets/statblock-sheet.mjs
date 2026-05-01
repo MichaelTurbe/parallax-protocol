@@ -4,7 +4,8 @@ import {
     rollSave,
     rollSkillCheck,
     rollSkillContest,
-    rollWeaponAttack,
+    rollWeaponAttackCheck,
+    rollWeaponAttackContest,
 } from "../dice/rolls.mjs";
 
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
@@ -12,24 +13,29 @@ const CORE_SKILLS = ["awareness", "deflection", "evasion"];
 
 export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     _rollMode = "normal";
-    _bodyScrollTop = 0;
+    _pendingScrollTop = null;
+    _hasAppliedDefaultPosition = false;
 
-    static DEFAULT_OPTIONS = foundry.utils.mergeObject(super.DEFAULT_OPTIONS, {
+    static DEFAULT_OPTIONS = {
+        ...super.DEFAULT_OPTIONS,
         classes: ["parallax", "sheet", "actor", "statblock-sheet"],
         tag: "form",
         window: {
+            ...super.DEFAULT_OPTIONS.window,
             title: "Parallax Protocol Stat Block",
-            resizable: false,
+            resizable: true,
         },
         position: {
-            width: 980,
-            height: 760,
+            ...super.DEFAULT_OPTIONS.position,
+            width: 750,
+            height: 640,
         },
         form: {
+            ...super.DEFAULT_OPTIONS.form,
             submitOnChange: false,
             closeOnSubmit: false,
         },
-    });
+    };
 
     static PARTS = {
         body: {
@@ -37,18 +43,53 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         },
     };
 
+    tabGroups = {
+        primary: "overview",
+    };
+
     get title() {
         return `${this.document.name} — Parallax Stat Block`;
+    }
+
+    _getSheetBody() {
+        return this.element?.querySelector?.(".sheet-body") ?? null;
+    }
+
+    _captureScrollTop() {
+        const body = this._getSheetBody();
+        this._pendingScrollTop = body ? body.scrollTop : null;
+    }
+
+    async _onRender(context, options) {
+        await super._onRender(context, options);
+
+        if (!this._hasAppliedDefaultPosition) {
+            const width = Math.max(this.position?.width ?? 750, 700);
+            const height = Math.max(this.position?.height ?? 640, 600);
+            this.setPosition({ width, height });
+            this._hasAppliedDefaultPosition = true;
+        }
+
+        if (Number.isFinite(this._pendingScrollTop)) {
+            const body = this._getSheetBody();
+            if (body) body.scrollTop = this._pendingScrollTop;
+        }
+
+        this._pendingScrollTop = null;
     }
 
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
         const actor = this.document;
         const system = actor.system;
+
         const skillEntries = Object.entries(system.skills ?? {});
         const skillsByKey = Object.fromEntries(skillEntries.map(([key, skill]) => [key, { key, ...skill }]));
-        const coreSkills = CORE_SKILLS
-            .map((key) => skillsByKey[key] ?? { key, label: PARALLAX.skills[key]?.label ?? key, bonus: 0, target: 20, isCore: true });
+
+        const coreSkills = CORE_SKILLS.map(
+            (key) => skillsByKey[key] ?? { key, label: PARALLAX.skills[key]?.label ?? key, bonus: 0, target: 20, isCore: true }
+        );
+
         const extraSkills = skillEntries
             .filter(([key]) => !CORE_SKILLS.includes(key))
             .map(([key, skill]) => ({ key, ...skill }))
@@ -61,14 +102,26 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
 
         const hasAvailableSkills = availableSkillChoices.length > 0;
 
-        const weapons = actor.items.filter((item) => item.type === "weapon").map((weapon) => ({
-            id: weapon.id,
-            name: weapon.name,
-            system: weapon.system,
-            attackBonus: weapon.system.attackBonusMode === "manual"
+        const weapons = actor.items.filter((item) => item.type === "weapon");
+        const meleeWeapons = [];
+        const rangedWeapons = [];
+
+        for (const weapon of weapons) {
+            const attackBonus = weapon.system.attackBonusMode === "manual"
                 ? Number(weapon.system.manualAttackBonus ?? 0)
-                : Number(system.skills?.[weapon.system.linkedSkill]?.bonus ?? 0),
-        }));
+                : Number(system.skills?.[weapon.system.linkedSkill]?.bonus ?? 0);
+
+            const row = {
+                id: weapon.id,
+                name: weapon.name,
+                img: weapon.img,
+                attackBonus,
+                system: weapon.system,
+            };
+
+            if (weapon.system.classification === "melee") meleeWeapons.push(row);
+            else rangedWeapons.push(row);
+        }
 
         return {
             ...context,
@@ -76,24 +129,19 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
             system,
             actorImage: actor.img || "icons/svg/mystery-man.svg",
             editable: this.isEditable,
+            activeTab: this.tabGroups?.primary ?? "overview",
             rollMode: this._rollMode ?? "normal",
-            rollModes: {
-                normal: "Normal",
-                advantage: "Advantage",
-                disadvantage: "Disadvantage",
-            },
-            weapons,
             coreSkills,
             extraSkills,
             availableSkillChoices,
             hasAvailableSkills,
+            meleeWeapons,
+            rangedWeapons,
         };
     }
 
     _attachPartListeners(partId, htmlElement, options) {
         super._attachPartListeners(partId, htmlElement, options);
-
-        this._restoreBodyScroll(htmlElement);
 
         htmlElement.addEventListener("dragover", (event) => this._onDragOver(event));
         htmlElement.addEventListener("drop", (event) => this._onDrop(event));
@@ -105,8 +153,6 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         htmlElement.querySelectorAll("input, select, textarea").forEach((element) => {
             element.addEventListener("change", (event) => this._onChangeInput(event));
         });
-
-        this._refreshRollModeButtons(htmlElement);
     }
 
     _onDragOver(event) {
@@ -121,7 +167,7 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         const itemData = await this._getDroppedItemData(event);
         if (!itemData) return;
 
-        this._captureBodyScroll();
+        this._captureScrollTop();
         await this.document.createEmbeddedDocuments("Item", [itemData]);
     }
 
@@ -175,25 +221,8 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         return itemObject;
     }
 
-
-    _captureBodyScroll(root = null) {
-        const rootEl = root instanceof HTMLElement ? root : root?.[0] ?? this.element?.[0] ?? this.element ?? null;
-        const body = rootEl?.querySelector?.(".sheet-body");
-        this._bodyScrollTop = Number(body?.scrollTop ?? 0);
-    }
-
-    _restoreBodyScroll(root = null) {
-        const rootEl = root instanceof HTMLElement ? root : root?.[0] ?? this.element?.[0] ?? this.element ?? null;
-        const body = rootEl?.querySelector?.(".sheet-body");
-        if (!body) return;
-
-        requestAnimationFrame(() => {
-            body.scrollTop = Number(this._bodyScrollTop ?? 0);
-        });
-    }
-
     async _onChangeInput(event) {
-        this._captureBodyScroll();
+        this._captureScrollTop();
 
         const element = event.currentTarget;
         if (!element?.name) return;
@@ -221,21 +250,11 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
     }
 
     async _consumeRollMode(callback) {
+        this._captureScrollTop();
         const mode = this._rollMode ?? "normal";
         await callback(mode);
         this._rollMode = "normal";
-        this._refreshRollModeButtons();
-    }
-
-    _refreshRollModeButtons(root = null) {
-        const host = root ?? this.element;
-        const rootEl = host instanceof HTMLElement ? host : host?.[0] ?? null;
-        if (!(rootEl instanceof HTMLElement)) return;
-
-        rootEl.querySelectorAll(".roll-mode-button").forEach((button) => {
-            const isActive = button.dataset.rollMode === this._rollMode;
-            button.classList.toggle("active", Boolean(isActive));
-        });
+        return this.render();
     }
 
     async _onClickAction(event, target) {
@@ -245,10 +264,16 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         const action = target.dataset.ppAction;
         const actor = this.document;
 
+        if (action === "tab") {
+            this._captureScrollTop();
+            this.tabGroups.primary = target.dataset.tabId ?? "overview";
+            return this.render();
+        }
+
         if (action === "setRollMode") {
+            this._captureScrollTop();
             this._rollMode = target.dataset.rollMode ?? "normal";
-            this._refreshRollModeButtons();
-            return;
+            return this.render();
         }
 
         if (action === "choosePortrait") {
@@ -256,18 +281,15 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
                 type: "image",
                 current: this.document.img || "",
                 callback: async (path) => {
+                    this._captureScrollTop();
                     await this.document.update({ img: path });
                 },
             });
             return picker.browse(this.document.img || "");
         }
 
-        if (action === "clearPortrait") {
-            return this.document.update({ img: "icons/svg/mystery-man.svg" });
-        }
-
         if (action === "addSkill") {
-            this._captureBodyScroll();
+            this._captureScrollTop();
             const container = target.closest(".statblock-skill-picker-row") ?? this.element;
             const select = container?.querySelector?.('[data-pp-skill-picker="availableSkill"]');
             const skillKey = String(select?.value ?? "").trim();
@@ -287,14 +309,10 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         }
 
         if (action === "deleteSkill") {
-            this._captureBodyScroll();
-
+            this._captureScrollTop();
             const skillKey = target.dataset.skillKey;
             if (!skillKey || CORE_SKILLS.includes(skillKey)) return;
-
-            await actor.update({
-                [`system.skills.-=${skillKey}`]: null,
-            });
+            await actor.update({ [`system.skills.-=${skillKey}`]: null });
             return;
         }
 
@@ -305,27 +323,22 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
                 ui.notifications?.warn("Set a numeric Save Target before rolling a save.");
                 return;
             }
-
-            const save = {
-                label: `${actor.name} Save`,
-                target: parsedTarget,
-            };
-
-            return this._consumeRollMode((mode) => rollSave({ system: { saves: { statblock: save } } }, "statblock", mode));
+            const save = { label: `${actor.name} Save`, target: parsedTarget };
+            return this._consumeRollMode((mode) =>
+                rollSave({ name: actor.name, system: { saves: { statblock: save } } }, "statblock", mode)
+            );
         }
 
         if (action === "createItem") {
-            this._captureBodyScroll();
+            this._captureScrollTop();
             const itemType = target.dataset.itemType;
             const classification = target.dataset.classification ?? "melee";
             await actor.createEmbeddedDocuments("Item", [{
-                name: "New weapon",
+                name: `New ${itemType}`,
                 type: itemType,
-                system: {
-                    classification,
-                    linkedSkill: classification === "melee" ? "meleeWeapons" : "firearmsSmall",
-                    attackBonusMode: "manual",
-                },
+                system: itemType === "weapon"
+                    ? { classification, linkedSkill: classification === "melee" ? "meleeWeapons" : "firearmsSmall", attackBonusMode: "manual" }
+                    : {},
             }]);
             return;
         }
@@ -344,15 +357,13 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
         }
 
         if (action === "deleteItem") {
-            this._captureBodyScroll();
+            this._captureScrollTop();
             const item = actor.items.get(target.dataset.itemId);
             if (item) await item.delete();
             return;
         }
 
         if (action === "rollSkillCheck") {
-            const skill = actor.system.skills?.[target.dataset.skillKey];
-            if (!skill) return;
             return this._consumeRollMode((mode) => rollSkillCheck(actor, target.dataset.skillKey, mode, true));
         }
 
@@ -364,10 +375,16 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
             return this._consumeRollMode((mode) => rollInitiative(actor, true, mode));
         }
 
-        if (action === "rollWeaponAttack") {
+        if (action === "rollWeaponAttackCheck") {
             const weapon = actor.items.get(target.dataset.itemId);
             if (!weapon) return;
-            return this._consumeRollMode((mode) => rollWeaponAttack(actor, weapon, mode));
+            return this._consumeRollMode((mode) => rollWeaponAttackCheck(actor, weapon, mode));
+        }
+
+        if (action === "rollWeaponAttackContest") {
+            const weapon = actor.items.get(target.dataset.itemId);
+            if (!weapon) return;
+            return this._consumeRollMode((mode) => rollWeaponAttackContest(actor, weapon, mode));
         }
     }
 }

@@ -11,6 +11,10 @@ export class ParallaxStatblockData extends foundry.abstract.TypeDataModel {
                 speed: new fields.NumberField({ initial: 30, min: 0, integer: true }),
                 saveTarget: new fields.StringField({ initial: "-" }),
             }),
+            hp: new fields.SchemaField({
+                value: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                max: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+            }),
             defenses: new fields.SchemaField({
                 evasion: new fields.NumberField({ initial: 0, integer: true }),
                 deflection: new fields.NumberField({ initial: 0, integer: true }),

@@ -58,6 +58,11 @@ h5 {
     min-height: 640px;
 }
 
+.application.parallax.statblock-sheet {
+    min-width: 700px;
+    min-height: 600px;
+}
+
 .parallax.sheet form,
 .parallax.sheet .parallax-sheet,
 .parallax.sheet .parallax-item-sheet {
@@ -269,7 +274,7 @@ h5 {
 }
 
 .roll-mode-button{
-    border: 3px solid var(--pp-light-icon-foreground);
+    border: 3px solid var(--pp-weapon);
 }
 
 .roll-mode-button.active {
@@ -606,7 +611,7 @@ h5 {
 }
 
 .pp-selectable-button {
-    background-color: var(--pp-stat-block);
+    background-color: var(--pp-weapon);
     border-radius: 3pt;
     min-height: 30px;
 }

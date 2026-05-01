@@ -1,74 +1,243 @@
 <div class="parallax-sheet statblock-layout">
     <header class="sheet-header">
-        <div class="header-main-with-portrait">
-            <section class="portrait-card card">
-                <div class="portrait-wrapper statblock-portrait-wrapper">
-                    <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" />
-                </div>
-                <div class="portrait-actions">
-                    <button type="button" data-pp-action="choosePortrait">Choose Art</button>
-                    <button type="button" data-pp-action="clearPortrait">Clear</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="identity-grid">
-                    <label class="field-span-2">Name
-                        <input type="text" name="name" value="{{actor.name}}" />
-                    </label>
-                    <label>Kind
-                        <input type="text" name="system.summary.kindLabel" value="{{system.summary.kindLabel}}" placeholder="Warbot, Soldier, Predator..." />
-                    </label>
-                    <label>Level
-                        <input type="number" name="system.summary.level" value="{{system.summary.level}}" />
-                    </label>
-                    <label>Hit Die
-                        <input type="text" name="system.summary.hitDie" value="{{system.summary.hitDie}}" />
-                    </label>
-                    <label>Size
-                        <input type="text" name="system.summary.size" value="{{system.summary.size}}" />
-                    </label>
-                    <label>Speed
-                        <input type="number" name="system.summary.speed" value="{{system.summary.speed}}" />
-                    </label>
-                    <div class="save-target-row">
-                        <label>Save Target
-                            <input type="text" name="system.summary.saveTarget" value="{{system.summary.saveTarget}}" />
-                        </label>
-                        <button type="button" class="save-roll-button" data-pp-action="rollSave">Roll Save</button>
+        <div class="character-header">
+            <div class="character-header-full">
+                <div class="character-header-main yellow-border">
+                    <div class="character-summary-fields">
+                        <div class="field-group" style="flex: 4 1 0">
+                            <h5>Name</h5>
+                            <input class="dossier-input" type="text" name="name" value="{{actor.name}}" />
+                        </div>
+                        <div class="field-group" style="flex: 2 1 0">
+                            <h5>Kind</h5>
+                            <input class="dossier-input" type="text" name="system.summary.kindLabel" value="{{system.summary.kindLabel}}" placeholder="Warbot, Predator..." />
+                        </div>
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5>Level</h5>
+                            <input class="dossier-input" type="number" name="system.summary.level" value="{{system.summary.level}}" />
+                        </div>
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5 style="white-space: nowrap;">Max HP</h5>
+                            <input class="dossier-input" type="number" name="system.hp.max" value="{{system.hp.max}}" />
+                        </div>
+                        <div class="field-group" style="flex: 1 1 0">
+                            <h5 style="white-space: nowrap;">Current HP</h5>
+                            <input class="dossier-input" type="number" name="system.hp.value" value="{{system.hp.value}}" />
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center">
+                        <label style="font-size: small;">quick actions:</label>
+                        <div class="pp-header-stats">
+                            <div class="field-group">
+                                <h5>Speed:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.summary.speed}}" />
+                            </div>
+                            <div class="field-group">
+                                <h5>KDR:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.defenses.kineticDr}}" />
+                            </div>
+                            <div class="field-group">
+                                <h5>EDR:</h5>
+                                <input class="dossier-input" type="text" disabled style="width:50px" value="{{system.defenses.energyDr}}" />
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 100%; display: flex; gap:10px; justify-content: flex-end; flex-wrap:nowrap;">
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollInitiative">
+                            <span class="pp-icon-button__text">Roll Initiative</span>
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/initiative.svg" alt="" aria-hidden="true" />
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillCheck" data-skill-key="awareness">
+                            <span class="pp-icon-button__text">Awareness</span>
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/awareness.svg" alt="" aria-hidden="true" />
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillContest" data-skill-key="deflection">
+                            <span class="pp-icon-button__text">Deflect</span>
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/divert.svg" alt="" aria-hidden="true" />
+                        </button>
+                        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="rollSkillContest" data-skill-key="evasion">
+                            <span class="pp-icon-button__text">Evade</span>
+                            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/shield-reflect.svg" alt="" aria-hidden="true" />
+                        </button>
                     </div>
                 </div>
-                <div class="top-gap">
-                    <label>Description
-                        <textarea name="system.description">{{system.description}}</textarea>
-                    </label>
+                <div class="next-roll-panel yellow-border">
+                    <div class="pp-icon-button">
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/d10.svg" alt="" aria-hidden="true" />
+                        <span class="pp-icon-button__text" style="text-align: center;">next roll:</span>
+                        <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/d10.svg" alt="" aria-hidden="true" />
+                    </div>
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'advantage')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="advantage">
+                        <span class="pp-icon-button__-text">advantage</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/advantage.svg" alt="" aria-hidden="true" />
+                    </button>
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'normal')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="normal">
+                        <span class="pp-icon-button__-text">normal</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/normal-roll.svg" alt="" aria-hidden="true" />
+                    </button>
+                    <button type="button"
+                        class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}"
+                        data-pp-action="setRollMode" data-roll-mode="disadvantage">
+                        <span class="pp-icon-button__-text">disadvantage</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/disadvantage.svg" alt="" aria-hidden="true" />
+                    </button>
                 </div>
-            </section>
+            </div>
+            <div class="sheet-tabs">
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'overview')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="overview">
+                    <span class="pp-icon-button__text">Overview</span>
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/npc.svg" alt="" aria-hidden="true" />
+                </button>
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'combat')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="combat">
+                    <span class="pp-icon-button__text">Combat</span>
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/combat.svg" alt="" aria-hidden="true" />
+                </button>
+                <button type="button"
+                    class="tab-button {{#if (eq activeTab 'skills')}}active-tab{{/if}} pp-icon-button rules-element"
+                    data-pp-action="tab" data-tab-id="skills">
+                    <span class="pp-icon-button__text">Skills</span>
+                    <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/skill.svg" alt="" aria-hidden="true" />
+                </button>
+            </div>
         </div>
     </header>
 
-    <section class="sheet-controls">
-        <div class="roll-mode-bar">
-            <div class="roll-mode-label">Next Roll</div>
-            <div class="roll-mode-buttons">
-                {{#each rollModes as |label key|}}
-                <button type="button" class="roll-mode-button {{#if (eq ../rollMode key)}}active{{/if}}" data-pp-action="setRollMode" data-roll-mode="{{key}}">{{label}}</button>
-                {{/each}}
-            </div>
-        </div>
-    </section>
-
     <section class="sheet-body">
-        <div class="two-col wide-gap">
+
+        {{!-- Overview tab --}}
+        <div class="tab-panel dossier-layout {{#unless (eq activeTab 'overview')}}hidden{{/unless}}">
+            <div class="dossier-top-row">
+                <section class="card portrait-card">
+                    <div class="portrait-wrapper statblock-portrait-wrapper">
+                        <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="choosePortrait" title="Click to change image" />
+                    </div>
+                </section>
+                <section class="card" style="flex: 1 1 auto;">
+                    <h4>Identity</h4>
+                    <div class="identity-grid">
+                        <label>Hit Die
+                            <input type="text" name="system.summary.hitDie" value="{{system.summary.hitDie}}" />
+                        </label>
+                        <label>Size
+                            <input type="text" name="system.summary.size" value="{{system.summary.size}}" />
+                        </label>
+                        <label>Speed
+                            <input type="number" name="system.summary.speed" value="{{system.summary.speed}}" />
+                        </label>
+                        <div class="save-target-row">
+                            <label>Save Target
+                                <input type="text" name="system.summary.saveTarget" value="{{system.summary.saveTarget}}" />
+                            </label>
+                            <button type="button" class="save-roll-button" data-pp-action="rollSave">Roll</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <section class="card top-gap">
+                <h4>Description</h4>
+                <textarea name="system.description">{{system.description}}</textarea>
+            </section>
+            <section class="card top-gap">
+                <h4>Notes</h4>
+                <textarea name="system.notes">{{system.notes}}</textarea>
+            </section>
+        </div>
+
+        {{!-- Combat tab --}}
+        <div class="tab-panel {{#unless (eq activeTab 'combat')}}hidden{{/unless}}">
             <section class="card">
-                <h3>Combat</h3>
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Melee Attacks</h4>
+                    <button type="button" class="roll-mode-button pp-icon-button pp-selectable-button weapons"
+                        style="width:75px; border-width:1px"
+                        data-pp-action="createItem" data-item-type="weapon" data-classification="melee">
+                        <span class="pp-icon-button__text">add</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/melee-weapons.svg" alt="" aria-hidden="true" />
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pp-weapon-icon-col"></th>
+                            <th>Name</th>
+                            <th>Atk</th>
+                            <th>Dmg</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each meleeWeapons}}
+                        <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
+                            <td>{{name}}</td>
+                            <td>{{attackBonus}}</td>
+                            <td>{{system.damageSingle}}</td>
+                            <td>{{system.damageType}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
+                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Ranged Attacks</h4>
+                    <button type="button" class="roll-mode-button pp-icon-button pp-selectable-button weapons"
+                        style="width:75px; border-width:1px"
+                        data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">
+                        <span class="pp-icon-button__text">add</span>
+                        <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/small-arms.svg" alt="" aria-hidden="true" />
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pp-weapon-icon-col"></th>
+                            <th>Name</th>
+                            <th>Atk</th>
+                            <th>Single</th>
+                            <th>Auto</th>
+                            <th>Rng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each rangedWeapons}}
+                        <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
+                            <td>{{name}}</td>
+                            <td>{{attackBonus}}</td>
+                            <td>{{system.damageSingle}}</td>
+                            <td>{{system.damageAutomatic}}</td>
+                            <td>{{system.rangeShort}} / {{system.rangeLong}} / {{system.rangeMax}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-pp-action="rollWeaponAttackCheck" data-item-id="{{id}}">Check</button>
+                                <button type="button" data-pp-action="rollWeaponAttackContest" data-item-id="{{id}}">Contest</button>
+                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card top-gap">
+                <h4>Damage Reduction</h4>
                 <div class="summary-grid compact">
-                    <label>Evasion
-                        <input type="number" value="{{system.defenses.evasion}}" disabled />
-                    </label>
-                    <label>Deflection
-                        <input type="number" value="{{system.defenses.deflection}}" disabled />
-                    </label>
                     <label>Kinetic DR
                         <input type="number" name="system.defenses.kineticDr" value="{{system.defenses.kineticDr}}" />
                     </label>
@@ -77,9 +246,11 @@
                     </label>
                 </div>
             </section>
+        </div>
 
+        {{!-- Skills tab --}}
+        <div class="tab-panel {{#unless (eq activeTab 'skills')}}hidden{{/unless}}">
             <section class="card">
-                <h3>Skills</h3>
                 <div class="inline-actions statblock-skill-picker-row">
                     <select class="statblock-skill-select" data-pp-skill-picker="availableSkill" {{#unless hasAvailableSkills}}disabled{{/unless}}>
                         {{#if hasAvailableSkills}}
@@ -92,15 +263,28 @@
                     </select>
                     <button type="button" class="add-skill-button" data-pp-action="addSkill" {{#unless hasAvailableSkills}}disabled{{/unless}}>+ Skill</button>
                 </div>
-                <table>
-                    <thead><tr><th>Skill</th><th>Bonus</th><th>Target</th><th></th></tr></thead>
+                <table class="pp-skill-table">
+                    <colgroup>
+                        <col class="pp-skill-name-col" />
+                        <col class="pp-skill-trained-bonus-col" />
+                        <col class="pp-skill-target-col" />
+                        <col class="pp-skill-actions-col" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="pp-skill-name-cell">Skill</th>
+                            <th>Bonus</th>
+                            <th>Target</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {{#each coreSkills}}
                         <tr>
-                            <td>{{label}}</td>
+                            <td class="pp-skill-name-cell">{{label}}</td>
                             <td><input type="number" name="system.skills.{{key}}.bonus" value="{{bonus}}" /></td>
-                            <td><input type="number" name="system.skills.{{key}}.target" value="{{target}}" disabled /></td>
-                            <td class="row-actions">
+                            <td class="pp-skill-target-cell">{{target}}</td>
+                            <td class="row-actions pp-skill-actions-cell">
                                 {{#if (eq key "awareness")}}
                                 <button type="button" data-pp-action="rollInitiative">Initiative</button>
                                 {{/if}}
@@ -111,13 +295,13 @@
                         {{/each}}
                         {{#each extraSkills}}
                         <tr>
-                            <td>{{label}}</td>
+                            <td class="pp-skill-name-cell">{{label}}</td>
                             <td><input type="number" name="system.skills.{{key}}.bonus" value="{{bonus}}" /></td>
-                            <td><input type="number" name="system.skills.{{key}}.target" value="{{target}}" disabled /></td>
-                            <td class="row-actions">
+                            <td class="pp-skill-target-cell">{{target}}</td>
+                            <td class="row-actions pp-skill-actions-cell">
                                 <button type="button" data-pp-action="rollSkillCheck" data-skill-key="{{key}}">Check</button>
                                 <button type="button" data-pp-action="rollSkillContest" data-skill-key="{{key}}">Contest</button>
-                                <button type="button" data-pp-action="deleteSkill" data-skill-key="{{key}}">X</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteSkill" data-skill-key="{{key}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
                             </td>
                         </tr>
                         {{/each}}
@@ -126,36 +310,5 @@
             </section>
         </div>
 
-        <section class="card top-gap">
-            <h3>Attacks</h3>
-            <div class="inline-actions">
-                <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="melee">+ Melee Attack</button>
-                <button type="button" data-pp-action="createItem" data-item-type="weapon" data-classification="smallArms">+ Ranged Attack</button>
-            </div>
-            <table>
-                <thead><tr><th>Name</th><th>Attack</th><th>Damage</th><th>Auto</th><th>Type</th><th></th></tr></thead>
-                <tbody>
-                    {{#each weapons}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{attackBonus}}</td>
-                        <td>{{system.damageSingle}}</td>
-                        <td>{{system.damageAutomatic}}</td>
-                        <td>{{system.damageType}}</td>
-                        <td class="row-actions">
-                            <button type="button" data-pp-action="rollWeaponAttack" data-item-id="{{id}}">Roll</button>
-                            <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
-                            <button type="button" data-pp-action="deleteItem" data-item-id="{{id}}">X</button>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </section>
-
-        <section class="card top-gap">
-            <h3>Notes</h3>
-            <textarea name="system.notes">{{system.notes}}</textarea>
-        </section>
     </section>
 </div>

@@ -5,7 +5,7 @@
                 <div class="character-header-main yellow-border">
                     <div class="character-summary-fields">
                         <div class="field-group" style="flex: 4 1 0">
-                            <h5 class="pp-font-rationale">Name</h5>
+                            <h5>Name</h5>
                             <input class="dossier-input" type="text" name="name" value="{{actor.name}}"/>
                         </div>
 
@@ -82,21 +82,21 @@
                     <button type="button"
                         class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'advantage')}}active{{/if}}"
                         data-pp-action="setRollMode" data-roll-mode="advantage">
-                        <span class="pp-icon-button__dark-text">advantage</span>
+                        <span class="pp-icon-button__-text">advantage</span>
                         <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/advantage.svg" alt=""
                             aria-hidden="true" />
                     </button>
                     <button type="button"
                         class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'normal')}}active{{/if}}"
                         data-pp-action="setRollMode" data-roll-mode="normal">
-                        <span class="pp-icon-button__dark-text">normal</span>
+                        <span class="pp-icon-button__-text">normal</span>
                         <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/normal-roll.svg" alt=""
                             aria-hidden="true" />
                     </button>
                     <button type="button"
                         class="roll-mode-button pp-icon-button pp-selectable-button {{#if (eq rollMode 'disadvantage')}}active{{/if}}"
                         data-pp-action="setRollMode" data-roll-mode="disadvantage">
-                        <span class="pp-icon-button__dark-text">disadvantage</span>
+                        <span class="pp-icon-button__-text">disadvantage</span>
                         <img class="pp-icon-button__small-icon" src="systems/parallax-protocol/assets/icons/disadvantage.svg" alt=""
                             aria-hidden="true" />
                     </button>
