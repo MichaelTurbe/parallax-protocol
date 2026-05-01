@@ -13,11 +13,15 @@ import { ParallaxStatblockSheet } from "./module/sheets/statblock-sheet.mjs";
 import { ParallaxItemSheet } from "./module/sheets/item-sheet.mjs";
 import { showRollToast } from "./module/ui/roll-toast.mjs";
 import { attachChatButtonListeners } from "./module/ui/chat-buttons.mjs";
+import { StatblockImporter } from "./module/apps/statblock-importer.mjs";
 
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
 
-    game.parallax = { config: PARALLAX };
+    game.parallax = {
+        config: PARALLAX,
+        openStatblockImporter: () => new StatblockImporter().render(true),
+    };
 
     Handlebars.registerHelper("eq", function (a, b) {
         return a === b;
@@ -66,4 +70,21 @@ Hooks.on("renderChatMessage", (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0] ?? null;
     if (!(root instanceof HTMLElement)) return;
     attachChatButtonListeners(root);
+});
+
+Hooks.on("renderActorDirectory", (_app, html) => {
+    const root = html instanceof HTMLElement ? html : html?.[0];
+    if (!(root instanceof HTMLElement)) return;
+    if (root.querySelector(".pp-import-statblock-btn")) return;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "pp-import-statblock-btn";
+    btn.textContent = "Import Stat Block";
+    btn.addEventListener("click", () => new StatblockImporter().render(true));
+
+    const target = root.querySelector(".header-actions")
+        ?? root.querySelector(".directory-header")
+        ?? root.querySelector("header");
+    if (target) target.appendChild(btn);
 });

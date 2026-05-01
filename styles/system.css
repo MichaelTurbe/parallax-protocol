@@ -849,3 +849,61 @@ h5 {
     font-family: 'Orbitron', sans-serif;
     line-height: 1.1;
 }
+
+/* ── Stat Block Importer ──────────────────────────────────────────────────── */
+
+.application.parallax.statblock-importer .window-content {
+    padding: 0.75rem;
+    overflow: visible;
+}
+
+.parallax.statblock-importer .statblock-importer-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.parallax.statblock-importer .importer-type-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    color: #F2EABD;
+}
+
+.parallax.statblock-importer .importer-type-row select {
+    width: 100%;
+    font-family: 'Oxanium', sans-serif;
+}
+
+.parallax.statblock-importer .importer-paste-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    color: #F2EABD;
+}
+
+.parallax.statblock-importer .importer-textarea {
+    width: 100%;
+    min-height: 220px;
+    resize: vertical;
+    font-family: 'Electrolize', monospace;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+}
+
+.parallax.statblock-importer .importer-footer {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.parallax.statblock-importer .importer-footer button {
+    flex: 0 0 auto;
+}
+
+/* sidebar inject button */
+.pp-import-statblock-btn {
+    font-family: 'Oxanium', sans-serif;
+}

@@ -1,0 +1,34 @@
+<div class="statblock-importer-body">
+    <div class="importer-type-row">
+        <label>Actor Type
+            <select name="actorType">
+                {{#each actorTypes as |label key|}}
+                <option value="{{key}}">{{label}}</option>
+                {{/each}}
+            </select>
+        </label>
+    </div>
+
+    <div class="importer-paste-row top-gap">
+        <label>Paste Stat Block Text
+            <textarea name="statblockText" class="importer-textarea" placeholder="CEPHLICON TROTTER HIT DIE: D8, LEVEL: 1
+Voracious, sneaky carnivores standing about 4 feet tall.
+CLAWS x2: +4 1d6 kinetic (S)
+EVASION: +5 DEFLECTION: +3
+KINETIC DR: 1 ENERGY DR: 1
+SIZE: M SPEED: 30
+SAVING THROW TARGET: 17
+SKILLS: acrobatics +5/15, awareness +5/15"></textarea>
+        </label>
+    </div>
+
+    <div class="importer-footer top-gap">
+        <button type="button" class="pp-icon-button pp-action-button" data-pp-action="import">
+            <span class="pp-icon-button__text">Import</span>
+            <img class="pp-icon-button__icon" src="systems/parallax-protocol/assets/icons/npc.svg" alt="" aria-hidden="true" />
+        </button>
+        <button type="button" class="pp-icon-button" data-pp-action="cancel">
+            <span class="pp-icon-button__text">Cancel</span>
+        </button>
+    </div>
+</div>
