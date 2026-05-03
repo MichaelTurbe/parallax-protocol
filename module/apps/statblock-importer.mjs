@@ -153,28 +153,33 @@ export function parseStatblockText(rawText) {
         //       "CLAWS x2: +7, 1d8 kinetic (S)"   ← comma variant
         //       "HEAVY LASER RIFLE: +6 2d8+2 energy (E)"
         const weaponMatch = line.match(
-            /^([A-Z][A-Z0-9\s'\-/]+?)(?:\s+x\d+)?:\s*\+(\d+),?\s+(\d+d\d+(?:[+\-]\d+)?)\s+(kinetic|energy)\s+\(([A-Za-z])\)/i
+            /^([A-Z][A-Z0-9\s'\-/]+?)(?:\s+x(\d+))?:\s*\+(\d+),?\s+(\d+d\d+(?:[+\-]\d+)?)\s+(kinetic|energy)\s+\(([A-Za-z])\)/i
         );
         if (weaponMatch) {
             const wName = weaponMatch[1].trim();
-            const attackBonus = parseIntOrDefault(weaponMatch[2]);
-            const damageSingle = weaponMatch[3].toLowerCase();
-            const damageClass = weaponMatch[4].toLowerCase();
-            const damageType = weaponMatch[5].toLowerCase();
+            const attackCount = weaponMatch[2] ? parseInt(weaponMatch[2], 10) : 1;
+            const attackBonus = parseIntOrDefault(weaponMatch[3]);
+            const damageSingle = weaponMatch[4].toLowerCase();
+            const damageClass = weaponMatch[5].toLowerCase();
+            const damageType = weaponMatch[6].toLowerCase();
 
             const upper = wName.toUpperCase();
             const isRanged = /PISTOL|RIFLE|GUN|LASER|PLASMA|BLASTER|CANNON|CARBINE|SHOT|BURST|BEAM/.test(upper);
+            const baseName = toTitleCase(wName);
 
-            result.weapons.push({
-                name: toTitleCase(wName),
-                classification: isRanged ? "smallArms" : "melee",
-                linkedSkill: isRanged ? "firearmsSmall" : "meleeWeapons",
-                attackBonusMode: "manual",
-                manualAttackBonus: attackBonus,
-                damageClass,
-                damageSingle,
-                damageType,
-            });
+            const count = attackCount > 1 ? attackCount : 1;
+            for (let i = 1; i <= count; i++) {
+                result.weapons.push({
+                    name: count > 1 ? `#${i} ${baseName}` : baseName,
+                    classification: isRanged ? "smallArms" : "melee",
+                    linkedSkill: isRanged ? "firearmsSmall" : "meleeWeapons",
+                    attackBonusMode: "manual",
+                    manualAttackBonus: attackBonus,
+                    damageClass,
+                    damageSingle,
+                    damageType,
+                });
+            }
             foundDataLine = true;
             continue;
         }
