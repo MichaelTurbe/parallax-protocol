@@ -75,7 +75,7 @@ export function parseStatblockText(rawText) {
     // ── Line 1: NAME HIT DIE: D8, LEVEL: 1 ───────────────────────────────────
     const headerMatch = lines[0].match(/^(.+?)\s+HIT DIE:\s*(\S+?),?\s*LEVEL:\s*(\d+)/i);
     if (headerMatch) {
-        result.name = headerMatch[1].trim();
+        result.name = toTitleCase(headerMatch[1].trim());
         result.hitDie = headerMatch[2].toUpperCase();
         result.level = parseIntOrDefault(headerMatch[3], 1);
     } else {
