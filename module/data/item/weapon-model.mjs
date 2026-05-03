@@ -15,6 +15,7 @@ export class ParallaxWeaponData extends foundry.abstract.TypeDataModel {
             rangeShort: new fields.NumberField({ initial: 0, min: 0 }),
             rangeLong: new fields.NumberField({ initial: 0, min: 0 }),
             rangeMax: new fields.NumberField({ initial: 0, min: 0 }),
+            price: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             notes: new fields.HTMLField({ initial: "" }),
         };
     }

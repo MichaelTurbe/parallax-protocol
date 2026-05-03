@@ -12,6 +12,7 @@ export class ParallaxArmorData extends foundry.abstract.TypeDataModel {
                 radiation: new fields.NumberField({ initial: 0, min: 0, integer: true }),
                 stun: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             }),
+            price: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             notes: new fields.HTMLField({ initial: "" }),
         };
     }

@@ -6,6 +6,7 @@ export class ParallaxGearData extends foundry.abstract.TypeDataModel {
             category: new fields.StringField({ initial: "mundane" }),
             bulk: new fields.NumberField({ initial: 0, min: 0 }),
             inPack: new fields.BooleanField({ initial: false }),
+            price: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             notes: new fields.HTMLField({ initial: "" }),
         };
     }
