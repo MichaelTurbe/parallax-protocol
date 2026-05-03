@@ -1,7 +1,6 @@
 import { attachChatButtonListeners } from './chat-buttons.mjs';
 
 const CONTAINER_ID = 'pp-roll-toast-container';
-const DURATION_MS = 4500;
 
 function getOrCreateContainer() {
     let container = document.getElementById(CONTAINER_ID);
@@ -19,7 +18,7 @@ function dismiss(toast) {
 }
 
 export function showRollToast(message) {
-    if (!game.user.isGM) return;
+    if (!game.settings.get('parallax-protocol', 'showRollToasts')) return;
     if (!message.rolls?.length) return;
 
     const speaker = message.speaker?.alias ?? 'Unknown';
@@ -43,6 +42,10 @@ export function showRollToast(message) {
         requestAnimationFrame(() => toast.classList.add('pp-roll-toast--visible'));
     });
 
-    const timer = setTimeout(() => dismiss(toast), DURATION_MS);
+    const autoClose = game.settings.get('parallax-protocol', 'toastAutoClose');
+    const duration = game.settings.get('parallax-protocol', 'toastDuration');
+
+    let timer = null;
+    if (autoClose) timer = setTimeout(() => dismiss(toast), duration);
     toast.addEventListener('click', () => { clearTimeout(timer); dismiss(toast); });
 }

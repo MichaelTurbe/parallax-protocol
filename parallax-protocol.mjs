@@ -18,6 +18,46 @@ import { StatblockImporter } from "./module/apps/statblock-importer.mjs";
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
 
+    game.settings.register('parallax-protocol', 'npcHpMode', {
+        name: 'NPC Token HP Generation',
+        hint: 'When a creature, NPC, or robot with no HP set is dropped onto the board, calculate starting HP using this method (level × hit die).',
+        scope: 'world',
+        config: true,
+        type: String,
+        choices: {
+            'average': 'Average HP',
+            'random': 'Roll random HP',
+        },
+        default: 'average',
+    });
+
+    game.settings.register('parallax-protocol', 'showRollToasts', {
+        name: 'Show Roll Notifications',
+        hint: 'Display a toast overlay when a roll result comes in. On by default for GMs, off by default for players.',
+        scope: 'client',
+        config: true,
+        type: Boolean,
+        default: game.user?.isGM ?? false,
+    });
+
+    game.settings.register('parallax-protocol', 'toastAutoClose', {
+        name: 'Auto-dismiss Roll Toasts',
+        hint: 'When enabled, roll result toasts close automatically after the configured delay. When disabled, they must be clicked to dismiss.',
+        scope: 'client',
+        config: true,
+        type: Boolean,
+        default: true,
+    });
+
+    game.settings.register('parallax-protocol', 'toastDuration', {
+        name: 'Roll Toast Duration (ms)',
+        hint: 'How long roll result toasts stay visible before auto-dismissing. Has no effect if auto-dismiss is disabled.',
+        scope: 'client',
+        config: true,
+        type: Number,
+        default: 4500,
+    });
+
     game.parallax = {
         config: PARALLAX,
         openStatblockImporter: () => new StatblockImporter().render(true),
@@ -70,6 +110,30 @@ Hooks.on("renderChatMessage", (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0] ?? null;
     if (!(root instanceof HTMLElement)) return;
     attachChatButtonListeners(root);
+});
+
+Hooks.on("createToken", async (tokenDocument, _options, userId) => {
+    if (userId !== game.userId) return;
+
+    const actor = tokenDocument.actor;
+    if (!actor || !["npc", "robot", "creature"].includes(actor.type)) return;
+    if (actor.system.hp.value !== 0 || actor.system.hp.max !== 0) return;
+
+    const dieStr = actor.system.summary?.hitDie ?? "D8";
+    const sides = parseInt(dieStr.replace(/[Dd]/, ""), 10);
+    const level = Math.max(1, Number(actor.system.summary?.level ?? 1));
+    if (!Number.isFinite(sides) || sides < 2) return;
+
+    const mode = game.settings.get("parallax-protocol", "npcHpMode");
+    let hp;
+    if (mode === "random") {
+        const roll = await new Roll(`${level}d${sides}`).evaluate();
+        hp = roll.total;
+    } else {
+        hp = (Math.floor(sides / 2) + 1) * level;
+    }
+
+    await tokenDocument.update({ "delta.system.hp.value": hp, "delta.system.hp.max": hp });
 });
 
 Hooks.on("renderActorDirectory", (_app, html) => {
