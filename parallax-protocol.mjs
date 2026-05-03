@@ -14,6 +14,7 @@ import { ParallaxItemSheet } from "./module/sheets/item-sheet.mjs";
 import { showRollToast } from "./module/ui/roll-toast.mjs";
 import { attachChatButtonListeners } from "./module/ui/chat-buttons.mjs";
 import { StatblockImporter } from "./module/apps/statblock-importer.mjs";
+import { ParallaxCombatant } from "./module/documents/combatant.mjs";
 
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
@@ -69,6 +70,7 @@ Hooks.once("init", () => {
 
     CONFIG.Actor.documentClass = ParallaxActor;
     CONFIG.Item.documentClass = ParallaxItem;
+    CONFIG.Combatant.documentClass = ParallaxCombatant;
 
     CONFIG.Actor.dataModels = {
         character: ParallaxCharacterData,
@@ -133,7 +135,7 @@ Hooks.on("createToken", async (tokenDocument, _options, userId) => {
         hp = (Math.floor(sides / 2) + 1) * level;
     }
 
-    await tokenDocument.update({ "delta.system.hp.value": hp, "delta.system.hp.max": hp });
+    await tokenDocument.actor.update({ "system.hp.value": hp, "system.hp.max": hp });
 });
 
 Hooks.on("renderActorDirectory", (_app, html) => {
