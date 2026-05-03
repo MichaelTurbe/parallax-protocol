@@ -119,6 +119,20 @@ Hooks.on("createToken", async (tokenDocument, _options, userId) => {
 
     const actor = tokenDocument.actor;
     if (!actor || !["npc", "robot", "creature"].includes(actor.type)) return;
+
+    // Auto-number: scan sibling tokens on this scene with the same actor, find the
+    // highest trailing number already in use, and assign the next one.
+    const scene = tokenDocument.parent;
+    if (scene) {
+        const used = scene.tokens
+            .filter(t => t.id !== tokenDocument.id && t.actorId === tokenDocument.actorId)
+            .map(t => { const m = t.name.match(/\s(\d+)$/); return m ? parseInt(m[1], 10) : 0; })
+            .filter(n => n > 0);
+        const next = used.length > 0 ? Math.max(...used) + 1 : 1;
+        await tokenDocument.update({ name: `${actor.name} ${next}` });
+    }
+
+    // Auto-generate HP if the sheet has none set yet.
     if (actor.system.hp.value !== 0 || actor.system.hp.max !== 0) return;
 
     const dieStr = actor.system.summary?.hitDie ?? "D8";
