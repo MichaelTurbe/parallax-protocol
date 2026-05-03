@@ -680,6 +680,12 @@ h5 {
     gap: 5px;
 }
 
+.parallax.sheet.statblock-sheet .dossier-top-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: start;
+}
+
 .parallax.sheet .stats-column {
     display: flex;
     flex-direction: column;

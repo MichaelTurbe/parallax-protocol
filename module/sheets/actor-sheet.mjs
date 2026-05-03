@@ -43,7 +43,20 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             submitOnChange: false,
             closeOnSubmit: false,
         },
+        actions: {
+            configureToken: ParallaxCharacterSheet._onConfigureToken,
+        },
     };
+
+    static _onConfigureToken() {
+        new CONFIG.Token.prototypeSheetClass({ prototype: this.document.prototypeToken }).render({ force: true });
+    }
+
+    _getHeaderControls() {
+        const controls = super._getHeaderControls();
+        controls.push({ icon: 'fa-solid fa-user-circle', label: 'Token', action: 'configureToken' });
+        return controls;
+    }
 
     static PARTS = {
         body: {
