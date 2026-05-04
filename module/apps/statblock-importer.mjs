@@ -235,6 +235,19 @@ export function parseStatblockText(rawText) {
     return result;
 }
 
+// ── Compendium helpers ────────────────────────────────────────────────────────
+
+async function findCompendiumWeapon(name) {
+    const needle = name.toLowerCase();
+    for (const pack of game.packs) {
+        if (pack.documentName !== 'Item') continue;
+        const index = await pack.getIndex();
+        const entry = index.find(e => e.type === 'weapon' && e.name.toLowerCase() === needle);
+        if (entry) return pack.getDocument(entry._id);
+    }
+    return null;
+}
+
 // ── Application ───────────────────────────────────────────────────────────────
 
 export class StatblockImporter extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -346,22 +359,30 @@ export class StatblockImporter extends HandlebarsApplicationMixin(ApplicationV2)
         }
 
         if (parsed.weapons.length) {
-            await actor.createEmbeddedDocuments(
-                "Item",
-                parsed.weapons.map((w) => ({
-                    name: w.name,
-                    type: "weapon",
-                    system: {
-                        classification: w.classification,
-                        linkedSkill: w.linkedSkill,
-                        attackBonusMode: w.attackBonusMode,
-                        manualAttackBonus: w.manualAttackBonus,
-                        damageClass: w.damageClass,
-                        damageSingle: w.damageSingle,
-                        damageType: w.damageType,
-                    },
-                }))
-            );
+            const itemDataArray = await Promise.all(parsed.weapons.map(async (w) => {
+                const lookupName = w.name.replace(/^#\d+\s+/, '');
+                const compendium = await findCompendiumWeapon(lookupName);
+
+                const system = {
+                    classification: compendium?.system.classification ?? w.classification,
+                    linkedSkill: compendium?.system.linkedSkill ?? w.linkedSkill,
+                    attackBonusMode: 'manual',
+                    manualAttackBonus: w.manualAttackBonus,
+                    damageClass: w.damageClass,
+                    damageSingle: w.damageSingle,
+                    damageType: w.damageType,
+                    damageAutomatic: compendium?.system.damageAutomatic ?? '',
+                    rangeShort: compendium?.system.rangeShort ?? 0,
+                    rangeLong: compendium?.system.rangeLong ?? 0,
+                    rangeMax: compendium?.system.rangeMax ?? 0,
+                    bulk: compendium?.system.bulk ?? 0,
+                    price: compendium?.system.price ?? 0,
+                };
+
+                return { name: w.name, type: 'weapon', system };
+            }));
+
+            await actor.createEmbeddedDocuments('Item', itemDataArray);
         }
 
         ui.notifications?.info(`Imported "${parsed.name}" as ${actorType}.`);

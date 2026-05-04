@@ -153,7 +153,7 @@ export async function rollSkillCheck(actor, skillKey, mode = "normal") {
     const roll = await new Roll(resolveRollFormula(mode)).evaluate();
     const total = roll.total;
     const success = total >= target;
-    const damageButtons = buildSkillDamageButtons(actor, skillKey);
+    const damageButtons = success ? buildSkillDamageButtons(actor, skillKey) : '';
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
@@ -249,9 +249,25 @@ export async function rollWeaponAttackCheck(actor, weapon, mode = "normal") {
     const total = roll.total;
     const success = total >= target;
 
+    const actorUuid = escapeHtml(actor.uuid);
+    const weaponId = escapeHtml(weapon.id);
+    let actionsSection = '';
+    if (success) {
+        const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
+        if (String(weapon.system.damageAutomatic ?? '').trim()) {
+            damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
+        }
+        actionsSection = `<div class="parallax-chat-actions">${damageButtons.join(' ')}</div>`;
+    }
+
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `${weapon.name} Attack Check (${skillLabel}, ${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
+        flavor: `
+            <div class="parallax-chat-card">
+                <div><strong>${escapeHtml(weapon.name)} Attack Check</strong></div>
+                <div>${escapeHtml(skillLabel)} • ${modeLabel(mode)} • target ${target} — ${success ? 'Success' : 'Failure'}</div>
+                ${actionsSection}
+            </div>`,
     });
 }
 
