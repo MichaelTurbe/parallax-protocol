@@ -59,6 +59,22 @@
     },
     "primaryTokenAttribute": "hp",
     "secondaryTokenAttribute": null,
+    "packs": [
+        {
+            "name": "parallax-protocol-items",
+            "label": "Parallax Protocol Items",
+            "path": "packs/parallax-protocol-items",
+            "type": "Item",
+            "system": "parallax-protocol"
+        },
+        {
+            "name": "parallax-protocol-actors",
+            "label": "Parallax Protocol Actors",
+            "path": "packs/parallax-protocol-actors",
+            "type": "Actor",
+            "system": "parallax-protocol"
+        }
+    ],
     "url": "",
     "manifest": "",
     "download": ""
