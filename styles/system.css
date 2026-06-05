@@ -43,11 +43,11 @@
 .pp-font-raleway    { font-family: 'Raleway', sans-serif; }
 .pp-font-rationale  { font-family: 'Rationale', sans-serif; }
 
-h4{
+.parallax h4 {
     font-family: 'Oxanium', sans-serif;
 }
 
-h5 {
+.parallax h5 {
     font-family: 'Electrolize', sans-serif;
 }
 
@@ -85,7 +85,7 @@ h5 {
     font-family: 'Oxanium', sans-serif;
 }
 
-.tight-text{
+.parallax .tight-text {
     margin: 0;
 }
 
@@ -254,7 +254,7 @@ h5 {
 .parallax.sheet .roll-mode-buttons {
     flex-wrap: wrap;
 }
-.tab-button {
+.parallax .tab-button {
     border-color: var(--pp-rules-element);
     border-radius: 6pt 6pt 0 0;
     border-width: 1px;
@@ -273,20 +273,20 @@ h5 {
     min-width: 0;
 }
 
-.roll-mode-button{
+.parallax .roll-mode-button {
     border: 3px solid var(--pp-weapon);
 }
 
-.roll-mode-button.active {
+.parallax .roll-mode-button.active {
     border: 3px solid var(--pp-dark-red);
 }
 
-.active-tab{
+.parallax .active-tab {
     border: 2px solid var(--pp-stat-block);
     border-bottom: none;
 }
 
-.tab-panel{
+.parallax .tab-panel {
     width: 100%;
 }
 
@@ -521,29 +521,28 @@ h5 {
     white-space: nowrap;
 }
 
-.character-header {
+.parallax .character-header {
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: space-around;
 }
 
-.character-header-full{
+.parallax .character-header-full {
     display: flex;
     flex-direction: row;
     gap: 10px;
-
 }
 
-.yellow-border{
+.parallax .yellow-border {
     border: 1px;
-        border-color: var(--pp-light-icon-foreground);
-        border-style: solid;
-        border-radius: 5pt;
-        padding: 5px
+    border-color: var(--pp-light-icon-foreground);
+    border-style: solid;
+    border-radius: 5pt;
+    padding: 5px;
 }
 
-.character-header-main {
+.parallax .character-header-main {
     display: flex;
     flex-direction: column;
     row-gap: 2px;
@@ -551,7 +550,7 @@ h5 {
     justify-content: space-around;
 }
 
-.character-summary-fields {
+.parallax .character-summary-fields {
     width: 100%;
     display: flex;
     gap: 10px;
@@ -566,25 +565,23 @@ h5 {
     text-align: center;
 }
 
-.field-group {
+.parallax .field-group {
     display: flex;
     flex-direction: column;
 }
 
-.sheet-tabs {
+.parallax .sheet-tabs {
     display: flex;
     flex-direction: row;
     align-content: flex-end;
     gap: 10px;
-    /* padding-left: 10px;
-    padding-right: 10px; */
 }
 
 /* .sheet-tabs button {
     flex-basis: 100%;
 } */
 
-.next-roll-panel {
+.parallax .next-roll-panel {
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -644,8 +641,8 @@ h5 {
     object-fit: contain;
 }
 
-.rules-element{
-    background-color: var(--pp-rules-element)
+.parallax .rules-element {
+    background-color: var(--pp-rules-element);
 }
 
 .parallax.sheet .pp-weapon-icon-col {
@@ -659,8 +656,8 @@ h5 {
     object-fit: contain;
 }
 
-.weapons{
-    background-color:var(--pp-weapon)
+.parallax .weapons {
+    background-color: var(--pp-weapon);
 }
 
 /* v25 character sheet layout fixes */
@@ -726,7 +723,7 @@ h5 {
     white-space: nowrap;
 }
 
-.dossier-input{
+.parallax .dossier-input {
     height: 2rem;
     font-size: large;
     text-align: center;
