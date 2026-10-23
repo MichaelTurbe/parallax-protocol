@@ -13,6 +13,7 @@ Last reviewed: 2026-10-22
 - Armor and field DEX penalties applied to DEX-based skills; field generators can carry DEX and speed penalties
 - BURDENED speed penalty calculated from bulk, with and without the pack
 - Body DR read-only (from species traits)
+- Portrait opens full size in an image popout; a separate pencil button changes it
 
 ### 0.0.30 and earlier
 

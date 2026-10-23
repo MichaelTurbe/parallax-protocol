@@ -190,7 +190,8 @@
             <div class="dossier-top-row">
                 <section class="card portrait-card">
                     <div class="portrait-wrapper">
-                        <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="choosePortrait" title="Click to change image" />
+                        <img class="actor-portrait" src="{{actorImage}}" alt="{{actor.name}}" data-pp-action="viewPortrait" title="View full size" />
+                        {{#if editable}}<button type="button" class="pp-portrait-edit" data-pp-action="choosePortrait" title="Change image" aria-label="Change image"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>{{/if}}
                     </div>
                 </section>
                 <section class="stats-column">

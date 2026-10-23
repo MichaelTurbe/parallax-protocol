@@ -406,6 +406,14 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             return this.render();
         }
 
+        if (action === "viewPortrait") {
+            return new foundry.applications.apps.ImagePopout({
+                src: this.document.img || "icons/svg/mystery-man.svg",
+                uuid: this.document.uuid,
+                window: { title: this.document.name },
+            }).render({ force: true });
+        }
+
         if (action === "choosePortrait") {
             const picker = new foundry.applications.apps.FilePicker({
                 type: "image",
