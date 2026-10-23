@@ -468,7 +468,7 @@
                         {{#each skills}}
                         <tr data-skill-row="{{key}}">
                             <td class="pp-skill-name-cell">{{label}}</td>
-                            <td class="pp-skill-stat-cell" title="{{statTooltip}}">{{statLabel}}</td>
+                            <td class="pp-skill-stat-cell"><span class="pp-stat-tag {{#if statPenalized}}pp-stat-penalized{{/if}}" title="{{statTooltip}}">{{statLabel}}</span></td>
                             <td class="pp-skill-trained-cell"><input type="checkbox" data-skill-trained disabled title="Trained when rank is 1 or more" {{checked trained}} /></td>
                             <td class="pp-skill-rank-cell {{#if overCreationMax}}pp-over-cap{{/if}}" data-skill-rank-cell title="Max {{creationMax}} at character creation"><input type="number" min="0" name="system.skills.{{key}}.rank" value="{{rank}}" /></td>
                             <td class="pp-skill-item-bonus-cell"><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>

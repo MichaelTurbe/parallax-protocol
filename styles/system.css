@@ -773,6 +773,19 @@
     background: var(--pp-warning-tint);
 }
 
+/* The same warning treatment on the stat name in the skills table. */
+.parallax.sheet .pp-stat-tag {
+    display: inline-block;
+    padding: 0 0.3rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.parallax.sheet .pp-stat-tag.pp-stat-penalized {
+    border-color: var(--pp-warning);
+    background: var(--pp-warning-tint);
+}
+
 .parallax.sheet .pp-stat-effective {
     display: block;
     width: 100%;

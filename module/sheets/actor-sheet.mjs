@@ -111,7 +111,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             skillsByCategory[categoryKey].push({
                 key,
                 ...skill,
-                statLabel: skill?.stat ? String(skill.stat).toUpperCase() + (statPenalty ? ` −${statPenalty}` : "") : "",
+                statLabel: skill?.stat ? String(skill.stat).toUpperCase() : "",
+                statPenalized: statPenalty > 0,
                 statTooltip: statPenalty
                     ? `Armor/field DEX penalty: ${stat.value} − ${statPenalty} = ${stat.effective} (never below 0)`
                     : "",
