@@ -51,6 +51,10 @@ export class ParallaxCharacterData extends foundry.abstract.TypeDataModel {
                     kinetic: new fields.NumberField({ initial: 0, min: 0, integer: true }),
                     energy: new fields.NumberField({ initial: 0, min: 0, integer: true }),
                 }),
+                shield: new fields.SchemaField({
+                    kinetic: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                    energy: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                }),
                 total: new fields.SchemaField({
                     kinetic: new fields.NumberField({ initial: 0, min: 0, integer: true }),
                     energy: new fields.NumberField({ initial: 0, min: 0, integer: true }),

@@ -152,6 +152,7 @@ export class ParallaxActor extends Actor {
     _prepareItemsAndArmor() {
         let armorItem = null;
         let fieldItem = null;
+        let shieldItem = null;
         let speciesKinetic = 0;
         let speciesEnergy = 0;
         const speciesSaveBonuses = {};
@@ -159,6 +160,7 @@ export class ParallaxActor extends Actor {
         for (const item of this.items) {
             if (item.type === "armor" && !armorItem) armorItem = item;
             if (item.type === "field" && !fieldItem) fieldItem = item;
+            if (item.type === "shield" && !shieldItem) shieldItem = item;
             if (item.type === "speciesTrait") {
                 speciesKinetic += Number(item.system.hereditaryArmorKinetic ?? 0);
                 speciesEnergy += Number(item.system.hereditaryArmorEnergy ?? 0);
@@ -174,6 +176,8 @@ export class ParallaxActor extends Actor {
         this.system.armorSummary.armor.energy = Number(armorItem?.system.energyDr ?? 0);
         this.system.armorSummary.field.kinetic = Number(fieldItem?.system.kineticDr ?? 0);
         this.system.armorSummary.field.energy = Number(fieldItem?.system.energyDr ?? 0);
+        this.system.armorSummary.shield.kinetic = Number(shieldItem?.system.kineticDr ?? 0);
+        this.system.armorSummary.shield.energy = 0;
         this.system.armorSummary.body.kinetic = speciesKinetic;
         this.system.armorSummary.body.energy = speciesEnergy;
         this.system.movement.armorPenalty = Number(armorItem?.system.speedPenalty ?? 0);
@@ -214,7 +218,7 @@ export class ParallaxActor extends Actor {
                 else equipmentBulkNotInPack += bulk;
             }
 
-            if (item.type === "weapon" || item.type === "armor" || item.type === "field") {
+            if (["weapon", "armor", "field", "shield"].includes(item.type)) {
                 equipmentBulkNotInPack += Number(item.system.bulk ?? 0);
             }
         }
@@ -240,11 +244,13 @@ export class ParallaxActor extends Actor {
         this.system.armorSummary.total.kinetic =
             Number(this.system.armorSummary.body.kinetic ?? 0) +
             Number(this.system.armorSummary.armor.kinetic ?? 0) +
-            Number(this.system.armorSummary.field.kinetic ?? 0);
+            Number(this.system.armorSummary.field.kinetic ?? 0) +
+            Number(this.system.armorSummary.shield.kinetic ?? 0);
 
         this.system.armorSummary.total.energy =
             Number(this.system.armorSummary.body.energy ?? 0) +
             Number(this.system.armorSummary.armor.energy ?? 0) +
-            Number(this.system.armorSummary.field.energy ?? 0);
+            Number(this.system.armorSummary.field.energy ?? 0) +
+            Number(this.system.armorSummary.shield.energy ?? 0);
     }
 }

@@ -97,6 +97,7 @@ export class ParallaxItemSheet extends HandlebarsApplicationMixin(DocumentSheetV
             isWeapon: this.document.type === "weapon",
             isArmor: this.document.type === "armor",
             isField: this.document.type === "field",
+            isShield: this.document.type === "shield",
             isGear: this.document.type === "gear",
             isSpeciesTrait: this.document.type === "speciesTrait",
             weaponClassifications: config.weaponClassifications ?? {},

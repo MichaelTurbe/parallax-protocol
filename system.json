@@ -45,6 +45,11 @@
                     "system.notes"
                 ]
             },
+            "shield": {
+                "htmlFields": [
+                    "system.notes"
+                ]
+            },
             "gear": {
                 "htmlFields": [
                     "system.notes"

@@ -6,6 +6,7 @@ import { ParallaxStatblockData } from "./module/data/actor/statblock-model.mjs";
 import { ParallaxWeaponData } from "./module/data/item/weapon-model.mjs";
 import { ParallaxArmorData } from "./module/data/item/armor-model.mjs";
 import { ParallaxFieldData } from "./module/data/item/field-model.mjs";
+import { ParallaxShieldData } from "./module/data/item/shield-model.mjs";
 import { ParallaxGearData } from "./module/data/item/gear-model.mjs";
 import { ParallaxSpeciesTraitData } from "./module/data/item/species-trait-model.mjs";
 import { ParallaxCharacterSheet } from "./module/sheets/actor-sheet.mjs";
@@ -86,6 +87,7 @@ Hooks.once("init", () => {
         weapon: ParallaxWeaponData,
         armor: ParallaxArmorData,
         field: ParallaxFieldData,
+        shield: ParallaxShieldData,
         gear: ParallaxGearData,
         speciesTrait: ParallaxSpeciesTraitData,
     };
@@ -103,7 +105,7 @@ Hooks.once("init", () => {
     });
 
     foundry.applications.apps.DocumentSheetConfig.registerSheet(Item, "parallax-protocol", ParallaxItemSheet, {
-        types: ["weapon", "armor", "field", "gear", "speciesTrait"],
+        types: ["weapon", "armor", "field", "shield", "gear", "speciesTrait"],
         makeDefault: true,
         label: "Parallax Item Sheet",
     });

@@ -390,6 +390,7 @@
                             </tr>
                             <tr><td>Armor</td><td>{{system.armorSummary.armor.kinetic}}</td><td>{{system.armorSummary.armor.energy}}</td></tr>
                             <tr><td>Field</td><td>{{system.armorSummary.field.kinetic}}</td><td>{{system.armorSummary.field.energy}}</td></tr>
+                            <tr><td>Shield</td><td>{{system.armorSummary.shield.kinetic}}</td><td>{{system.armorSummary.shield.energy}}</td></tr>
                             <tr class="total-row"><td>Total</td><td>{{system.armorSummary.total.kinetic}}</td><td>{{system.armorSummary.total.energy}}</td></tr>
                         </tbody>
                     </table>
@@ -554,6 +555,40 @@
                             <td>{{system.bulk}}</td>
                             <td>{{system.saveBonuses.radiation}}</td>
                             <td>{{system.saveBonuses.stun}}</td>
+                            <td class="row-actions">
+                                <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
+                                <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="card top-gap">
+                <div style="display: flex; flex-direction: row; justify-content:space-between;">
+                    <h4>Combat Shields</h4>
+                    <button type="button" class="roll-mode-button pp-icon-button" style="width:75px; border-width:1px" data-pp-action="createItem" data-item-type="shield">
+                        <span class="pp-icon-button__text">add</span>
+                    </button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pp-weapon-icon-col"></th>
+                            <th>Name</th>
+                            <th>KDR</th>
+                            <th>Bulk</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each shieldItems}}
+                        <tr>
+                            <td><img class="pp-weapon-icon" src="{{img}}" alt="" /></td>
+                            <td>{{name}}</td>
+                            <td>{{system.kineticDr}}</td>
+                            <td>{{system.bulk}}</td>
                             <td class="row-actions">
                                 <button type="button" data-pp-action="editItem" data-item-id="{{id}}">Edit</button>
                                 <button type="button" class="pp-delete-btn" data-pp-action="deleteItem" data-item-id="{{id}}"><img class="pp-delete-btn__icon" src="systems/parallax-protocol/assets/icons/trash-can.svg" alt="Delete" /></button>

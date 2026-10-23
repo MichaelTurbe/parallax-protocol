@@ -154,6 +154,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         const gear = actor.items.filter((item) => item.type === "gear");
         const armorItems = actor.items.filter((item) => item.type === "armor");
         const fieldItems = actor.items.filter((item) => item.type === "field");
+        const shieldItems = actor.items.filter((item) => item.type === "shield");
         const speciesTraits = actor.items.filter((item) => item.type === "speciesTrait");
 
         return {
@@ -180,6 +181,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             gear,
             armorItems,
             fieldItems,
+            shieldItems,
             speciesTraits,
         };
     }
@@ -249,7 +251,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             ? sourceItem.toObject()
             : foundry.utils.deepClone(sourceItem);
 
-        const allowedTypes = new Set(["weapon", "armor", "field", "gear", "speciesTrait"]);
+        const allowedTypes = new Set(["weapon", "armor", "field", "shield", "gear", "speciesTrait"]);
         if (!allowedTypes.has(itemObject.type)) {
             ui.notifications?.warn(`Unsupported item type: ${itemObject.type ?? "unknown"}.`);
             return null;
@@ -432,6 +434,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
                 gear: { category: "mundane", inPack: false },
                 armor: {},
                 field: {},
+                shield: {},
                 speciesTrait: {},
             };
 

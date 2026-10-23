@@ -30,7 +30,7 @@ await pack.configure({ locked: false });
 const packDocs = await pack.getDocuments();
 const packDocsByName = new Map(packDocs.map(d => [d.name, d]));
 
-let created = 0, updated = 0, skipped = 0;
+let created = 0, updated = 0, replaced = 0, skipped = 0;
 
 for (const folderName of FOLDER_NAMES) {
     const worldFolder = game.folders.find(f => f.type === 'Item' && f.name === folderName);
@@ -56,9 +56,13 @@ for (const folderName of FOLDER_NAMES) {
         itemData.folder = compFolder.id;
 
         const existing = packDocsByName.get(item.name);
-        if (existing) {
+        if (existing && existing.type === item.type) {
             await existing.update(itemData);
             updated++;
+        } else if (existing) {
+            await existing.delete();
+            await Item.create(itemData, { pack: PACK_ID });
+            replaced++;
         } else {
             await Item.create(itemData, { pack: PACK_ID });
             created++;
@@ -66,4 +70,4 @@ for (const folderName of FOLDER_NAMES) {
     }
 }
 
-ui.notifications.info(`Sync complete — ${created} created, ${updated} updated, ${skipped} folders skipped.`);
+ui.notifications.info(`Sync complete — ${created} created, ${updated} updated, ${replaced} replaced (type changed), ${skipped} folders skipped.`);

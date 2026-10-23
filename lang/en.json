@@ -10,6 +10,7 @@
       "weapon": "Weapon",
       "armor": "Armor",
       "field": "Field Generator",
+      "shield": "Combat Shield",
       "gear": "Gear",
       "speciesTrait": "Species Trait"
     }

@@ -53,6 +53,7 @@ See [releases/0.1.0.md](releases/0.1.0.md).
 
 **Content**
 - Re-sync the compendium after 0.1.0 so shields become `shield` items and the cloak and helmet text is updated
+- Characters already carrying the old gear-type shields need them replaced with the new `shield` items (by hand, or with an optional migration)
 - Species trait compendium (morphological adaptations, exobiotic ecology traits)
 - Finish the NPC and Terra-standard animal stat blocks to match the book
 

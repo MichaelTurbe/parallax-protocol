@@ -218,7 +218,7 @@ export class ParallaxStatblockSheet extends HandlebarsApplicationMixin(DocumentS
             ? sourceItem.toObject()
             : foundry.utils.deepClone(sourceItem);
 
-        const allowedTypes = new Set(["weapon", "armor", "field", "gear", "speciesTrait"]);
+        const allowedTypes = new Set(["weapon", "armor", "field", "shield", "gear", "speciesTrait"]);
         if (!allowedTypes.has(itemObject.type)) {
             ui.notifications?.warn(`Unsupported item type: ${itemObject.type ?? "unknown"}.`);
             return null;
