@@ -434,7 +434,15 @@
 
             {{#each skillsByCategory as |skills categoryKey|}}
             <section class="card top-gap">
-                <h4 class="tight-text">{{lookup ../skillCategories categoryKey}} Skills</h4>
+                <div class="pp-skill-category-header">
+                    <h4 class="tight-text">{{lookup ../skillCategories categoryKey}} Skills</h4>
+                    {{#with (lookup ../rankBudgets categoryKey) as |budget|}}
+                    <span class="pp-rank-budget pp-budget-{{budget.status}}" data-rank-budget="{{categoryKey}}" title="{{budget.tooltip}}">
+                        {{budget.priorityLabel}} priority · ranks <strong><span data-rank-spent>{{budget.spent}}</span> / {{budget.allowance}}</strong>
+                        <em data-rank-note>{{budget.note}}</em>
+                    </span>
+                    {{/with}}
+                </div>
                 <table class="pp-skill-table">
                     <colgroup>
                         <col class="pp-skill-name-col" />
@@ -455,7 +463,7 @@
                             <td class="pp-skill-name-cell">{{label}}</td>
                             <td class="pp-skill-stat-cell">{{statLabel}}</td>
                             <td class="pp-skill-trained-cell"><input type="checkbox" data-skill-trained disabled title="Trained when rank is 1 or more" {{checked trained}} /></td>
-                            <td class="pp-skill-rank-cell"><input type="number" min="0" name="system.skills.{{key}}.rank" value="{{rank}}" /></td>
+                            <td class="pp-skill-rank-cell {{#if overCreationMax}}pp-over-cap{{/if}}" data-skill-rank-cell title="Max {{creationMax}} at character creation"><input type="number" min="0" name="system.skills.{{key}}.rank" value="{{rank}}" /></td>
                             <td class="pp-skill-item-bonus-cell"><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
                             <td class="pp-skill-total-cell" data-skill-total>{{totalBonus}}</td>
                             <td class="pp-skill-target-cell" data-skill-target>{{target}}</td>

@@ -407,6 +407,35 @@
     text-align: center;
 }
 
+.parallax.sheet .pp-skill-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--pp-gap);
+}
+
+.parallax.sheet .pp-rank-budget {
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.parallax.sheet .pp-rank-budget em {
+    margin-left: 0.35rem;
+}
+
+.parallax.sheet .pp-rank-budget.pp-budget-under em {
+    color: var(--pp-stat-block);
+}
+
+.parallax.sheet .pp-rank-budget.pp-budget-over em,
+.parallax.sheet .pp-rank-budget.pp-budget-over strong {
+    color: var(--pp-item);
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-rank-cell.pp-over-cap input {
+    outline: 2px solid var(--pp-item);
+}
+
 .parallax.sheet .pp-skill-table .pp-skill-actions-cell {
     justify-content: flex-start;
 }

@@ -65,6 +65,7 @@ export class ParallaxActor extends Actor {
         const level = Math.max(1, Math.min(14, Number.isFinite(rawLevel) ? rawLevel : 1));
 
         this._prepareSkills();
+        this._prepareRankBudget(level);
         this._prepareItemsAndArmor();
         this._prepareSaves(level);
         this._prepareCombat();
@@ -100,6 +101,41 @@ export class ParallaxActor extends Actor {
             skill.totalBonus = statBonus + rank + itemBonus;
             skill.target = 20 - skill.totalBonus;
         }
+    }
+
+    // Ranks each category may hold: its creation budget plus one rank per advance for every level after 1st.
+    // These are guidance for the sheet only; nothing prevents going over.
+    _prepareRankBudget(level) {
+        const rankBudget = {};
+
+        for (const category of Object.keys(PARALLAX.skillCategories)) {
+            const priority = PARALLAX.priorityRanks.find((rank) => this.system.priorities?.[rank] === category) ?? null;
+            const rules = PARALLAX.priorityRules[priority] ?? { creationRanks: 0, creationMax: 0, advancesPerLevel: 0 };
+            const allowance = rules.creationRanks + (level - 1) * rules.advancesPerLevel;
+            let spent = 0;
+
+            for (const skill of Object.values(this.system.skills ?? {})) {
+                if (skill.category !== category) continue;
+                const rank = Number(skill.rank ?? 0);
+                spent += rank;
+                skill.overCreationMax = level === 1 && rank > rules.creationMax;
+                skill.creationMax = rules.creationMax;
+            }
+
+            rankBudget[category] = {
+                priority,
+                priorityLabel: PARALLAX.priorityLabels[priority] ?? "Unranked",
+                creationRanks: rules.creationRanks,
+                creationMax: rules.creationMax,
+                advancesPerLevel: rules.advancesPerLevel,
+                allowance,
+                spent,
+                remaining: allowance - spent,
+                status: spent < allowance ? "under" : spent > allowance ? "over" : "full",
+            };
+        }
+
+        this.system.rankBudget = rankBudget;
     }
 
     _prepareSaves(level) {

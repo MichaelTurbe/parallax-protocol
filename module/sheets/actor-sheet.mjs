@@ -117,6 +117,16 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             category.sort((a, b) => a.label.localeCompare(b.label));
         }
 
+        const rankBudgets = {};
+        for (const [category, budget] of Object.entries(system.rankBudget ?? {})) {
+            rankBudgets[category] = {
+                ...budget,
+                note: this._rankBudgetNote(budget),
+                tooltip: `${budget.creationRanks} ranks at creation (max ${budget.creationMax} per skill), `
+                    + `+${budget.advancesPerLevel} per level after 1st`,
+            };
+        }
+
         const weapons = actor.items.filter((item) => item.type === "weapon");
         const meleeWeapons = [];
         const rangedWeapons = [];
@@ -161,6 +171,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             },
             skillCategories: PARALLAX.skillCategories,
             skillsByCategory,
+            rankBudgets,
             saveTypes: PARALLAX.saveTypes,
             priorities: PARALLAX.skillCategories,
             hitDieOptions: { 6: "d6", 8: "d8", 10: "d10", 12: "d12" },
@@ -268,9 +279,32 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         const total = row.querySelector("[data-skill-total]");
         const target = row.querySelector("[data-skill-target]");
         const trained = row.querySelector("[data-skill-trained]");
+        const rankCell = row.querySelector("[data-skill-rank-cell]");
         if (total) total.textContent = String(skill.totalBonus);
         if (target) target.textContent = String(skill.target);
         if (trained) trained.checked = Boolean(skill.trained);
+        rankCell?.classList.toggle("pp-over-cap", Boolean(skill.overCreationMax));
+
+        this._refreshRankBudget(skill.category);
+    }
+
+    _refreshRankBudget(category) {
+        const element = this.element?.querySelector?.(`[data-rank-budget="${category}"]`);
+        const budget = this.document.system.rankBudget?.[category];
+        if (!element || !budget) return;
+
+        const spent = element.querySelector("[data-rank-spent]");
+        const note = element.querySelector("[data-rank-note]");
+        if (spent) spent.textContent = String(budget.spent);
+        if (note) note.textContent = this._rankBudgetNote(budget);
+        element.classList.remove("pp-budget-under", "pp-budget-full", "pp-budget-over");
+        element.classList.add(`pp-budget-${budget.status}`);
+    }
+
+    _rankBudgetNote(budget) {
+        if (budget.status === "under") return `${budget.remaining} to spend`;
+        if (budget.status === "over") return `${-budget.remaining} over`;
+        return "";
     }
 
     async _onChangeInput(event) {
