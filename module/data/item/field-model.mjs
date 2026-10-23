@@ -3,7 +3,7 @@ const fields = foundry.data.fields;
 export class ParallaxFieldData extends foundry.abstract.TypeDataModel {
     static defineSchema() {
         return {
-            bulk: new fields.NumberField({ initial: 0, min: 0 }),
+            bulk: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             dexPenalty: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             speedPenalty: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             kineticDr: new fields.NumberField({ initial: 0, min: 0, integer: true }),

@@ -235,12 +235,11 @@ export class ParallaxActor extends Actor {
     }
 
     // BURDENED: speed drops 5 ft for every point of bulk above the load rating, until unable to move.
-    // Fractional bulk over the rating rounds up to a full point.
     _prepareMovement() {
         const base = Number(this.system.movement.base ?? 30);
         const armorPenalty = Number(this.system.movement.armorPenalty ?? 0);
         const rating = Number(this.system.load.rating ?? 0);
-        const burdenedPenalty = (bulk) => 5 * Math.max(0, Math.ceil(Number(bulk ?? 0) - rating));
+        const burdenedPenalty = (bulk) => 5 * Math.max(0, Number(bulk ?? 0) - rating);
         const withPackPenalty = burdenedPenalty(this.system.load.totalBulkWithPack);
         const withoutPackPenalty = burdenedPenalty(this.system.load.totalBulkWithoutPack);
 

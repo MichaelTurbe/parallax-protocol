@@ -11,7 +11,7 @@ export class ParallaxWeaponData extends foundry.abstract.TypeDataModel {
             damageSingle: new fields.StringField({ initial: "1d6" }),
             damageAutomatic: new fields.StringField({ initial: "" }),
             damageType: new fields.StringField({ initial: "p" }),
-            bulk: new fields.NumberField({ initial: 0, min: 0 }),
+            bulk: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             rangeShort: new fields.NumberField({ initial: 0, min: 0 }),
             rangeLong: new fields.NumberField({ initial: 0, min: 0 }),
             rangeMax: new fields.NumberField({ initial: 0, min: 0 }),

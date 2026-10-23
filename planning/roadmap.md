@@ -72,8 +72,10 @@ Last reviewed: 2026-10-22
 **Known quirks**
 - The hereditary save bonus inputs on the dossier are overwritten whenever the character has any species trait item (the same problem Body DR had before 0.1.0). Either make them display-only or add trait and manual values together
 
+**Watch in play**
+- Effective DEX can drop below 0 from armor and field penalties (decided 2026-10-22). Check how this feels at the table
+
 **Open questions**
-- Should an armor DEX penalty be able to push effective DEX below 0? Currently there is no floor
 - Should robot stat blocks hide save targets entirely?
 
 **Housekeeping**

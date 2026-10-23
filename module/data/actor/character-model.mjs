@@ -31,10 +31,10 @@ export class ParallaxCharacterData extends foundry.abstract.TypeDataModel {
             }),
             load: new fields.SchemaField({
                 rating: new fields.NumberField({ initial: 5, min: 0, integer: true }),
-                equipmentBulkInPack: new fields.NumberField({ initial: 0, min: 0 }),
-                equipmentBulkNotInPack: new fields.NumberField({ initial: 0, min: 0 }),
-                totalBulkWithPack: new fields.NumberField({ initial: 0, min: 0 }),
-                totalBulkWithoutPack: new fields.NumberField({ initial: 0, min: 0 }),
+                equipmentBulkInPack: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                equipmentBulkNotInPack: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                totalBulkWithPack: new fields.NumberField({ initial: 0, min: 0, integer: true }),
+                totalBulkWithoutPack: new fields.NumberField({ initial: 0, min: 0, integer: true }),
             }),
             armorSummary: new fields.SchemaField({
                 type: new fields.StringField({ initial: "" }),

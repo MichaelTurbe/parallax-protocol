@@ -43,7 +43,7 @@
                 {{selectOptions damageTypeOptions selected=system.damageType}}
             </select>
         </label>
-        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Bulk <input type="number" min="0" step="1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>Short Range <input type="number" name="system.rangeShort" value="{{system.rangeShort}}" /></label>
         <label>Long Range <input type="number" name="system.rangeLong" value="{{system.rangeLong}}" /></label>
         <label>Max Range <input type="number" name="system.rangeMax" value="{{system.rangeMax}}" /></label>
@@ -58,7 +58,7 @@
 
     {{#if isArmor}}
     <div class="two-col top-gap">
-        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Bulk <input type="number" min="0" step="1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>DEX Penalty <input type="number" name="system.dexPenalty" value="{{system.dexPenalty}}" /></label>
         <label>Speed Penalty <input type="number" name="system.speedPenalty" value="{{system.speedPenalty}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
@@ -70,7 +70,7 @@
 
     {{#if isField}}
     <div class="two-col top-gap">
-        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Bulk <input type="number" min="0" step="1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>DEX Penalty <input type="number" name="system.dexPenalty" value="{{system.dexPenalty}}" /></label>
         <label>Speed Penalty <input type="number" name="system.speedPenalty" value="{{system.speedPenalty}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
@@ -82,7 +82,7 @@
 
     {{#if isShield}}
     <div class="two-col top-gap">
-        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Bulk <input type="number" min="0" step="1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label>Kinetic DR <input type="number" name="system.kineticDr" value="{{system.kineticDr}}" /></label>
     </div>
     {{/if}}
@@ -94,7 +94,7 @@
                 {{selectOptions gearCategories selected=system.category}}
             </select>
         </label>
-        <label>Bulk <input type="number" step="0.1" name="system.bulk" value="{{system.bulk}}" /></label>
+        <label>Bulk <input type="number" min="0" step="1" name="system.bulk" value="{{system.bulk}}" /></label>
         <label class="checkbox-line"><input type="checkbox" name="system.inPack" {{checked system.inPack}} /> In Pack</label>
     </div>
     {{/if}}
