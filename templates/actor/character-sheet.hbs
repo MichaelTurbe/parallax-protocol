@@ -358,12 +358,12 @@
                 </table>
             </section>
             <section class="card movement-load-card">
-                <h4>Movement & Load</h4>
+                <h4>Movement & Load {{#if system.load.burdenedWithPack}}<span class="pp-condition-badge" title="Bulk with pack exceeds load rating">BURDENED</span>{{/if}}</h4>
                 <div class="movement-load-edit-row">
                     <label>Base Speed <input type="number" name="system.movement.base" value="{{system.movement.base}}" /></label>
-                    <label>Armor Penalty <input type="number" name="system.movement.armorPenalty" value="{{system.movement.armorPenalty}}" /></label>
-                    <label>With Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithPack" value="{{system.movement.burdenedPenaltyWithPack}}" /></label>
-                    <label>Without Pack Penalty <input type="number" name="system.movement.burdenedPenaltyWithoutPack" value="{{system.movement.burdenedPenaltyWithoutPack}}" /></label>
+                    <div>Armor Penalty <strong>{{system.movement.armorPenalty}}</strong></div>
+                    <div>Burdened Penalty With Pack <strong>{{system.movement.burdenedPenaltyWithPack}}</strong></div>
+                    <div>Burdened Penalty Without Pack <strong>{{system.movement.burdenedPenaltyWithoutPack}}</strong></div>
                 </div>
                 <div class="movement-load-summary-row">
                     <div>Load Rating <strong>{{system.load.rating}}</strong></div>

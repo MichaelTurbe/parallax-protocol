@@ -407,6 +407,16 @@
     text-align: center;
 }
 
+.parallax.sheet .pp-condition-badge {
+    margin-left: 0.5rem;
+    padding: 0 0.4rem;
+    border-radius: 3px;
+    background: var(--pp-dark-red);
+    color: var(--pp-stat-block);
+    font-size: 0.75em;
+    letter-spacing: 0.05em;
+}
+
 .parallax.sheet .pp-skill-category-header {
     display: flex;
     justify-content: space-between;
@@ -817,6 +827,7 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.parallax.sheet .movement-load-edit-row > div,
 .parallax.sheet .movement-load-summary-row > div {
     border: var(--pp-border);
     border-radius: 6px;
