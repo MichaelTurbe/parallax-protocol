@@ -7,6 +7,8 @@ const items = [
         type: "field",
         system: {
             bulk: 0,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 0,
             energyDr: 1,
             price: 40,
@@ -20,6 +22,8 @@ const items = [
         type: "field",
         system: {
             bulk: 0,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 1,
             energyDr: 0,
             price: 45,
@@ -33,6 +37,8 @@ const items = [
         type: "field",
         system: {
             bulk: 0,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 0,
             energyDr: 2,
             price: 75,
@@ -46,6 +52,8 @@ const items = [
         type: "field",
         system: {
             bulk: 0,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 2,
             energyDr: 0,
             price: 80,
@@ -59,6 +67,8 @@ const items = [
         type: "field",
         system: {
             bulk: 1,
+            dexPenalty: 1,
+            speedPenalty: 0,
             kineticDr: 0,
             energyDr: 3,
             price: 160,
@@ -72,6 +82,8 @@ const items = [
         type: "field",
         system: {
             bulk: 1,
+            dexPenalty: 3,
+            speedPenalty: 15,
             kineticDr: 3,
             energyDr: 0,
             price: 150,
@@ -85,6 +97,8 @@ const items = [
         type: "field",
         system: {
             bulk: 2,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 4,
             energyDr: 0,
             price: 500,
@@ -98,6 +112,8 @@ const items = [
         type: "field",
         system: {
             bulk: 2,
+            dexPenalty: 0,
+            speedPenalty: 0,
             kineticDr: 0,
             energyDr: 4,
             price: 500,

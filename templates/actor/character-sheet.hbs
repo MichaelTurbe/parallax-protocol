@@ -462,7 +462,7 @@
                         {{#each skills}}
                         <tr data-skill-row="{{key}}">
                             <td class="pp-skill-name-cell">{{label}}</td>
-                            <td class="pp-skill-stat-cell">{{statLabel}}</td>
+                            <td class="pp-skill-stat-cell" title="{{statTooltip}}">{{statLabel}}</td>
                             <td class="pp-skill-trained-cell"><input type="checkbox" data-skill-trained disabled title="Trained when rank is 1 or more" {{checked trained}} /></td>
                             <td class="pp-skill-rank-cell {{#if overCreationMax}}pp-over-cap{{/if}}" data-skill-rank-cell title="Max {{creationMax}} at character creation"><input type="number" min="0" name="system.skills.{{key}}.rank" value="{{rank}}" /></td>
                             <td class="pp-skill-item-bonus-cell"><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
@@ -540,6 +540,8 @@
                             <th>KDR</th>
                             <th>EDR</th>
                             <th>Bulk</th>
+                            <th>DEX Pen.</th>
+                            <th>Spd Pen.</th>
                             <th>Save Rad</th>
                             <th>Save Stun</th>
                             <th></th>
@@ -553,6 +555,8 @@
                             <td>{{system.kineticDr}}</td>
                             <td>{{system.energyDr}}</td>
                             <td>{{system.bulk}}</td>
+                            <td>{{system.dexPenalty}}</td>
+                            <td>{{system.speedPenalty}}</td>
                             <td>{{system.saveBonuses.radiation}}</td>
                             <td>{{system.saveBonuses.stun}}</td>
                             <td class="row-actions">

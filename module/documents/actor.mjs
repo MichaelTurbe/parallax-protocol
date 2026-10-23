@@ -64,9 +64,9 @@ export class ParallaxActor extends Actor {
         const rawLevel = Number(this.system?.identity?.level || 1);
         const level = Math.max(1, Math.min(14, Number.isFinite(rawLevel) ? rawLevel : 1));
 
+        this._prepareItemsAndArmor();
         this._prepareSkills();
         this._prepareRankBudget(level);
-        this._prepareItemsAndArmor();
         this._prepareSaves(level);
         this._prepareCombat();
         this._prepareLoad();
@@ -92,8 +92,12 @@ export class ParallaxActor extends Actor {
     }
 
     _prepareSkills() {
+        // Armor and field DEX penalties lower the DEX bonus used by DEX-based skills (rulebook p. 70).
+        const dexPenalty = Number(this.system.armorSummary?.dexPenalty ?? 0);
+
         for (const skill of Object.values(this.system.skills ?? {})) {
-            const statBonus = Number(this.system.stats?.[skill.stat]?.value ?? 0);
+            const statPenalty = skill.stat === "dex" ? dexPenalty : 0;
+            const statBonus = Number(this.system.stats?.[skill.stat]?.value ?? 0) - statPenalty;
             const rank = Number(skill.rank ?? 0);
             const itemBonus = Number(skill.itemBonus ?? 0);
 
@@ -171,7 +175,7 @@ export class ParallaxActor extends Actor {
         }
 
         this.system.armorSummary.type = armorItem?.name ?? "";
-        this.system.armorSummary.dexPenalty = Number(armorItem?.system.dexPenalty ?? 0);
+        this.system.armorSummary.dexPenalty = Number(armorItem?.system.dexPenalty ?? 0) + Number(fieldItem?.system.dexPenalty ?? 0);
         this.system.armorSummary.armor.kinetic = Number(armorItem?.system.kineticDr ?? 0);
         this.system.armorSummary.armor.energy = Number(armorItem?.system.energyDr ?? 0);
         this.system.armorSummary.field.kinetic = Number(fieldItem?.system.kineticDr ?? 0);
@@ -180,7 +184,7 @@ export class ParallaxActor extends Actor {
         this.system.armorSummary.shield.energy = 0;
         this.system.armorSummary.body.kinetic = speciesKinetic;
         this.system.armorSummary.body.energy = speciesEnergy;
-        this.system.movement.armorPenalty = Number(armorItem?.system.speedPenalty ?? 0);
+        this.system.movement.armorPenalty = Number(armorItem?.system.speedPenalty ?? 0) + Number(fieldItem?.system.speedPenalty ?? 0);
 
         const equippedSaveBonuses = {
             radiation: Number(armorItem?.system.saveBonuses?.radiation ?? 0) + Number(fieldItem?.system.saveBonuses?.radiation ?? 0),

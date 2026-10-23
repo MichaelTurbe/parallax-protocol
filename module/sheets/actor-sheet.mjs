@@ -106,10 +106,12 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             const categoryKey = skill?.category;
             if (!categoryKey || !skillsByCategory[categoryKey]) continue;
 
+            const dexPenalty = skill?.stat === "dex" ? Number(system.armorSummary?.dexPenalty ?? 0) : 0;
             skillsByCategory[categoryKey].push({
                 key,
                 ...skill,
-                statLabel: skill?.stat ? String(skill.stat).toUpperCase() : "",
+                statLabel: skill?.stat ? String(skill.stat).toUpperCase() + (dexPenalty ? ` −${dexPenalty}` : "") : "",
+                statTooltip: dexPenalty ? `DEX penalty of ${dexPenalty} from armor/field generator applied` : "",
             });
         }
 
