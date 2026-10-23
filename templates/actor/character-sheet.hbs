@@ -199,7 +199,12 @@
                         <h4>Stats</h4>
                         <div class="stat-grid character-stat-grid">
                             <label><span class="stat-label">STR</span> <input type="number" min="0" name="system.stats.str.value" value="{{system.stats.str.value}}" /></label>
-                            <label><span class="stat-label">DEX</span> <input type="number" min="0" name="system.stats.dex.value" value="{{system.stats.dex.value}}" /></label>
+                            {{#with system.stats.dex as |dex|}}
+                            <label {{#if dex.penalty}}class="pp-stat-penalized" title="Armor/field DEX penalty −{{dex.penalty}}: skills use effective DEX {{dex.effective}}"{{/if}}>
+                                <span class="stat-label">DEX</span> <input type="number" min="0" name="system.stats.dex.value" value="{{dex.value}}" />
+                                {{#if dex.penalty}}<span class="pp-stat-effective">eff. {{dex.effective}} (−{{dex.penalty}})</span>{{/if}}
+                            </label>
+                            {{/with}}
                             <label><span class="stat-label">CON</span> <input type="number" min="0" name="system.stats.con.value" value="{{system.stats.con.value}}" /></label>
                             <label><span class="stat-label">INT</span> <input type="number" min="0" name="system.stats.int.value" value="{{system.stats.int.value}}" /></label>
                             <label><span class="stat-label">WIS</span> <input type="number" min="0" name="system.stats.wis.value" value="{{system.stats.wis.value}}" /></label>

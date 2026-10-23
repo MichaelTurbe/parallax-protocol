@@ -78,6 +78,8 @@
     --pp-item: #CA1527;
     --pp-weapon: #09293B;
     --pp-dark-red: #7A000C;
+    --pp-warning: #E8892B;
+    --pp-warning-tint: rgba(232, 137, 43, 0.18);
     font-family: 'Oxanium', sans-serif;
 }
 
@@ -778,6 +780,24 @@
 .parallax.sheet .character-stat-grid input[type="number"] {
     min-width: 40px;
     text-align: center;
+}
+
+/* A stat lowered by an armor or field penalty: the entered value stays editable, the tile shows the effective value. */
+.parallax.sheet .character-stat-grid label.pp-stat-penalized {
+    border-color: var(--pp-warning);
+    background: var(--pp-warning-tint);
+}
+
+.parallax.sheet .character-stat-grid label.pp-stat-penalized input[type="number"] {
+    border-color: var(--pp-warning);
+    background: var(--pp-warning-tint);
+}
+
+.parallax.sheet .pp-stat-effective {
+    display: block;
+    width: 100%;
+    font-size: 0.75em;
+    color: var(--pp-warning);
 }
 
 .parallax.sheet .hit-die-card select,
