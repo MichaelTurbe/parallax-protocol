@@ -145,7 +145,7 @@ const combatGear = [
     { name: "Laser Energy Sink & Cooling Rig", img: CA, type: "gear", system: { category: "combat", bulk: 2, inPack: false, price: 450, notes: "<p>A foot-cubic device stored in a backpack and connected via tubes to an automatic laser weapon. Lifts the burst limit per combat and removes the possibility of overheating on a roll of 2. Effectively stops you from dropping the gun. Connection/disconnect requires a round.</p>" } },
     { name: "Mag Auto-Feed & Cooling Rig", img: CA, type: "gear", system: { category: "combat", bulk: 2, inPack: false, price: 450, notes: "<p>A foot-cubic device stored in a backpack and connected via metal tubes to an automatic mag weapon. Lifts the burst limit per combat and removes the possibility of overheating on a roll of 2. Effectively stops you from dropping the gun. Connection/disconnect requires a round.</p>" } },
     { name: "Slug Auto-Feed & Cooling Rig", img: CA, type: "gear", system: { category: "combat", bulk: 2, inPack: false, price: 450, notes: "<p>A foot-cubic device stored in a backpack and connected via metal tubes to an automatic slug weapon. Lifts the burst limit per combat and removes the possibility of overheating on a roll of 2. Effectively stops you from dropping the gun. Connection/disconnect requires a round.</p>" } },
-    { name: "Tactical Helmet", img: CA, type: "gear", system: { category: "combat", bulk: 1, inPack: false, price: 800, notes: "<p>Combines visual targeting aids with the benefits of an optic &amp; aural comm implant via visual overlays and in-helmet audio. Provides a +1 to attacks with LONG ARMS and to GUNNERY checks if interfaced with a ship's systems. Auto-dims visor — immune to BLINDED by flashes. Not vacuum-rated, but filters provide a +10 to GAS saving throws. Must be charged occasionally.</p>" } },
+    { name: "Tactical Helmet", img: CA, type: "gear", system: { category: "combat", bulk: 1, inPack: false, price: 800, notes: "<p>Combines visual targeting aids with the benefits of an optic &amp; aural comm implant via visual overlays and in-helmet audio. Provides a +1 to attacks with LONG ARMS when worn. You have advantage on GUNNERY checks if interfaced with a ship's systems. Auto-dims visor — immune to BLINDED by flashes. Not vacuum-rated, but filters provide a +10 to GAS saving throws. Must be charged occasionally.</p>" } },
 ];
 
 // ── Survival Gear ─────────────────────────────────────────────────────────────
@@ -222,7 +222,7 @@ const commDevices = [
 const IN = "systems/parallax-protocol/assets/icons/infiltration.svg";
 
 const infiltrationGear = [
-    { name: "Chameleon Cloak", img: IN, type: "gear", system: { category: "infiltration", bulk: 1, inPack: false, price: 110, notes: "<p>Advanced microfilament cloak that looks like ordinary fabric until activated. Actively creates live, shifting camouflage. Provides a +3 item bonus to Stealth checks.</p>" } },
+    { name: "Chameleon Cloak", img: IN, type: "gear", system: { category: "infiltration", bulk: 1, inPack: false, price: 110, notes: "<p>Advanced microfilament cloak that looks like ordinary fabric until activated. Actively creates live, shifting camouflage to cloak the movement of the wearer. You have advantage on STEALTH checks.</p>" } },
     { name: "Infrared Goggles", img: IN, type: "gear", system: { category: "infiltration", bulk: 1, inPack: false, price: 50, notes: "<p>Goggles that interface with any comm device to provide infrared vision. Can be toggled on or off via subvocal command.</p>" } },
 ];
 

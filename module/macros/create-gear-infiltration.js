@@ -10,7 +10,7 @@ const items = [
             bulk: 1,
             inPack: false,
             price: 110,
-            notes: "<p>Advanced microfilament cloak that looks like ordinary fabric until activated. Actively creates live, shifting camouflage. Provides a +3 item bonus to Stealth checks.</p>",
+            notes: "<p>Advanced microfilament cloak that looks like ordinary fabric until activated. Actively creates live, shifting camouflage to cloak the movement of the wearer. You have advantage on STEALTH checks.</p>",
         },
     },
     {

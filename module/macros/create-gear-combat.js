@@ -91,7 +91,7 @@ const items = [
             bulk: 1,
             inPack: false,
             price: 800,
-            notes: "<p>Combines visual targeting aids with the benefits of an optic &amp; aural comm implant via visual overlays and in-helmet audio. Provides a +1 to attacks with LONG ARMS and to GUNNERY checks if interfaced with a ship's systems. Auto-dims visor — immune to BLINDED by flashes. Not vacuum-rated, but filters provide a +10 to GAS saving throws. Must be charged occasionally.</p>",
+            notes: "<p>Combines visual targeting aids with the benefits of an optic &amp; aural comm implant via visual overlays and in-helmet audio. Provides a +1 to attacks with LONG ARMS when worn. You have advantage on GUNNERY checks if interfaced with a ship's systems. Auto-dims visor — immune to BLINDED by flashes. Not vacuum-rated, but filters provide a +10 to GAS saving throws. Must be charged occasionally.</p>",
         },
     },
 ];
