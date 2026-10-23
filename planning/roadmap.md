@@ -79,6 +79,5 @@ Last reviewed: 2026-10-22
 - Should robot stat blocks hide save targets entirely?
 
 **Housekeeping**
-- The `restarting` commit on `master` still contains the 138 MB PDF, so `git push` will be rejected until that commit is rewritten
 - `system.json` compatibility says verified 14.359; the local server runs 14.367
 - `test.html` at the repo root: purpose unknown, candidate for removal
