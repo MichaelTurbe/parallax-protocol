@@ -1,7 +1,8 @@
+// Initiative is 2d10 + Awareness total skill bonus (rulebook 0.9.6.2, p. 38).
 export class ParallaxCombatant extends Combatant {
     getInitiativeRoll(formula) {
         const actor = this.actor;
-        if (!actor) return super.getInitiativeRoll('1d20');
+        if (!actor) return super.getInitiativeRoll('2d10');
 
         let bonus;
         if (['npc', 'robot', 'creature'].includes(actor.type)) {
@@ -10,6 +11,6 @@ export class ParallaxCombatant extends Combatant {
             bonus = Number(actor.system.combat?.initiativeBonus ?? 0);
         }
 
-        return new Roll(bonus !== 0 ? `1d20 + ${bonus}` : '1d20');
+        return new Roll(bonus !== 0 ? '2d10 + @bonus' : '2d10', { bonus });
     }
 }

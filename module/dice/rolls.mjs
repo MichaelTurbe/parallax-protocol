@@ -201,21 +201,23 @@ export async function rollSave(actor, saveKey, mode = "normal") {
     });
 }
 
+// Initiative is 2d10 + Awareness total skill bonus. When the actor has exactly one combatant in the active
+// combat, the result is written to the tracker; otherwise (not in combat, or several unlinked tokens of the
+// same actor) it is only posted to chat.
 export async function rollInitiative(actor, isStatblock = false, mode = "normal") {
-    const awareness = isStatblock
-        ? actor.system.skills?.awareness
-        : actor.system.skills?.awareness;
+    const bonus = isStatblock
+        ? Number(actor.system.defenses?.initiativeBonus ?? 0)
+        : Number(actor.system.combat?.initiativeBonus ?? 0);
 
-    const target = Number(awareness?.target ?? 20);
-    const bonus = Number(awareness?.totalBonus ?? awareness?.bonus ?? actor.system.combat?.initiativeBonus ?? actor.system.defenses?.initiativeBonus ?? 0);
+    const roll = await new Roll(resolveRollFormula(mode, true), { bonus }).evaluate();
 
-    const roll = await new Roll(resolveRollFormula(mode)).evaluate();
-    const total = roll.total;
-    const success = total >= target;
+    const combatants = game.combat?.getCombatantsByActor(actor) ?? [];
+    const combatant = combatants.length === 1 ? combatants[0] : null;
+    if (combatant) await combatant.update({ initiative: roll.total });
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
-        flavor: `Initiative / Awareness Check (${modeLabel(mode)}) — target ${target} — ${success ? "Success" : "Failure"}`,
+        flavor: `Initiative (${modeLabel(mode)}) — Awareness +${bonus}${combatant ? " — set in combat tracker" : ""}`,
     });
 }
 
