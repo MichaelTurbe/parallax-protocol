@@ -106,12 +106,15 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             const categoryKey = skill?.category;
             if (!categoryKey || !skillsByCategory[categoryKey]) continue;
 
-            const dexPenalty = skill?.stat === "dex" ? Number(system.armorSummary?.dexPenalty ?? 0) : 0;
+            const stat = system.stats?.[skill?.stat];
+            const statPenalty = Number(stat?.penalty ?? 0);
             skillsByCategory[categoryKey].push({
                 key,
                 ...skill,
-                statLabel: skill?.stat ? String(skill.stat).toUpperCase() + (dexPenalty ? ` −${dexPenalty}` : "") : "",
-                statTooltip: dexPenalty ? `DEX penalty of ${dexPenalty} from armor/field generator applied` : "",
+                statLabel: skill?.stat ? String(skill.stat).toUpperCase() + (statPenalty ? ` −${statPenalty}` : "") : "",
+                statTooltip: statPenalty
+                    ? `Armor/field DEX penalty: ${stat.value} − ${statPenalty} = ${stat.effective} (never below 0)`
+                    : "",
             });
         }
 
@@ -342,6 +345,12 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             value = rawValue === "" ? 0 : Number(rawValue);
         } else {
             value = element.value;
+        }
+
+        // Stats are bonuses that never go below 0 (bounded accuracy).
+        if (/^system\.stats\.\w+\.value$/.test(path) && value < 0) {
+            await this.document.update({ [path]: 0 });
+            return this.render();
         }
 
         if (path.startsWith("system.priorities.")) {

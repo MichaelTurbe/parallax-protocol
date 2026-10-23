@@ -65,6 +65,7 @@ export class ParallaxActor extends Actor {
         const level = Math.max(1, Math.min(14, Number.isFinite(rawLevel) ? rawLevel : 1));
 
         this._prepareItemsAndArmor();
+        this._prepareStats();
         this._prepareSkills();
         this._prepareRankBudget(level);
         this._prepareSaves(level);
@@ -91,13 +92,20 @@ export class ParallaxActor extends Actor {
         this.system.defenses.initiativeBonus = awareness;
     }
 
-    _prepareSkills() {
-        // Armor and field DEX penalties lower the DEX bonus used by DEX-based skills (rulebook p. 70).
+    // Effective stat bonuses used by skills. Armor and field DEX penalties lower DEX (rulebook p. 70), and no stat
+    // drops below 0, since a negative bonus would break bounded accuracy.
+    _prepareStats() {
         const dexPenalty = Number(this.system.armorSummary?.dexPenalty ?? 0);
 
+        for (const [key, stat] of Object.entries(this.system.stats ?? {})) {
+            stat.penalty = key === "dex" ? dexPenalty : 0;
+            stat.effective = Math.max(0, Number(stat.value ?? 0) - stat.penalty);
+        }
+    }
+
+    _prepareSkills() {
         for (const skill of Object.values(this.system.skills ?? {})) {
-            const statPenalty = skill.stat === "dex" ? dexPenalty : 0;
-            const statBonus = Number(this.system.stats?.[skill.stat]?.value ?? 0) - statPenalty;
+            const statBonus = Number(this.system.stats?.[skill.stat]?.effective ?? 0);
             const rank = Number(skill.rank ?? 0);
             const itemBonus = Number(skill.itemBonus ?? 0);
 

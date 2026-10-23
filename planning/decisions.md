@@ -25,7 +25,7 @@ Picking a category that another slot already has swaps the two slots, so each ca
 Shields now provide kinetic DR, so they join armor and field generators as a DR layer (`armorSummary.shield`), using the same "first item of this type counts" rule. Gear-typed shields in the compendium need to be re-synced; the sync macro now replaces items whose type changed.
 
 **DEX penalties come from armor *and* field generators.**
-The heavy field generators carry DEX and speed penalties in the rulebook table, so `field` items get `dexPenalty` and `speedPenalty` fields too. Effective DEX for skill math is DEX − (armor penalty + field penalty), with no floor. *Confirmed by the user 2026-10-22:* effective DEX can go below 0. Revisit after it has been tried in play.
+The heavy field generators carry DEX and speed penalties in the rulebook table, so `field` items get `dexPenalty` and `speedPenalty` fields too. Effective DEX for skill math is DEX − (armor penalty + field penalty), **floored at 0**. *Revised by the user 2026-10-22:* a negative stat bonus breaks bounded accuracy, so no stat may go below 0. This applies both to the effective value and to what can be typed into the stat boxes. (An earlier same-day call allowed negative DEX; this replaces it.)
 
 **BURDENED speed penalties are calculated.**
 The penalty is 5 ft per point of bulk above the load rating, worked out separately with and without the pack. Speed bottoms out at 0. The two manual penalty inputs are removed.
