@@ -14,6 +14,7 @@ import { ParallaxStatblockSheet } from "./module/sheets/statblock-sheet.mjs";
 import { ParallaxItemSheet } from "./module/sheets/item-sheet.mjs";
 import { showRollToast } from "./module/ui/roll-toast.mjs";
 import { attachChatButtonListeners } from "./module/ui/chat-buttons.mjs";
+import { disableNumberInputWheel } from "./module/ui/number-inputs.mjs";
 import { StatblockImporter } from "./module/apps/statblock-importer.mjs";
 import { ParallaxCombatant } from "./module/documents/combatant.mjs";
 import { migrateWorld, registerMigrationSettings } from "./module/migrations.mjs";
@@ -22,6 +23,7 @@ Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
 
     registerMigrationSettings();
+    disableNumberInputWheel();
 
     game.settings.register('parallax-protocol', 'npcHpMode', {
         name: 'NPC Token HP Generation',
