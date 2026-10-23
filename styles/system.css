@@ -129,7 +129,6 @@
 }
 
 .parallax.sheet .portrait-wrapper {
-    position: relative;
     aspect-ratio: 3 / 4;
     border-radius: 10px;
     overflow: hidden;
@@ -153,27 +152,8 @@
     cursor: zoom-in;
 }
 
-.parallax.sheet .pp-portrait-edit {
-    position: absolute;
-    top: 6px;
-    right: 6px;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: var(--pp-border);
-    background: rgba(0, 0, 0, 0.6);
-    color: var(--pp-light-icon-foreground);
-    opacity: 0.55;
-    transition: opacity 120ms ease;
-}
-
-.parallax.sheet .portrait-wrapper:hover .pp-portrait-edit,
-.parallax.sheet .pp-portrait-edit:focus-visible {
-    opacity: 1;
+.parallax.sheet .pp-portrait-change {
+    width: 100%;
 }
 
 .parallax.sheet .portrait-actions,
