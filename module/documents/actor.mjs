@@ -34,21 +34,12 @@ export class ParallaxActor extends Actor {
             system.skills[key].label ??= skill.label;
             system.skills[key].category ??= skill.category;
             system.skills[key].stat ??= skill.stat;
-            system.skills[key].trained ??= false;
+            // Falls back to the pre-0.1.0 trainedSkillBonus for actors the world migration hasn't reached
+            // (e.g. characters imported from an old compendium).
+            system.skills[key].rank ??= Number(system.skills[key].trainedSkillBonus ?? 0);
             system.skills[key].itemBonus ??= 0;
             system.skills[key].totalBonus ??= 0;
             system.skills[key].target ??= 20;
-            // Free-entry trained skill bonus. The trained checkbox is only a marker;
-            // it does not gate or calculate this value.
-            if (system.skills[key].trainedSkillBonus === undefined || system.skills[key].trainedSkillBonus === null) {
-                if (Number.isFinite(Number(system.skills[key].frozenTrainedBonus))) {
-                    system.skills[key].trainedSkillBonus = Number(system.skills[key].frozenTrainedBonus);
-                } else if (system.skills[key].trained) {
-                    system.skills[key].trainedSkillBonus = Number(system.trainedSkillBonuses?.[skill.category] ?? 0);
-                } else {
-                    system.skills[key].trainedSkillBonus = 0;
-                }
-            }
         }
 
         for (const [key, label] of Object.entries(PARALLAX.saveTypes)) {
@@ -102,12 +93,11 @@ export class ParallaxActor extends Actor {
     _prepareSkills() {
         for (const skill of Object.values(this.system.skills ?? {})) {
             const statBonus = Number(this.system.stats?.[skill.stat]?.value ?? 0);
-            const trainedSkillBonus = Number(skill.trainedSkillBonus ?? 0);
+            const rank = Number(skill.rank ?? 0);
             const itemBonus = Number(skill.itemBonus ?? 0);
 
-            // The trained checkbox is intentionally not part of this calculation.
-            // It only records whether the character is trained for rules/UI purposes.
-            skill.totalBonus = statBonus + trainedSkillBonus + itemBonus;
+            skill.trained = rank > 0;
+            skill.totalBonus = statBonus + rank + itemBonus;
             skill.target = 20 - skill.totalBonus;
         }
     }

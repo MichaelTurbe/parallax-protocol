@@ -258,21 +258,19 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         return PARALLAX.hitDieByCategory[firstPriority] ?? 8;
     }
 
+    // Updates one skill row in place from the actor's derived data, so editing a rank doesn't re-render
+    // the whole sheet (which would drop focus and tab order).
     _refreshSkillRow(skillKey) {
         const row = this.element?.querySelector?.(`[data-skill-row="${skillKey}"]`);
         const skill = this.document.system.skills?.[skillKey];
         if (!row || !skill) return;
 
-        const statBonus = Number(this.document.system.stats?.[skill.stat]?.value ?? 0);
-        const trainedSkillBonus = Number(skill.trainedSkillBonus ?? 0);
-        const itemBonus = Number(skill.itemBonus ?? 0);
-        const totalBonus = statBonus + trainedSkillBonus + itemBonus;
-        const skillTarget = 20 - totalBonus;
-
         const total = row.querySelector("[data-skill-total]");
         const target = row.querySelector("[data-skill-target]");
-        if (total) total.textContent = String(totalBonus);
-        if (target) target.textContent = String(skillTarget);
+        const trained = row.querySelector("[data-skill-trained]");
+        if (total) total.textContent = String(skill.totalBonus);
+        if (target) target.textContent = String(skill.target);
+        if (trained) trained.checked = Boolean(skill.trained);
     }
 
     async _onChangeInput(event) {
@@ -302,12 +300,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         }
 
         if (path.startsWith("system.skills.")) {
-            const parts = path.split(".");
-            const skillKey = parts[2];
-            const fieldKey = parts[3];
-            const currentSkill = foundry.utils.deepClone(this.document.system.skills?.[skillKey] ?? {});
-            currentSkill[fieldKey] = value;
-            await this.document.update({ [`system.skills.${skillKey}`]: currentSkill }, { render: false });
+            const skillKey = path.split(".")[2];
+            await this.document.update({ [path]: value }, { render: false });
             this._refreshSkillRow(skillKey);
             return;
         }

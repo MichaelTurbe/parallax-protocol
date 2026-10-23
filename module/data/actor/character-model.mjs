@@ -62,12 +62,6 @@ export class ParallaxCharacterData extends foundry.abstract.TypeDataModel {
                 third: new fields.StringField({ initial: "physical" }),
                 fourth: new fields.StringField({ initial: "subtle" }),
             }),
-            trainedSkillBonuses: new fields.SchemaField({
-                martial: new fields.NumberField({ initial: 4, integer: true }),
-                intellectual: new fields.NumberField({ initial: 3, integer: true }),
-                physical: new fields.NumberField({ initial: 2, integer: true }),
-                subtle: new fields.NumberField({ initial: 1, integer: true }),
-            }),
             skills: new fields.ObjectField({ initial: {} }),
             saves: new fields.ObjectField({ initial: {} }),
             combat: new fields.SchemaField({

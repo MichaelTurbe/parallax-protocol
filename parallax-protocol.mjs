@@ -15,9 +15,12 @@ import { showRollToast } from "./module/ui/roll-toast.mjs";
 import { attachChatButtonListeners } from "./module/ui/chat-buttons.mjs";
 import { StatblockImporter } from "./module/apps/statblock-importer.mjs";
 import { ParallaxCombatant } from "./module/documents/combatant.mjs";
+import { migrateWorld, registerMigrationSettings } from "./module/migrations.mjs";
 
 Hooks.once("init", () => {
     console.log("Parallax Protocol | Initializing");
+
+    registerMigrationSettings();
 
     game.settings.register('parallax-protocol', 'npcHpMode', {
         name: 'NPC Token HP Generation',
@@ -105,6 +108,8 @@ Hooks.once("init", () => {
         label: "Parallax Item Sheet",
     });
 });
+
+Hooks.once("ready", () => migrateWorld());
 
 Hooks.on("createChatMessage", (message) => showRollToast(message));
 

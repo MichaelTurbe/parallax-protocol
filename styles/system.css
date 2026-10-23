@@ -355,8 +355,12 @@
     width: 70px;
 }
 
-.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-col {
+.parallax.sheet .pp-skill-table .pp-skill-bonus-col {
     width: 96px;
+}
+
+.parallax.sheet .pp-skill-table .pp-skill-rank-col {
+    width: 64px;
 }
 
 .parallax.sheet .pp-skill-table .pp-skill-item-bonus-col {
@@ -383,7 +387,7 @@
 
 .parallax.sheet .pp-skill-table .pp-skill-stat-cell,
 .parallax.sheet .pp-skill-table .pp-skill-trained-cell,
-.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-cell,
+.parallax.sheet .pp-skill-table .pp-skill-rank-cell,
 .parallax.sheet .pp-skill-table .pp-skill-item-bonus-cell,
 .parallax.sheet .pp-skill-table .pp-skill-total-cell,
 .parallax.sheet .pp-skill-table .pp-skill-target-cell {
@@ -395,7 +399,7 @@
     margin-inline: auto;
 }
 
-.parallax.sheet .pp-skill-table .pp-skill-trained-bonus-cell input,
+.parallax.sheet .pp-skill-table .pp-skill-rank-cell input,
 .parallax.sheet .pp-skill-table .pp-skill-item-bonus-cell input {
     box-sizing: border-box;
     width: 100%;

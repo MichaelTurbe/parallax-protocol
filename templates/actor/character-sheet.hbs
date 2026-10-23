@@ -427,12 +427,6 @@
                             </select>
                         </label>
                     </div>
-                    {{!-- <div class="summary-grid compact top-gap">
-                        <div>Martial <strong>{{system.trainedSkillBonuses.martial}}</strong></div>
-                        <div>Intellectual <strong>{{system.trainedSkillBonuses.intellectual}}</strong></div>
-                        <div>Physical <strong>{{system.trainedSkillBonuses.physical}}</strong></div>
-                        <div>Subtle <strong>{{system.trainedSkillBonuses.subtle}}</strong></div>
-                    </div> --}}
                 </section>
 
 
@@ -446,22 +440,22 @@
                         <col class="pp-skill-name-col" />
                         <col class="pp-skill-stat-col" />
                         <col class="pp-skill-trained-col" />
-                        <col class="pp-skill-trained-bonus-col" />
+                        <col class="pp-skill-rank-col" />
                         <col class="pp-skill-item-bonus-col" />
                         <col class="pp-skill-total-col" />
                         <col class="pp-skill-target-col" />
                         <col class="pp-skill-actions-col" />
                     </colgroup>
                     <thead>
-                        <tr><th class="pp-skill-name-cell">Skill</th><th>Stat</th><th>Trained</th><th>Trained Skill Bonus</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
+                        <tr><th class="pp-skill-name-cell">Skill</th><th>Stat</th><th>Trained</th><th>Rank</th><th>Item</th><th>Total</th><th>Target</th><th></th></tr>
                     </thead>
                     <tbody>
                         {{#each skills}}
                         <tr data-skill-row="{{key}}">
                             <td class="pp-skill-name-cell">{{label}}</td>
                             <td class="pp-skill-stat-cell">{{statLabel}}</td>
-                            <td class="pp-skill-trained-cell"><input type="checkbox" name="system.skills.{{key}}.trained" {{checked trained}} /></td>
-                            <td class="pp-skill-trained-bonus-cell"><input type="number" name="system.skills.{{key}}.trainedSkillBonus" value="{{trainedSkillBonus}}" /></td>
+                            <td class="pp-skill-trained-cell"><input type="checkbox" data-skill-trained disabled title="Trained when rank is 1 or more" {{checked trained}} /></td>
+                            <td class="pp-skill-rank-cell"><input type="number" min="0" name="system.skills.{{key}}.rank" value="{{rank}}" /></td>
                             <td class="pp-skill-item-bonus-cell"><input type="number" name="system.skills.{{key}}.itemBonus" value="{{itemBonus}}" /></td>
                             <td class="pp-skill-total-cell" data-skill-total>{{totalBonus}}</td>
                             <td class="pp-skill-target-cell" data-skill-target>{{target}}</td>
