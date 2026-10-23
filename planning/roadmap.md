@@ -2,7 +2,19 @@
 
 Last reviewed: 2026-10-22
 
-## Built (as of 0.0.30)
+## Built
+
+### 0.1.0 (rulebook 0.9.6.2)
+- Skill ranks replace trained skill bonuses; the trained checkbox follows rank; world migration from 0.0.x data
+- Rank budget per category (creation ranks + advances per level) with overspend and creation-cap warnings
+- Priority slots swap so each category has exactly one priority
+- Initiative is 2d10 + Awareness in the combat tracker and from the sheet (which also writes to the tracker)
+- Combat shield item type giving kinetic DR as its own layer
+- Armor and field DEX penalties applied to DEX-based skills; field generators can carry DEX and speed penalties
+- BURDENED speed penalty calculated from bulk, with and without the pack
+- Body DR read-only (from species traits)
+
+### 0.0.30 and earlier
 
 **Actors**
 - Character sheet (Application V2) with Dossier, Combat, Skills and Inventory tabs
@@ -28,9 +40,9 @@ Last reviewed: 2026-10-22
 - Item-creation macros for every equipment list in the rulebook, plus a macro that syncs world items into the compendium
 - Item and actor compendium packs
 
-## In progress: 0.1.0
+## In progress
 
-See [releases/0.1.0.md](releases/0.1.0.md).
+0.1.0 is code complete; it still needs testing in a live world and merging. See [releases/0.1.0.md](releases/0.1.0.md).
 
 ## To do
 
@@ -66,6 +78,5 @@ See [releases/0.1.0.md](releases/0.1.0.md).
 
 **Housekeeping**
 - The `restarting` commit on `master` still contains the 138 MB PDF, so `git push` will be rejected until that commit is rewritten
-- `README.md` is out of date (says NPC sheets aren't implemented)
 - `system.json` compatibility says verified 14.359; the local server runs 14.367
 - `test.html` at the repo root: purpose unknown, candidate for removal

@@ -1,8 +1,8 @@
 {
     "id": "parallax-protocol",
     "title": "Parallax Protocol",
-    "version": "0.0.30",
-    "description": "Prototype Foundry VTT system for Parallax Protocol. v29: header skill rolls, revised combat movement/load layout, and inventory-derived save/DR refresh fixes.",
+    "version": "0.1.0",
+    "description": "Prototype Foundry VTT system for Parallax Protocol (rulebook 0.9.6.2). 0.1.0: skill ranks replace trained skill bonuses, 2d10 initiative, combat shields as kinetic DR, armor DEX penalties and BURDENED speed calculated.",
     "authors": [
         {
             "name": "Ecstatic Entropy Games"
