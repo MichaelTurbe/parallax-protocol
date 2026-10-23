@@ -269,6 +269,21 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
         return PARALLAX.hitDieByCategory[firstPriority] ?? 8;
     }
 
+    // Each category holds exactly one priority, so choosing a category already held by another slot swaps
+    // the two. The hit die follows whichever category ends up first.
+    _getPriorityUpdate(slot, category) {
+        const priorities = { ...this.document.system.priorities };
+        const otherSlot = PARALLAX.priorityRanks.find((rank) => rank !== slot && priorities[rank] === category);
+        if (otherSlot) priorities[otherSlot] = priorities[slot];
+        priorities[slot] = category;
+
+        const update = { "system.priorities": priorities };
+        if (priorities.first !== this.document.system.priorities.first) {
+            update["system.identity.hitDie"] = this._getDefaultHitDie(priorities.first);
+        }
+        return update;
+    }
+
     // Updates one skill row in place from the actor's derived data, so editing a rank doesn't re-render
     // the whole sheet (which would drop focus and tab order).
     _refreshSkillRow(skillKey) {
@@ -325,11 +340,8 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
             value = element.value;
         }
 
-        if (path === "system.priorities.first") {
-            await this.document.update({
-                [path]: value,
-                "system.identity.hitDie": this._getDefaultHitDie(value),
-            });
+        if (path.startsWith("system.priorities.")) {
+            await this.document.update(this._getPriorityUpdate(path.split(".")[2], value));
             return;
         }
 
