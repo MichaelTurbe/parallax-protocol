@@ -12,13 +12,6 @@ import {
 
 const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api;
 
-const HIT_DIE_BY_FIRST_PRIORITY = {
-    martial: 10,
-    intellectual: 6,
-    physical: 12,
-    subtle: 8,
-};
-
 export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
     _rollMode = "normal";
     _pendingScrollTop = null;
@@ -262,7 +255,7 @@ export class ParallaxCharacterSheet extends HandlebarsApplicationMixin(DocumentS
     }
 
     _getDefaultHitDie(firstPriority) {
-        return HIT_DIE_BY_FIRST_PRIORITY[firstPriority] ?? 8;
+        return PARALLAX.hitDieByCategory[firstPriority] ?? 8;
     }
 
     _refreshSkillRow(skillKey) {

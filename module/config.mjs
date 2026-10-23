@@ -93,3 +93,29 @@ PARALLAX.gearCategories = {
 };
 
 PARALLAX.priorityRanks = ["first", "second", "third", "fourth"];
+
+PARALLAX.priorityLabels = {
+    first: "First",
+    second: "Second",
+    third: "Third",
+    fourth: "Fourth",
+};
+
+// Skill rank budgets by category priority (rulebook 0.9.6.2, pp. 17, 27, 32).
+// creationRanks: ranks to allocate in the category at character creation.
+// creationMax: the most ranks any one skill in the category may have at creation.
+// advancesPerLevel: skills in the category that gain +1 rank on each level up.
+PARALLAX.priorityRules = {
+    first: { creationRanks: 16, creationMax: 4, advancesPerLevel: 4 },
+    second: { creationRanks: 9, creationMax: 3, advancesPerLevel: 3 },
+    third: { creationRanks: 4, creationMax: 2, advancesPerLevel: 2 },
+    fourth: { creationRanks: 1, creationMax: 1, advancesPerLevel: 1 },
+};
+
+// Hit die sides, determined by the category ranked first.
+PARALLAX.hitDieByCategory = {
+    martial: 10,
+    intellectual: 6,
+    physical: 12,
+    subtle: 8,
+};
