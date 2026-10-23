@@ -1,0 +1,9 @@
+# Rulebook PDFs are too large for GitHub (100 MB limit) and are kept locally only.
+*.pdf
+
+# Claude Code: project instructions and local settings stay out of source control.
+CLAUDE.md
+.claude/
+
+# macOS
+.DS_Store
