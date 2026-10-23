@@ -57,6 +57,9 @@ See [releases/0.1.0.md](releases/0.1.0.md).
 - Species trait compendium (morphological adaptations, exobiotic ecology traits)
 - Finish the NPC and Terra-standard animal stat blocks to match the book
 
+**Known quirks**
+- The hereditary save bonus inputs on the dossier are overwritten whenever the character has any species trait item (the same problem Body DR had before 0.1.0). Either make them display-only or add trait and manual values together
+
 **Open questions**
 - Should an armor DEX penalty be able to push effective DEX below 0? Currently there is no floor
 - Should robot stat blocks hide save targets entirely?
