@@ -9,7 +9,26 @@ function escapeHtml(value) {
         .replaceAll("'", "&#39;");
 }
 
+const APPLY_DAMAGE_DENIED = 'Only the GM or the target\'s owner can apply this damage.';
+
+// Chat card HTML is shared by everyone, so permission is checked per viewer when the card is displayed.
+// Unresolvable targets fall back to GM-only.
+function canApplyDamage(defenderUuid) {
+    try {
+        const defender = fromUuidSync(defenderUuid);
+        return defender ? defender.isOwner : game.user.isGM;
+    } catch (_error) {
+        return game.user.isGM;
+    }
+}
+
 export function attachChatButtonListeners(root) {
+    root.querySelectorAll('[data-parallax-chat-action="applyDamage"]').forEach((button) => {
+        if (canApplyDamage(button.dataset.defenderUuid)) return;
+        button.disabled = true;
+        button.title = APPLY_DAMAGE_DENIED;
+    });
+
     root.querySelectorAll('[data-parallax-chat-action]').forEach((button) => {
         button.addEventListener('click', async (event) => {
             event.preventDefault();
@@ -60,6 +79,10 @@ export function attachChatButtonListeners(root) {
                 const defender = await fromUuid(el.dataset.defenderUuid);
                 if (!defender) {
                     ui.notifications?.warn('Could not find the defender to apply damage.');
+                    return;
+                }
+                if (!defender.isOwner) {
+                    ui.notifications?.warn(APPLY_DAMAGE_DENIED);
                     return;
                 }
 

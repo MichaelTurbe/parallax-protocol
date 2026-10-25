@@ -1012,6 +1012,11 @@
     cursor: pointer;
 }
 
+.parallax-chat-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
 .parallax-chat-defender {
     margin-top: 6px;
     display: flex;

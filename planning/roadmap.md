@@ -62,6 +62,7 @@ Last reviewed: 2026-10-22
 - An equipped/unequipped state for armor, fields and shields. Currently the first item of each type counts
 
 **Sheet and UX**
+- Let players apply damage to targets they don't own by relaying the update to the GM over a socket (currently the button is disabled for them)
 - Level-up helper: roll HP and point out which categories still have advances left
 - Character creation helper (stats 3/2/1/1, rank budgets)
 - Show the hit die and priority on the dossier header
