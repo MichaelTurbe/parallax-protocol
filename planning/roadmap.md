@@ -15,6 +15,7 @@ Last reviewed: 2026-10-22
 - Body DR read-only (from species traits)
 - Portrait opens full size in an image popout; a Change Image button below it changes it
 - Number inputs ignore the mouse wheel; the DEX tile highlights armor/field penalties and shows effective DEX
+- Attack cards offer Single-Shot and Burst Damage wherever damage can be rolled, including after a successful defense contest
 
 ### 0.0.30 and earlier
 

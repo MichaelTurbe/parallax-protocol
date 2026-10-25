@@ -30,6 +30,23 @@ function getSkillBonus(actor, skillKey) {
     return Number(skill?.totalBonus ?? skill?.bonus ?? 0);
 }
 
+// Damage buttons for a weapon: single-shot always, plus burst when the weapon has a burst formula. With a defender,
+// the resulting damage card subtracts the defender's DR and offers to apply the damage.
+function buildWeaponDamageButtons(actor, weapon, { defenderUuid = null, damageClass = null, namePrefix = false } = {}) {
+    const hasBurst = Boolean(String(weapon.system.damageAutomatic ?? '').trim());
+    const prefix = namePrefix ? `${escapeHtml(weapon.name)} ` : '';
+    const modes = hasBurst
+        ? [['single', 'Single-Shot Damage'], ['automatic', 'Burst Damage']]
+        : [['single', namePrefix ? 'Damage' : 'Roll Damage']];
+    const defenderAttrs = defenderUuid
+        ? ` data-defender-uuid="${escapeHtml(defenderUuid)}" data-damage-class="${escapeHtml(damageClass ?? weapon.system.damageClass ?? 'kinetic')}"`
+        : '';
+
+    return modes.map(([mode, label]) => `<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage"`
+        + ` data-actor-uuid="${escapeHtml(actor.uuid)}" data-weapon-id="${escapeHtml(weapon.id)}" data-damage-mode="${mode}"${defenderAttrs}>`
+        + `${prefix}${label}</button>`).join(' ');
+}
+
 const SKILL_TO_CLASSIFICATION = {
     meleeWeapons: 'melee',
     martialArts: 'melee',
@@ -46,17 +63,7 @@ function buildSkillDamageButtons(actor, skillKey) {
     const weapons = actor.items.filter(i => i.type === 'weapon' && i.system.classification === classification);
     if (!weapons.length) return '';
 
-    const actorUuid = escapeHtml(actor.uuid);
-    const buttons = weapons.flatMap(weapon => {
-        const weaponId = escapeHtml(weapon.id);
-        const weaponName = escapeHtml(weapon.name);
-        const btns = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">${weaponName} Dmg</button>`];
-        if (String(weapon.system.damageAutomatic ?? '').trim()) {
-            btns.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">${weaponName} Auto Dmg</button>`);
-        }
-        return btns;
-    });
-
+    const buttons = weapons.map(weapon => buildWeaponDamageButtons(actor, weapon, { namePrefix: true }));
     return `<div class="parallax-chat-actions">${buttons.join(' ')}</div>`;
 }
 
@@ -112,11 +119,7 @@ function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill, attack
                 </div>`;
         }
     } else {
-        const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
-        if (String(weapon.system.damageAutomatic ?? "").trim()) {
-            damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
-        }
-        actionsSection = `<div class="parallax-chat-actions">${damageButtons.join(" ")}</div>`;
+        actionsSection = `<div class="parallax-chat-actions">${buildWeaponDamageButtons(actor, weapon)}</div>`;
     }
 
     return `
@@ -130,7 +133,7 @@ function buildAttackFlavor(actor, weapon, mode, attackBonus, linkedSkill, attack
 }
 
 function buildDamageFlavor(weapon, damageMode, formula, damageType, strBonusApplied, drSection = '', applySection = '') {
-    const label = damageMode === "automatic" ? "Auto Damage" : "Damage";
+    const label = damageMode === "automatic" ? "Burst Damage" : "Damage";
     const suffix = strBonusApplied ? ` + STR` : "";
 
     return `
@@ -251,16 +254,9 @@ export async function rollWeaponAttackCheck(actor, weapon, mode = "normal") {
     const total = roll.total;
     const success = total >= target;
 
-    const actorUuid = escapeHtml(actor.uuid);
-    const weaponId = escapeHtml(weapon.id);
-    let actionsSection = '';
-    if (success) {
-        const damageButtons = [`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="single">Roll Damage</button>`];
-        if (String(weapon.system.damageAutomatic ?? '').trim()) {
-            damageButtons.push(`<button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage" data-actor-uuid="${actorUuid}" data-weapon-id="${weaponId}" data-damage-mode="automatic">Roll Auto Damage</button>`);
-        }
-        actionsSection = `<div class="parallax-chat-actions">${damageButtons.join(' ')}</div>`;
-    }
+    const actionsSection = success
+        ? `<div class="parallax-chat-actions">${buildWeaponDamageButtons(actor, weapon)}</div>`
+        : '';
 
     await roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor }),
@@ -297,21 +293,16 @@ export async function rollDefenseContest(defenderActor, skillKey, mode, attacker
     const defTotal = roll.total;
     const attackerWins = attackerTotal > defTotal;
 
-    const actorUuid = escapeHtml(attackerActorUuid);
-    const defUuid = escapeHtml(defenderActor.uuid);
-    const escapedWeaponId = escapeHtml(weaponId);
-    const escapedDamageClass = escapeHtml(damageClass ?? 'kinetic');
-
     let resultSection;
     if (attackerWins) {
+        const attacker = await fromUuid(attackerActorUuid);
+        const weapon = attacker?.items?.get(weaponId);
+        const damageButtons = weapon
+            ? buildWeaponDamageButtons(attacker, weapon, { defenderUuid: defenderActor.uuid, damageClass })
+            : '';
         resultSection = `
             <div class="parallax-chat-result parallax-chat-result--hit">HIT</div>
-            <div class="parallax-chat-actions">
-                <button type="button" class="parallax-chat-button" data-parallax-chat-action="rollWeaponDamage"
-                    data-actor-uuid="${actorUuid}" data-weapon-id="${escapedWeaponId}"
-                    data-damage-mode="single" data-defender-uuid="${defUuid}"
-                    data-damage-class="${escapedDamageClass}">Roll Damage</button>
-            </div>`;
+            <div class="parallax-chat-actions">${damageButtons}</div>`;
     } else {
         resultSection = `<div class="parallax-chat-result parallax-chat-result--miss">MISS</div>`;
     }
